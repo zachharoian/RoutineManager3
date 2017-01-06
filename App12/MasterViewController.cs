@@ -22,7 +22,7 @@ namespace App12
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
+            /*
             // Perform any additional setup after loading the view, typically from a nib.
             NavigationItem.LeftBarButtonItem = EditButtonItem;
 
@@ -30,27 +30,32 @@ namespace App12
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, AddEvent);
             addButton.AccessibilityLabel = "addButton";
             NavigationItem.RightBarButtonItem = addButton;
-
+            
+            //  Set localization ID
+            
+            
             //  Test data
-            List<EventData> data = new List<EventData>();
-            data[0] = new EventData("Red", "NewDefault1");
-            data[1] = new EventData();
-            data[2] = new EventData();
-            data[3] = new EventData();
-            data[1].Title = "Blue";
+            List<EventData> data = new List<EventData>(4);
+
+
+            data.Add(new EventData("Red", "NewDefault1"));
+            data.Add(new EventData("Orange", "NewDefault1"));
+            data.Add(new EventData("Red", "NewDefault1"));
+            data.Add(new EventData("Red", "NewDefault1"));
             data[1].Desc = "Default2";
             data[2].Title = "Green";
             data[2].Desc = "Default3";
             data[3].Title = "Yellow";
             data[3].Desc = "Default4";
+            
 
-            DataAccess.SaveObject(data[1]);
+            //DataAccess.SaveObject(data[1]);
             //DataAccess.SaveObject(data[1]);
             //DataAccess.SaveObject(data[2]);
             //DataAccess.SaveObject(data[3]);
-
-            //  Insert Data
-            TableView.Source = dataSource = new TableSource(data, this);
+            */
+            //  Create datastream
+            TableView.Source = dataSource = new TableSource(this);
         }
 
         public override void DidReceiveMemoryWarning()
@@ -61,13 +66,17 @@ namespace App12
 
         void AddEvent(object sender, EventArgs args)
         {
+            PerformSegue("showEventCreate", this);
+            /*
             EventData newEvent = new EventData("Default Title", "Default Desc"); 
             dataSource.AddItem(0, newEvent);
 
             using (var indexPath = NSIndexPath.FromRowSection(0, 0))
                 TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
+            */
         }
 
+        /*
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
             if (segue.Identifier == "showDetail")
@@ -78,6 +87,7 @@ namespace App12
                 ((DetailViewController)segue.DestinationViewController).SetDetailItem(item);
             }
         }
+        */
 
         /*
         class DataSource : UITableViewSource
