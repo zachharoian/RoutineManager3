@@ -95,6 +95,10 @@
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
+    <Compile Include="NewEventController.cs" />
+    <Compile Include="NewEventController.designer.cs">
+      <DependentUpon>NewEventController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DetailViewController.cs" />
