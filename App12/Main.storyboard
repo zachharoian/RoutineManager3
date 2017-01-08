@@ -275,7 +275,13 @@
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         </variation>
                     </tableView>
-                    <navigationItem key="navigationItem" title="New Event" id="1183"/>
+                    <navigationItem key="navigationItem" title="New Event" id="1183">
+                        <barButtonItem key="rightBarButtonItem" id="1298" style="plain" systemItem="save"/>
+                        <barButtonItem key="leftBarButtonItem" id="1299" systemItem="cancel">
+                            <connections/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1189" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
