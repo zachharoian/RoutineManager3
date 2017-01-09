@@ -7,6 +7,8 @@ namespace App12
     public partial class NewEventController : UITableViewController
     {
 		string titleFieldText;
+        UIDatePicker startDatePicker;
+
         public NewEventController (IntPtr handle) : base (handle)
         {
 			
@@ -16,6 +18,7 @@ namespace App12
 		{
 			base.ViewDidLoad();
 
+            startDatePicker = new UIDatePicker();
 			toggleStartDatePicker();
 			startDatePickerChanged();
 		}
@@ -33,6 +36,7 @@ namespace App12
 		}
 
 		bool startDatePickerHidden = false;
+
 
 		public void toggleStartDatePicker()
 		{

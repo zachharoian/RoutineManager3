@@ -1,4 +1,4 @@
-// WARNING
+﻿// WARNING
 //
 // This file has been generated automatically by Xamarin Studio from the outlets and
 // actions declared in your storyboard file.
@@ -16,6 +16,10 @@ namespace App12
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIDatePicker startDatePicker { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel startDateSubtitle { get; set; }
 
         [Outlet]
@@ -24,6 +28,11 @@ namespace App12
 
         void ReleaseDesignerOutlets ()
         {
+            if (startDatePicker != null) {
+                startDatePicker.Dispose ();
+                startDatePicker = null;
+            }
+
             if (startDateSubtitle != null) {
                 startDateSubtitle.Dispose ();
                 startDateSubtitle = null;
