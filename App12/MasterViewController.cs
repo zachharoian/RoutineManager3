@@ -14,6 +14,8 @@ namespace App12
     {
         TableSource dataSource;
 
+		public string tempTitleFieldText;
+
         public MasterViewController(IntPtr handle) : base(handle)
         {
             Title = NSBundle.MainBundle.LocalizedString("Master", "Master");
@@ -66,7 +68,7 @@ namespace App12
 
         void AddEvent(object sender, EventArgs args)
         {
-            PerformSegue("showEventCreate", this);
+            //PerformSegue("showEventCreate", this);
             /*
             EventData newEvent = new EventData("Default Title", "Default Desc"); 
             dataSource.AddItem(0, newEvent);
@@ -76,6 +78,24 @@ namespace App12
             */
         }
 
+		//	Unwind from cancel to Main Agenda
+		[Action("UnwindToMasterViewController:")]
+		public void UnwindToMasterViewController(UIStoryboardSegue segue)
+		{
+
+		}
+
+		[Action("UnwindToNewEvent:")]
+		public void UnwindToNewEvent(UIStoryboardSegue segue)
+		{
+			var segueData = (UITableViewController)segue.SourceViewController;
+			EventData newEvent = new EventData(tempTitleFieldText, "Default Subtitle");
+			Console.Write(tempTitleFieldText);
+			dataSource.AddItem(0, newEvent);
+
+			using (var indexPath = NSIndexPath.FromRowSection(0, 0))
+				TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
+		}
         /*
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {

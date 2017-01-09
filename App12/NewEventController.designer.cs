@@ -14,8 +14,25 @@ namespace App12
     [Register ("NewEventController")]
     partial class NewEventController
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel startDateSubtitle { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField titleField { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
+            if (startDateSubtitle != null) {
+                startDateSubtitle.Dispose ();
+                startDateSubtitle = null;
+            }
+
+            if (titleField != null) {
+                titleField.Dispose ();
+                titleField = null;
+            }
         }
     }
 }
