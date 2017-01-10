@@ -110,143 +110,90 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1184">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="1182" id="1185"/>
                             <outlet property="delegate" destination="1182" id="1186"/>
                         </connections>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        </variation>
                         <sections>
-                            <tableViewSection id="1199">
+                            <tableViewSection id="1451">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="1200">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1452">
                                         <rect key="frame" x="0.0" y="70" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1200" id="1201">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1452" id="1453">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="1394" translatesAutoresizingMaskIntoConstraints="NO" placeholder="Title" clearButtonMode="whileEditing">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="1474" translatesAutoresizingMaskIntoConstraints="NO" placeholder="Title">
                                                     <rect key="frame" x="20" y="7" width="280" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <constraints>
+                                                        <constraint id="1478" firstAttribute="width" constant="280"/>
+                                                        <constraint id="1479" firstAttribute="height" constant="30"/>
+                                                    </constraints>
                                                 </textField>
                                             </subviews>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="1394"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="1397"/>
-                                                    <exclude reference="1398"/>
-                                                    <exclude reference="1399"/>
-                                                    <exclude reference="1400"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="1394"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="1397"/>
-                                                    <include reference="1398"/>
-                                                    <include reference="1399"/>
-                                                    <include reference="1400"/>
-                                                </mask>
-                                            </variation>
                                             <constraints>
-                                                <constraint id="1397" firstItem="1201" firstAttribute="trailing" secondItem="1394" secondAttribute="trailing" constant="20"/>
-                                                <constraint id="1398" firstItem="1394" firstAttribute="leading" secondItem="1201" secondAttribute="leading" constant="20"/>
-                                                <constraint id="1399" firstItem="1394" firstAttribute="top" secondItem="1201" secondAttribute="top" constant="7"/>
-                                                <constraint id="1400" firstItem="1201" firstAttribute="bottom" secondItem="1394" secondAttribute="bottom" constant="6"/>
+                                                <constraint id="1476" firstItem="1453" firstAttribute="trailing" secondItem="1474" secondAttribute="trailing" constant="20"/>
+                                                <constraint id="1477" firstItem="1453" firstAttribute="bottom" secondItem="1474" secondAttribute="bottom" constant="6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1202" style="IBUITableViewCellStyleValue1" textLabel="1422" detailTextLabel="1423">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1454" style="IBUITableViewCellStyleValue1" textLabel="1472" detailTextLabel="1473">
                                         <rect key="frame" x="0.0" y="114" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1202" id="1203">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1454" id="1455">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1422">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1472">
                                                     <rect key="frame" x="16" y="12" width="38" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1423">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1473">
                                                     <rect key="frame" x="245" y="12" width="59" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1413" rowHeight="216">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1456" rowHeight="216">
                                         <rect key="frame" x="0.0" y="158" width="320" height="216"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1413" id="1414">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1456" id="1457">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="215.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="1425" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="1465" translatesAutoresizingMaskIntoConstraints="NO" clipsSubviews="YES">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="332704801.65417802">
                                                         <!--2011-07-18 18:00:01 +0000-->
                                                     </date>
-                                                    <connections>
-                                                        <action selector="MySelector:" destination="1182" id="1432" eventType="valueChanged"/>
-                                                    </connections>
-                                                    <accessibility key="accessibilityConfiguration" identifier="startDatePicker">
-                                                        <bool key="isElement" value="YES"/>
-                                                    </accessibility>
+                                                    <constraints>
+                                                        <constraint id="1468" firstAttribute="width" constant="320"/>
+                                                        <constraint id="1469" firstAttribute="height" constant="216"/>
+                                                    </constraints>
                                                 </datePicker>
                                             </subviews>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="1425"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="1206">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1207">
-                                        <rect key="frame" x="0.0" y="762" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1207" id="1208">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1209">
-                                        <rect key="frame" x="0.0" y="806" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1209" id="1210">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1211">
-                                        <rect key="frame" x="0.0" y="850" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1211" id="1212">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <constraints>
+                                                <constraint id="1466" firstItem="1457" firstAttribute="trailing" secondItem="1465" secondAttribute="trailing"/>
+                                                <constraint id="1467" firstItem="1457" firstAttribute="bottom" secondItem="1465" secondAttribute="bottom"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        </variation>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Event" id="1183">
                         <barButtonItem key="rightBarButtonItem" id="1298" style="plain" systemItem="save">
@@ -263,7 +210,9 @@
                     <connections>
                         <outlet property="titleField" destination="1394" id="name-outlet-1394"/>
                         <outlet property="startDateSubtitle" destination="1423" id="name-outlet-1423"/>
-                        <outlet property="startDatePicker" destination="1425" id="name-outlet-1425"/>
+                        <outlet property="startDatePicker" destination="1465" id="name-outlet-1465"/>
+                        <outlet property="startDateSubtitle" destination="1473" id="name-outlet-1473"/>
+                        <outlet property="titleField" destination="1474" id="name-outlet-1474"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1189" userLabel="First Responder" sceneMemberID="firstResponder"/>
