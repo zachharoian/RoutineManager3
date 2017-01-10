@@ -26,31 +26,32 @@ namespace App12
         //  ---------------------------------
         public override void ViewDidLoad()
 		{
+            Console.WriteLine("ViewDidLoad() was initiated.");
             //  View did load command.
-			base.ViewDidLoad();
+            base.ViewDidLoad();
 
             toggleStartDatePicker();
 
             //  Update the text of the date cell to match the Date Picker.
 			startDatePickerChanged();
-		}// END ViewDidLoad()
+            Console.WriteLine("ViewDidLoad() was executed and completed.");
+        }// END ViewDidLoad()
 
         //  ---------------------------------
         //  startDatePickerChanged(): Method for updating the cell containing Date Picker information.
         //  ---------------------------------
         public void startDatePickerChanged()
 		{
+            Console.WriteLine("startDatePickerChanged() was initiated.");
             //  Create the path for the cell
-			NSIndexPath[] rows = new NSIndexPath[]
+            NSIndexPath[] rows = new NSIndexPath[]
 			{
 				NSIndexPath.FromRowSection(1,0)
 			};
 
             //  Convert the Date Picker information into a string and set it to the subtitle field of the cell.
 			startDateSubtitle.Text = NSDateFormatter.ToLocalizedString(startDatePicker.Date, NSDateFormatterStyle.Medium, NSDateFormatterStyle.Short);
-
-            //  Reload the table to display changes
-			TableView.ReloadRows(rows, UITableViewRowAnimation.None);
+            Console.WriteLine("startDatePickerChanged() was executed and completed.");
 		}// END startDatePickerChanged()
 
         //  ---------------------------------
@@ -58,17 +59,25 @@ namespace App12
         //  ---------------------------------
         public void toggleStartDatePicker()
 		{
+            Console.WriteLine("toggleStartDatePicker() was initiated.");
             //  Create the path for the cell
             NSIndexPath[] rows = new NSIndexPath[]
             {
                 NSIndexPath.FromRowSection(2,0)
             };
+            Console.WriteLine("Rows Variable created.");
             //  Flips the state of the validation variable.
+            Console.WriteLine("Date picker is hidden? " + startDatePickerHidden);
             startDatePickerHidden = !startDatePickerHidden;
 
+            Console.WriteLine("Date picker is hidden? " + startDatePickerHidden);
             //  Reload the cell to reflect the changes
-			TableView.ReloadRows(rows, UITableViewRowAnimation.None);
-		}// END toggleStartDataPicker()
+            TableView.ReloadRows(rows, UITableViewRowAnimation.None);
+            //TableView.ReloadData();
+            Console.WriteLine("Table Reloaded");
+            Console.WriteLine("Date picker is hidden? " + startDatePickerHidden);
+            Console.WriteLine("toggleStartDatePicker() was executed and completed.");
+        }// END toggleStartDataPicker()
 
         //  ---------------------------------
         //  MySelector: An action to tell when start Date Picker changes value.
@@ -76,33 +85,38 @@ namespace App12
         [Export ("UpdateStartDatePicker:")]
 		void Update(UIStoryboardSegue segue)
 		{
+            Console.WriteLine("Update() was initiated.");
             //  Forces the cell to update to reflect the change in value
-			startDatePickerChanged();
-		}// END Update()
+            startDatePickerChanged();
+            Console.WriteLine("Update() was completed.");
+        }// END Update()
 
         //  ---------------------------------
         //  RowSelected(): Overrides the selection method for cells. 
         //  ---------------------------------
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
 		{
+            Console.WriteLine("RowSelected() was initiated.");
             //  If the cell is the Date Picker overview cell, toggle the Date Picker. Else, select the row as normal.
             if (indexPath.Section == 0 && (indexPath.Row == 1 || indexPath.Row == 2))
             {
                 if (indexPath.Row == 1)
                 {
                     toggleStartDatePicker();
-                    tableView.DeselectRow(indexPath, true);
                 }
+                tableView.DeselectRow(indexPath, true);
             }
             else
                 tableView.DeselectRow(indexPath, true);
-		}// END RowSelected()
+            Console.WriteLine("RowSelected() was completed.");
+        }// END RowSelected()
 
         //  ---------------------------------
         //  GetHeightForRow(): Overrides the method for setting cell height.
         //  ---------------------------------
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
 		{
+            Console.WriteLine("GetHeightForRow() was initiated.");
             //  If the cell is the Date Picker Cell, and it is hidden, set the height to 0. If it is visible, set it to 216 (height of the Date Picker).
             //  Else, return the current height of the cell. 
             if (startDatePickerHidden == true && indexPath.Section == 0 && indexPath.Row == 2)
@@ -111,16 +125,18 @@ namespace App12
                 return 216;
             else
 				return base.GetHeightForRow(tableView, indexPath);
-		}// END GetHeightForRow()
+        }// END GetHeightForRow()
 
 		public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
 		{
-			titleFieldText = titleField.Text;
+            Console.WriteLine("PrepareForSegue() was initiated.");
+            titleFieldText = titleField.Text;
             //  TODO: Add description field
             //descFieldText = descField.Text;
 			base.PrepareForSegue(segue, sender);
 			var transferdata = segue.DestinationViewController as MasterViewController;
 			transferdata.tempTitleFieldText = titleFieldText;
-		}
+            Console.WriteLine("PrepareForSegue() was completed.");
+        }
     }
 }

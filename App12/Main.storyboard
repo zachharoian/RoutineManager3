@@ -183,6 +183,9 @@
                                                         <constraint id="1468" firstAttribute="width" constant="320"/>
                                                         <constraint id="1469" firstAttribute="height" constant="216"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="UpdateStartDatePicker:" destination="1182" id="1480" eventType="valueChanged"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
