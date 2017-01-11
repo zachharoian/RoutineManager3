@@ -23,7 +23,6 @@ namespace App12
         //  Cell ID
         string cellIdentifier = "TableCell";
 
-
         //
         //  Constructor
         //
@@ -33,15 +32,12 @@ namespace App12
             this.controller = controller;
 
             //  Beginning data
-            tableItems.Add(new EventData("Red", "NewDefault1"));
-            tableItems.Add(new EventData("Orange", "NewDefault1"));
-            tableItems.Add(new EventData("Red", "NewDefault1"));
-            tableItems.Add(new EventData("Red", "NewDefault1"));
-            tableItems[1].Desc = "Default2";
-            tableItems[2].Title = "Green";
-            tableItems[2].Desc = "Default3";
-            tableItems[3].Title = "Yellow";
-            tableItems[3].Desc = "Default4";
+            DateTime Random = new DateTime(2017, 1, 9, 13, 53, 36);
+            UIColor red = UIColor.Red;
+            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
+            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
+            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
+            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
         }
         //  END TableSource()
 
@@ -112,25 +108,24 @@ namespace App12
         }
         //  END RowSelected()
 
+
+        public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
+        {
+            return 115;
+        }// END GetHeightForRow()
+
         //  
         //  Custom method for cell retreival
         //
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
-            //  Creates a table cell called 'cell' and allows it to be recycled
-            UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
-
-            //  Checks if a cell needs to be created, and allows the cell to be recycled
+            var cell = tableView.DequeueReusableCell(cellIdentifier) as AgendaCell;
+            tableView.AllowsSelection = false;
+            tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
             if (cell == null)
-                cell = new UITableViewCell(UITableViewCellStyle.Subtitle, cellIdentifier);
-
-            //  Change the text of the cell
-            cell.TextLabel.Text = tableItems[indexPath.Row].Title;
-
-            //  Change the subtitle of the cell
-            cell.DetailTextLabel.Text = tableItems[indexPath.Row].Desc;
+                cell = new AgendaCell(cellIdentifier);
+            cell.UpdateCell(tableItems[indexPath.Row].Title, tableItems[indexPath.Row].Desc, tableItems[indexPath.Row].Start, tableItems[indexPath.Row].End, tableItems[indexPath.Row].BackgroundColor);
             return cell;
-
         }
         //  END GetCell()
 

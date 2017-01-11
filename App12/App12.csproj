@@ -84,6 +84,10 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AgendaCell.cs" />
+    <Compile Include="AgendaCell.designer.cs">
+      <DependentUpon>AgendaCell.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess.cs" />
     <Compile Include="EventData.cs" />
     <Compile Include="Main.cs" />
@@ -91,6 +95,7 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="TableSource.cs" />
+    <InterfaceDefinition Include="AgendaCell.xib" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />

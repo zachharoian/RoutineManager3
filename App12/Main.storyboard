@@ -136,6 +136,9 @@
                                                         <constraint id="1478" firstAttribute="width" constant="280"/>
                                                         <constraint id="1479" firstAttribute="height" constant="30"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="UpdateSaveButton:" destination="1182" id="1485" eventType="valueChanged"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -151,8 +154,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1472">
-                                                    <rect key="frame" x="16" y="12" width="38" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Starts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1472">
+                                                    <rect key="frame" x="16" y="12" width="46" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -174,7 +177,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="215.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="1465" translatesAutoresizingMaskIntoConstraints="NO" clipsSubviews="YES">
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" id="1465" translatesAutoresizingMaskIntoConstraints="NO" clipsSubviews="YES">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="332704801.65417802">
                                                         <!--2011-07-18 18:00:01 +0000-->
@@ -216,6 +219,7 @@
                         <outlet property="startDatePicker" destination="1465" id="name-outlet-1465"/>
                         <outlet property="startDateSubtitle" destination="1473" id="name-outlet-1473"/>
                         <outlet property="titleField" destination="1474" id="name-outlet-1474"/>
+                        <outlet property="buttonSave" destination="1298" id="name-outlet-1298"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1189" userLabel="First Responder" sceneMemberID="firstResponder"/>

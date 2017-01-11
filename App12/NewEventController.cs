@@ -7,8 +7,9 @@ namespace App12
     public partial class NewEventController : UITableViewController
     {
         //  Variables for data transfer for creating a new event.
-		string titleFieldText;
-        string descFieldText;
+		string titleFieldText, descFieldText;
+        DateTime startTime, endTime;
+        UIColor backgroundColor;
 
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDatePickerHidden = false;
@@ -29,13 +30,14 @@ namespace App12
             Console.WriteLine("ViewDidLoad() was initiated.");
             //  View did load command.
             base.ViewDidLoad();
-
             toggleStartDatePicker();
 
             //  Update the text of the date cell to match the Date Picker.
-			startDatePickerChanged();
+            startDatePickerChanged();
             Console.WriteLine("ViewDidLoad() was executed and completed.");
         }// END ViewDidLoad()
+
+        
 
         //  ---------------------------------
         //  startDatePickerChanged(): Method for updating the cell containing Date Picker information.
@@ -65,19 +67,31 @@ namespace App12
             {
                 NSIndexPath.FromRowSection(2,0)
             };
-            Console.WriteLine("Rows Variable created.");
-            //  Flips the state of the validation variable.
-            Console.WriteLine("Date picker is hidden? " + startDatePickerHidden);
+            Console.WriteLine("Hidden? " + startDatePickerHidden);
+            Console.WriteLine("Row Height: " + GetHeightForRow(TableView, NSIndexPath.FromRowSection(2, 0)));
             startDatePickerHidden = !startDatePickerHidden;
-
-            Console.WriteLine("Date picker is hidden? " + startDatePickerHidden);
+            Console.WriteLine("Hidden? " + startDatePickerHidden);
+            Console.WriteLine("Row Height: " + GetHeightForRow(TableView, NSIndexPath.FromRowSection(2, 0)));
             //  Reload the cell to reflect the changes
             TableView.ReloadRows(rows, UITableViewRowAnimation.None);
             //TableView.ReloadData();
-            Console.WriteLine("Table Reloaded");
-            Console.WriteLine("Date picker is hidden? " + startDatePickerHidden);
+            Console.WriteLine("Hidden? " + startDatePickerHidden);
+            Console.WriteLine("Row Height: " + GetHeightForRow(TableView, NSIndexPath.FromRowSection(2, 0)));
             Console.WriteLine("toggleStartDatePicker() was executed and completed.");
         }// END toggleStartDataPicker()
+
+        /*
+        [Export("UpdateSaveButton:")]
+        void UpdateSave(UIStoryboardSegue segue)
+        {
+            //if (System.String.IsNullOrWhiteSpace(titleField.Text) == true )
+            if (titleField.HasText == false)
+                buttonSave.Enabled = false;
+            else
+                buttonSave.Enabled = true;
+            
+        }
+        */
 
         //  ---------------------------------
         //  MySelector: An action to tell when start Date Picker changes value.
@@ -127,15 +141,28 @@ namespace App12
 				return base.GetHeightForRow(tableView, indexPath);
         }// END GetHeightForRow()
 
-		public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+        public static DateTime NSDateToDateTime(NSDate date)
+        {
+            DateTime reference = TimeZone.CurrentTimeZone.ToLocalTime(
+                new DateTime(2001, 1, 1, 0, 0, 0));
+            return reference.AddSeconds(date.SecondsSinceReferenceDate);
+        }
+
+        public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
 		{
             Console.WriteLine("PrepareForSegue() was initiated.");
             titleFieldText = titleField.Text;
-            //  TODO: Add description field
-            //descFieldText = descField.Text;
-			base.PrepareForSegue(segue, sender);
+            if (titleFieldText == "")
+                titleFieldText = "New Event";
+            descFieldText = /*descField.Text*/"";
+            startTime = NSDateToDateTime(startDatePicker.Date);
+            endTime = new DateTime(2017, 1, 9, 9, 12, 34);
+            base.PrepareForSegue(segue, sender);
 			var transferdata = segue.DestinationViewController as MasterViewController;
 			transferdata.tempTitleFieldText = titleFieldText;
+            transferdata.tempStart = startTime;
+            transferdata.tempEnd = endTime;
+            transferdata.tempDesc = descFieldText;
             Console.WriteLine("PrepareForSegue() was completed.");
         }
     }

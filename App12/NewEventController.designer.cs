@@ -16,6 +16,10 @@ namespace App12
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem buttonSave { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIDatePicker startDatePicker { get; set; }
 
         [Outlet]
@@ -26,8 +30,17 @@ namespace App12
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField titleField { get; set; }
 
+        [Action ("UpdateSaveButton:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void UpdateSaveButton (UIKit.UITextField sender);
+
         void ReleaseDesignerOutlets ()
         {
+            if (buttonSave != null) {
+                buttonSave.Dispose ();
+                buttonSave = null;
+            }
+
             if (startDatePicker != null) {
                 startDatePicker.Dispose ();
                 startDatePicker = null;

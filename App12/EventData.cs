@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using SQLite;
+using UIKit;
 
 namespace App12
 {
@@ -16,6 +17,9 @@ namespace App12
         //  Event Properties
         public string Title { get; set; }
         public string Desc { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public UIColor BackgroundColor { get; set; }
 
         //  Constructor
         public EventData()
@@ -23,10 +27,13 @@ namespace App12
         }
 
         //  Overloaded Constructor
-        public EventData(string tempTitle, string tempDesc)
+        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd, UIColor color)
         {
             Title = tempTitle;
             Desc = tempDesc;
+            Start = tempStart;
+            End = tempEnd;
+            BackgroundColor = color;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace App12
 
         public MasterViewController(IntPtr handle) : base(handle)
         {
-            Title = NSBundle.MainBundle.LocalizedString("Master", "Master");
+            Title = NSBundle.MainBundle.LocalizedString("Agenda", "Agenda");
         }
 
         public override void ViewDidLoad()
@@ -32,70 +32,33 @@ namespace App12
             var addButton = new UIBarButtonItem(UIBarButtonSystemItem.Add, AddEvent);
             addButton.AccessibilityLabel = "addButton";
             NavigationItem.RightBarButtonItem = addButton;
-            
-            //  Set localization ID
-            
-            
-            //  Test data
-            List<EventData> data = new List<EventData>(4);
-
-
-            data.Add(new EventData("Red", "NewDefault1"));
-            data.Add(new EventData("Orange", "NewDefault1"));
-            data.Add(new EventData("Red", "NewDefault1"));
-            data.Add(new EventData("Red", "NewDefault1"));
-            data[1].Desc = "Default2";
-            data[2].Title = "Green";
-            data[2].Desc = "Default3";
-            data[3].Title = "Yellow";
-            data[3].Desc = "Default4";
-            
-
-            //DataAccess.SaveObject(data[1]);
-            //DataAccess.SaveObject(data[1]);
-            //DataAccess.SaveObject(data[2]);
-            //DataAccess.SaveObject(data[3]);
             */
+
             //  Create datastream
             TableView.Source = dataSource = new TableSource(this);
-        }
-
-        public override void DidReceiveMemoryWarning()
-        {
-            base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
-        }
-
-        void AddEvent(object sender, EventArgs args)
-        {
-            //PerformSegue("showEventCreate", this);
-            /*
-            EventData newEvent = new EventData("Default Title", "Default Desc"); 
-            dataSource.AddItem(0, newEvent);
-
-            using (var indexPath = NSIndexPath.FromRowSection(0, 0))
-                TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
-            */
+            TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
         }
 
 		//	Unwind from cancel to Main Agenda
 		[Action("UnwindToMasterViewController:")]
 		public void UnwindToMasterViewController(UIStoryboardSegue segue)
 		{
-
 		}
-
+        public string tempDesc;
+        public DateTime tempStart, tempEnd;
+        public UIColor tempColor;
 		[Action("UnwindToNewEvent:")]
 		public void UnwindToNewEvent(UIStoryboardSegue segue)
 		{
 			var segueData = (UITableViewController)segue.SourceViewController;
-			EventData newEvent = new EventData(tempTitleFieldText, "Default Subtitle");
-			Console.Write(tempTitleFieldText);
-			dataSource.AddItem(0, newEvent);
+			EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempColor);
+            dataSource.AddItem(0, newEvent);
+            //data.Add(newEvent);
 
 			using (var indexPath = NSIndexPath.FromRowSection(0, 0))
 				TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
 		}
+
         /*
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
