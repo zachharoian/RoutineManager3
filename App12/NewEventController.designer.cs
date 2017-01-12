@@ -20,6 +20,18 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextView descField { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIDatePicker endDatePicker { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel endDateSubtitle { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIDatePicker startDatePicker { get; set; }
 
         [Outlet]
@@ -30,6 +42,14 @@ namespace App12
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField titleField { get; set; }
 
+        [Action ("ColorTextOnEndEdit:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void ColorTextOnEndEdit (UIKit.UIDatePicker sender);
+
+        [Action ("TextColor:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void TextColor (UIKit.UIDatePicker sender);
+
         [Action ("UpdateSaveButton:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void UpdateSaveButton (UIKit.UITextField sender);
@@ -39,6 +59,21 @@ namespace App12
             if (buttonSave != null) {
                 buttonSave.Dispose ();
                 buttonSave = null;
+            }
+
+            if (descField != null) {
+                descField.Dispose ();
+                descField = null;
+            }
+
+            if (endDatePicker != null) {
+                endDatePicker.Dispose ();
+                endDatePicker = null;
+            }
+
+            if (endDateSubtitle != null) {
+                endDateSubtitle.Dispose ();
+                endDateSubtitle = null;
             }
 
             if (startDatePicker != null) {
