@@ -13,6 +13,9 @@ namespace App12
 
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDatePickerHidden = true;
+        bool endDatePickerHidden = true;
+        bool startDatePickerTextChanged = false;
+        bool endDatePickerTextChanged = false;
 
         //  ---------------------------------
         //  NewEventController(): Constructor
@@ -65,42 +68,43 @@ namespace App12
             Console.WriteLine("endDatePickerChanged() was executed and completed.");
         }
 
-        /*
+        
         //  ---------------------------------
         //  toggleStartDatePicker(): Flips the state of the Start Date Picker.
         //  ---------------------------------
         public void toggleStartDatePicker()
 		{
-            Console.WriteLine("toggleStartDatePicker() was initiated.");
             //  Create the path for the cell
             NSIndexPath[] rows = new NSIndexPath[]
             {
                 NSIndexPath.FromRowSection(2,0)
             };
-            Console.WriteLine("Hidden? " + startDatePickerHidden);
-            Console.WriteLine("Row Height: " + GetHeightForRow(TableView, NSIndexPath.FromRowSection(2, 0)));
             startDatePickerHidden = !startDatePickerHidden;
-            Console.WriteLine("Hidden? " + startDatePickerHidden);
-            Console.WriteLine("Row Height: " + GetHeightForRow(TableView, NSIndexPath.FromRowSection(2, 0)));
-            //  Reload the cell to reflect the changes
-            TableView.ReloadRows(rows, UITableViewRowAnimation.None);
-            //TableView.ReloadData();
-            Console.WriteLine("Hidden? " + startDatePickerHidden);
-            Console.WriteLine("Row Height: " + GetHeightForRow(TableView, NSIndexPath.FromRowSection(2, 0)));
-            Console.WriteLine("toggleStartDatePicker() was executed and completed.");
-        }// END toggleStartDataPicker()
- 
-        [Export("UpdateSaveButton:")]
-        void UpdateSave(UIStoryboardSegue segue)
-        {
-            //if (System.String.IsNullOrWhiteSpace(titleField.Text) == true )
-            if (titleField.HasText == false)
-                buttonSave.Enabled = false;
+            startDatePickerTextChanged = !startDatePickerTextChanged;
+            if (startDatePickerTextChanged == true)
+                startDateSubtitle.TextColor = UIColor.Red;
             else
-                buttonSave.Enabled = true;
-            
-        }
-        */
+                startDateSubtitle.TextColor = UIColor.Black;
+            TableView.BeginUpdates();
+            TableView.EndUpdates();
+        }// END toggleStartDataPicker()
+
+        public void toggleEndDatePicker()
+        {
+            //  Create the path for the cell
+            NSIndexPath[] rows = new NSIndexPath[]
+            {
+                NSIndexPath.FromRowSection(4,0)
+            };
+            endDatePickerHidden = !endDatePickerHidden;
+            endDatePickerTextChanged = !endDatePickerTextChanged;
+            if (endDatePickerTextChanged == true)
+                endDateSubtitle.TextColor = UIColor.Red;
+            else
+                endDateSubtitle.TextColor = UIColor.Black;
+            TableView.BeginUpdates();
+            TableView.EndUpdates();
+        }// END toggleStartDataPicker()
 
         //  ---------------------------------
         //  MySelector: An action to tell when start Date Picker changes value.
@@ -114,6 +118,11 @@ namespace App12
             string tempText = startDateSubtitle.Text;
             if (startDatePicker.Date.SecondsSinceReferenceDate > endDatePicker.Date.SecondsSinceReferenceDate)
                 startDateSubtitle.AttributedText = new NSAttributedString(tempText, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.Single });
+            else
+            {
+                string tempTextEnd = endDateSubtitle.Text;
+                endDateSubtitle.AttributedText = new NSAttributedString(tempTextEnd, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.None });
+            }
         }// END Update()
 
         [Export("UpdateEndDatePicker:")]
@@ -125,6 +134,11 @@ namespace App12
             string tempText = endDateSubtitle.Text;
             if (startDatePicker.Date.SecondsSinceReferenceDate > endDatePicker.Date.SecondsSinceReferenceDate)
                 endDateSubtitle.AttributedText = new NSAttributedString(tempText, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.Single });
+            else
+            {
+                string tempTextStart = startDateSubtitle.Text;
+                startDateSubtitle.AttributedText = new NSAttributedString(tempTextStart, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.None });
+            }
             Console.WriteLine("Update() was completed.");
         }// END Update()
 
@@ -132,23 +146,30 @@ namespace App12
         //  RowSelected(): Overrides the selection method for cells. 
         //  ---------------------------------
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-		{   
-            Console.WriteLine("RowSelected() was initiated.");
-            /*
+        { 
             //  If the cell is the Date Picker overview cell, toggle the Date Picker. Else, select the row as normal.
-            if (indexPath.Section == 0 && (indexPath.Row == 1 || indexPath.Row == 2))
+            if (indexPath.Section == 0 && (indexPath.Row == 1 || indexPath.Row == 3))
             {
-                
                 if (indexPath.Row == 1)
                 {
                     toggleStartDatePicker();
+                    if (endDatePickerHidden == false)
+                        toggleEndDatePicker();
                 }
+
+                if (indexPath.Row == 3)
+                {
+                    toggleEndDatePicker();
+                    if (startDatePickerHidden == false)
+                        toggleStartDatePicker();
+                }
+                
                 tableView.DeselectRow(indexPath, true);
             }
-            else */
+            else 
                 tableView.DeselectRow(indexPath, true);
-            Console.WriteLine("RowSelected() was completed.");
         }// END RowSelected()
+
 
         //  ---------------------------------
         //  GetHeightForRow(): Overrides the method for setting cell height.
@@ -159,9 +180,9 @@ namespace App12
             //  If the cell is the Date Picker Cell, and it is hidden, set the height to 0. If it is visible, set it to 216 (height of the Date Picker).
             //  Else, return the current height of the cell.
             
-            if (startDatePickerHidden == true && indexPath.Section == 0 && indexPath.Row == 2)
+            if (indexPath.Section == 0 && ( (indexPath.Row == 2 && startDatePickerHidden == true) || (indexPath.Row == 4 && endDatePickerHidden == true) ))
                 return 0;
-            else if (startDatePickerHidden == false && indexPath.Section == 0 && indexPath.Row == 2)
+            else if (indexPath.Section == 0 && ((indexPath.Row == 2 && startDatePickerHidden == false) || (indexPath.Row == 4 && endDatePickerHidden == false)))
                 return 216;
             else
             
