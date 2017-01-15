@@ -1,15 +1,16 @@
-using Foundation;
+﻿using Foundation;
 using System;
 using UIKit;
 
 namespace App12
 {
-    public partial class NewEventController : UITableViewController
+    public partial class EditEventController : UITableViewController
     {
         //  Variables for data transfer for creating a new event.
-		string titleFieldText, descFieldText;
-        DateTime startTime, endTime;
-        UIColor backgroundColor;
+        //  Variables for data transfer for creating a new event.
+		public string titleFieldText, descFieldText;
+        public DateTime startTime, endTime;
+        public UIColor backgroundColor;
 
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDateEdit = true;
@@ -22,7 +23,7 @@ namespace App12
         //  ---------------------------------
         //  NewEventController(): Constructor used for UI Construction
         //  ---------------------------------
-        public NewEventController (IntPtr handle) : base (handle)
+        public EditEventController (IntPtr handle) : base (handle)
         {
         }// END NewEventController()
 
@@ -35,6 +36,11 @@ namespace App12
             //  View did load command.
             base.ViewDidLoad();
 
+            titleField.Text = titleFieldText;
+            descField.Text = descFieldText;
+            startDatePicker.SetDate(DateTimeToNSDate(startTime), false);
+            endDatePicker.SetDate(DateTimeToNSDate(endTime), false);
+
             //toggleStartDatePicker();
             startDatePicker.MinuteInterval = 5;
             endDatePicker.MinuteInterval = 5;
@@ -44,6 +50,11 @@ namespace App12
             endDatePickerChanged();
         }// END ViewDidLoad()
         
+        public NSDate DateTimeToNSDate (DateTime date)
+        {
+            DateTime newDate = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0));
+            return NSDate.FromTimeIntervalSinceReferenceDate((date - newDate).TotalSeconds);
+        }
 
         //  ---------------------------------
         //  startDatePickerChanged(): Method for updating the cell containing Date Picker information.
