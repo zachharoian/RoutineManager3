@@ -25,6 +25,7 @@ namespace App12
         //  ---------------------------------
         public EditEventController (IntPtr handle) : base (handle)
         {
+			Title = NSBundle.MainBundle.LocalizedString("Edit Event", "Edit Event");
         }// END NewEventController()
 
 
@@ -240,6 +241,7 @@ namespace App12
             return reference.AddSeconds(date.SecondsSinceReferenceDate);
         }
 
+		public NSIndexPath currentTableCell;
 
         //  ---------------------------------
         //  PrepareForSegue(): Save the date and transfer it back to the main screen to create a new event
@@ -282,6 +284,8 @@ namespace App12
 
             //  Transfer the Color to Main
             transferdata.tempColor = backgroundColor;
+
+			transferdata.tempIndexPath = currentTableCell;
         }// END PrepareForSegue()
     }// END NewEventController
 }// END App12

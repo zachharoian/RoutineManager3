@@ -52,22 +52,43 @@ namespace App12
 		public void UnwindToNewEvent(UIStoryboardSegue segue)
 		{
 			var segueData = (UITableViewController)segue.SourceViewController;
-			EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempColor);
-            dataSource.AddItem(0, newEvent);
-            //data.Add(newEvent);
+			if (tempIndexPath != null)
+			{
+				EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempColor);
+				dataSource.EditItem(tempIndexPath.Row, newEvent);
+				TableView.ReloadRows(new NSIndexPath[] { tempIndexPath }, UITableViewRowAnimation.Automatic);
+				tempIndexPath = null;
+			}
+			else
+			{
+				EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempColor);
+				dataSource.AddItem(0, newEvent);
+				//data.Add(newEvent);
 
-			using (var indexPath = NSIndexPath.FromRowSection(0, 0))
-				TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
+				using (var indexPath = NSIndexPath.FromRowSection(0, 0))
+					TableView.InsertRows(new[] { indexPath }, UITableViewRowAnimation.Automatic);
+			}
 		}
 
+		public NSIndexPath tempIndexPath;
+
+
+		public void SegueToEdit()
+		{
+			PerformSegue("editEventSegue", null);
+		}
         
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
-            {
+			
+			if(segue.Identifier == "editEventSegue")
+			{
                 base.PrepareForSegue(segue, sender);
                 var indexPath = TableView.IndexPathForSelectedRow;
                 var item = dataSource.tableItems[indexPath.Row];
                 var transferdata = segue.DestinationViewController as EditEventController;
+
+				transferdata.currentTableCell = indexPath;
 
                 transferdata.titleFieldText = item.Title;
                 transferdata.descFieldText = item.Desc;

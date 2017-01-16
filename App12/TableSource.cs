@@ -39,8 +39,17 @@ namespace App12
             tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
             tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
         }
-        //  END TableSource()
+		//  END TableSource()
 
+
+		public void EditItem(int index, EventData item) 
+		{
+			tableItems[index].Title = item.Title;
+			tableItems[index].Desc = item.Desc;
+			tableItems[index].Start = item.Start;
+			tableItems[index].End = item.End;
+			tableItems[index].BackgroundColor = item.BackgroundColor;
+		}
 
         //
         //  Method for adding an item
@@ -100,14 +109,13 @@ namespace App12
         //
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            //  Displays alert when touched - Replace with segue call?
-            //new UIAlertView("Hey!", "You touched " + tableItems[indexPath.Row].Title, null, "OK", null).Show();
-
+			//  Displays alert when touched - Replace with segue call?
+			//new UIAlertView("Hey!", "You touched " + tableItems[indexPath.Row].Title, null, "OK", null).Show();
+			controller.SegueToEdit();
             //  Unselect row when completed, and show an animation for it.
             tableView.DeselectRow(indexPath, true);
         }
         //  END RowSelected()
-
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
         {
