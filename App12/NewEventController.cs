@@ -9,7 +9,6 @@ namespace App12
         //  Variables for data transfer for creating a new event.
 		string titleFieldText, descFieldText;
         DateTime startTime, endTime;
-        UIColor backgroundColor;
 
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDateEdit = true;
@@ -268,9 +267,6 @@ namespace App12
 
             //  Transfer the End Date Picker to Main
             transferdata.tempEnd = endTime;
-
-            //  Transfer the Color to Main
-            transferdata.tempColor = backgroundColor;
         }// END PrepareForSegue()
     }// END NewEventController
 }// END App12

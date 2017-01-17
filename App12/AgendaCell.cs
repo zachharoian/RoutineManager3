@@ -51,13 +51,12 @@ namespace App12
             ContentView.AddSubviews(new UIView[] {card, title, desc, time});
         }
 
-        public void UpdateCell(string tempTitle, string tempDesc, DateTime start, DateTime end, UIColor bg)
+        public void UpdateCell(string tempTitle, string tempDesc, DateTime start, DateTime end)
         {
             
             title.Text = tempTitle;
             desc.Text = tempDesc;
             time.Text = start.ToShortTimeString() + " - " + end.ToShortTimeString();
-            backgroundColor = bg;
         }
 
         public override void LayoutSubviews()

@@ -19,7 +19,6 @@ namespace App12
         public string Desc { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public UIColor BackgroundColor { get; set; }
 
         //  Constructor
         public EventData()
@@ -27,13 +26,12 @@ namespace App12
         }
 
         //  Overloaded Constructor
-        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd, UIColor color)
+        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd)
         {
             Title = tempTitle;
             Desc = tempDesc;
             Start = tempStart;
             End = tempEnd;
-            BackgroundColor = color;
         }
     }
 }

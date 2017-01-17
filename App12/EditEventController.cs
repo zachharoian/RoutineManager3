@@ -282,9 +282,6 @@ namespace App12
             //  Transfer the End Date Picker to Main
             transferdata.tempEnd = endTime;
 
-            //  Transfer the Color to Main
-            transferdata.tempColor = backgroundColor;
-
 			transferdata.tempIndexPath = currentTableCell;
         }// END PrepareForSegue()
     }// END NewEventController

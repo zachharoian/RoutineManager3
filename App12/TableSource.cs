@@ -26,11 +26,13 @@ namespace App12
         //
         //  Constructor
         //
-        public TableSource(MasterViewController controller)
+        public TableSource(MasterViewController controller, List<EventData> currentEvents)
         {
             //  Set the current view controller to the controller input
             this.controller = controller;
 
+            tableItems = currentEvents;
+            /*
             //  Beginning data
             DateTime Random = new DateTime(2017, 1, 9, 13, 53, 36);
             UIColor red = UIColor.Red;
@@ -38,6 +40,8 @@ namespace App12
             tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
             tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
             tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
+            */
+            
         }
 		//  END TableSource()
 
@@ -48,7 +52,6 @@ namespace App12
 			tableItems[index].Desc = item.Desc;
 			tableItems[index].Start = item.Start;
 			tableItems[index].End = item.End;
-			tableItems[index].BackgroundColor = item.BackgroundColor;
 		}
 
         //
@@ -132,7 +135,7 @@ namespace App12
             tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
             if (cell == null)
                 cell = new AgendaCell(cellIdentifier);
-            cell.UpdateCell(tableItems[indexPath.Row].Title, tableItems[indexPath.Row].Desc, tableItems[indexPath.Row].Start, tableItems[indexPath.Row].End, tableItems[indexPath.Row].BackgroundColor);
+            cell.UpdateCell(tableItems[indexPath.Row].Title, tableItems[indexPath.Row].Desc, tableItems[indexPath.Row].Start, tableItems[indexPath.Row].End);
             return cell;
         }
         //  END GetCell()
