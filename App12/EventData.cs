@@ -19,7 +19,7 @@ namespace App12
         public string Desc { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public UIImage Image { get; set; }
+        //public UIImage Image { get; set; }
         
 
         //  Constructor

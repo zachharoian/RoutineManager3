@@ -28,6 +28,7 @@ namespace App12
             //  Create datastream
             TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents());
             TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+            this.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(100, 200, 255);
 
         }
 
@@ -46,7 +47,7 @@ namespace App12
 			if (tempIndexPath != null)
 			{
 				EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempID);
-                if (newEvent.Image == null)
+                //if (newEvent.Image == null)
                     //ParseforImage(newEvent.Title);
                 dataSource.EditItem(tempIndexPath.Row, newEvent);
                 //TableView.BeginUpdates();
@@ -58,7 +59,7 @@ namespace App12
 			else
 			{
                 EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd);
-                if (newEvent.Image == null)
+                //if (newEvent.Image == null)
                    // ParseforImage(newEvent.Title);
 				dataSource.AddItem(newEvent);
                 TableView.ReloadData();

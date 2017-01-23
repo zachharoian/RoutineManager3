@@ -50,17 +50,9 @@ namespace App12
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void TextColor (UIKit.UIDatePicker sender);
 
-        [Action ("UpdateEndDatePicker:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void UpdateEndDatePicker (UIKit.UIDatePicker sender);
-
         [Action ("UpdateSaveButton:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void UpdateSaveButton (UIKit.UITextField sender);
-
-        [Action ("UpdateStartDatePicker:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void UpdateStartDatePicker (UIKit.UIDatePicker sender);
 
         void ReleaseDesignerOutlets ()
         {
