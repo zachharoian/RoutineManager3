@@ -38,9 +38,41 @@ namespace App12
 
                 //  Creates the table for the data, if it doesn't exist already.
                 db.CreateTable<EventData>();
+                
 
                 //  Inserts the object into the database.
-                db.Insert(obj);
+                if (obj.ID != 0)
+                {
+                    SQLiteCommand command = new SQLiteCommand(db);
+                    command.CommandText = "UPDATE EventData SET Title = '"+obj.Title+"', Desc = '"+obj.Desc+"', Start = '"+obj.Start+"', End = '"+obj.End+"' Where _id = '"+obj.ID+"'";
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Database updated");
+                }
+                else
+                    db.Insert(obj);
+                
+            }
+
+        }
+
+        public static nint Count ()
+        {
+            object locker = new object();
+            lock (locker)
+            {
+                //  Sets the database path
+                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+
+                //  Connects to the database
+                var db = new SQLiteConnection(dbPath);
+
+                //  Creates the table for the data, if it doesn't exist already.
+                db.CreateTable<EventData>();
+
+                //  Inserts the object into the database.
+                List<EventData> temp = db.Table<EventData>().ToList();
+                return temp.Count;
+
             }
 
         }
@@ -48,6 +80,7 @@ namespace App12
         public static List<EventData> GetEvents()
         {
             List<EventData> tempList = new List<EventData>();
+            List<EventData> returnList = new List<EventData>();
             //  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
             object locker = new object();
             lock (locker)
@@ -63,10 +96,40 @@ namespace App12
 
                 //  Inserts the object into the database.
                 tempList = db.Table<EventData>().ToList();
-            }
-            return tempList;
 
-            
+                IOrderedEnumerable<EventData> sortQuery =
+                    from EventData in tempList
+                    orderby EventData.Start //descending
+                    select EventData;
+                
+                foreach (EventData EventData in sortQuery)
+                {
+                    returnList.Add(EventData);
+                    Console.WriteLine("Event:" + EventData.Title + "/nTime: " + EventData.Start.ToString());
+                }
+
+            }
+            return returnList;
+        }
+
+        public static void DeleteObject (EventData obj)
+        {
+            //  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
+            object locker = new object();
+            lock (locker)
+            {
+                //  Sets the database path
+                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+
+                //  Connects to the database
+                var db = new SQLiteConnection(dbPath);
+
+                //  Creates the table for the data, if it doesn't exist already.
+                db.CreateTable<EventData>();
+
+                //  Inserts the object into the database.
+                db.Delete(obj);
+            }
         }
 
     }

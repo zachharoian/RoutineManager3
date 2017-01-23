@@ -10,9 +10,8 @@ namespace App12
 		string titleFieldText, descFieldText;
         DateTime startTime, endTime;
 
+
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
-        bool startDateEdit = true;
-        bool endDateEdit = true;
         bool startDatePickerHidden = true;
         bool endDatePickerHidden = true;
         bool startDatePickerTextChanged = false;
@@ -37,7 +36,8 @@ namespace App12
             //toggleStartDatePicker();
             startDatePicker.MinuteInterval = 5;
             endDatePicker.MinuteInterval = 5;
-            
+
+            endDatePicker.Date.AddSeconds(3600);
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();
             endDatePickerChanged();

@@ -10,6 +10,7 @@ namespace App12
         //  Variables for data transfer for creating a new event.
 		public string titleFieldText, descFieldText;
         public DateTime startTime, endTime;
+        public int ID;
         public UIColor backgroundColor;
 
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
@@ -269,6 +270,9 @@ namespace App12
 
             //  Create the transfer path to the Main controller
 			var transferdata = segue.DestinationViewController as MasterViewController;
+
+            //  Transfer ID to Main
+            transferdata.tempID = ID;
 
             //  Transfer the Title Field to Main
 			transferdata.tempTitleFieldText = titleFieldText;

@@ -11,6 +11,7 @@ namespace App12
         UILabel title, desc, time;
         UIColor backgroundColor = UIColor.White;
         UIView card;
+        UIImage image;
 
         public AgendaCell (string cellId) : base (UITableViewCellStyle.Default, cellId)
         {
@@ -48,6 +49,9 @@ namespace App12
             card.Layer.ShadowOpacity = 0.1f;
             card.Layer.ShadowOffset = new CGSize(0, 2);
             card.Layer.CornerRadius = 1;
+
+            image = new UIImage();
+
             ContentView.AddSubviews(new UIView[] {card, title, desc, time});
         }
 
@@ -62,11 +66,15 @@ namespace App12
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
+            int imageOffset = 35;
             card.Frame = new CGRect(5, 5, ContentView.Bounds.Width - 10, ContentView.Bounds.Height - 10);
-            title.Frame = new CGRect(10, 10, ContentView.Bounds.Width - 10, 20);
-            time.Frame = new CGRect(10, 30, ContentView.Bounds.Width - 10, 12);
-            desc.Frame = new CGRect(10, 42, ContentView.Bounds.Width - 10, 12);
-            
+            title.Frame = new CGRect(10 + imageOffset, 10, ContentView.Bounds.Width - (10 + imageOffset), 20);
+            time.Frame = new CGRect(10 + imageOffset, 30, ContentView.Bounds.Width - (10 + imageOffset), 12);
+            desc.Frame = new CGRect(10 + imageOffset, 42, ContentView.Bounds.Width - (10 + imageOffset), 12);
+            //  Image will be 10 pixels from the left of the cell, 10 pixels from the top, 30 pixels diameter
+            //  5 pixel margin from other text and card
+            //image.Frame = new CGRect(10, 10, 30, 30);
+                        
         }
 
     }

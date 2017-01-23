@@ -30,37 +30,42 @@ namespace App12
         {
             //  Set the current view controller to the controller input
             this.controller = controller;
-
+            
             tableItems = currentEvents;
-            /*
-            //  Beginning data
-            DateTime Random = new DateTime(2017, 1, 9, 13, 53, 36);
-            UIColor red = UIColor.Red;
-            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
-            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
-            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
-            tableItems.Add(new EventData("Blue", "NewDefault1", Random, Random, red));
-            */
             
         }
-		//  END TableSource()
+        //  END TableSource()
 
 
-		public void EditItem(int index, EventData item) 
-		{
-			tableItems[index].Title = item.Title;
-			tableItems[index].Desc = item.Desc;
-			tableItems[index].Start = item.Start;
-			tableItems[index].End = item.End;
+        public void EditItem(int index, EventData item)
+        {
+            tableItems[index].Title = item.Title;
+            tableItems[index].Desc = item.Desc;
+            tableItems[index].Start = item.Start;
+            tableItems[index].End = item.End;
+            tableItems[index].ID = item.ID;
+
+            //AddItem(item);
+            DataAccess.SaveObject(item);
+            ReloadSourceData();
 		}
+
+        private void ReloadSourceData()
+        {
+            tableItems = DataAccess.GetEvents();
+        }
+
 
         //
         //  Method for adding an item
         //
-        public void AddItem(int index, EventData item)
+        public void AddItem(EventData item)
         {
             //  Inserts the object into the index provided.
-            tableItems.Insert(index, item);
+            //tableItems.Insert(index, item);
+            DataAccess.SaveObject(item);
+            ReloadSourceData();
+            
         }
         //  END AddItem()
 
@@ -71,7 +76,7 @@ namespace App12
         public override nint RowsInSection(UITableView tableview, nint section)
         {
             //  Returns how many items are in the list.
-            return tableItems.Count;
+            return DataAccess.Count();
 
         }
         //  END RowsInSection()
@@ -95,8 +100,10 @@ namespace App12
         {
             if (editingStyle == UITableViewCellEditingStyle.Delete)
             {
+                EventData obj = tableItems[indexPath.Row];
                 // Delete the row from the data source.
-                tableItems.RemoveAt(indexPath.Row);
+                DataAccess.DeleteObject(obj);
+                ReloadSourceData();
                 controller.TableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
             }
             else if (editingStyle == UITableViewCellEditingStyle.Insert)
