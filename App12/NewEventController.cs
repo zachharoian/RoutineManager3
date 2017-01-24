@@ -1,5 +1,6 @@
 using Foundation;
 using System;
+using System.Globalization;
 using UIKit;
 
 namespace App12
@@ -246,6 +247,8 @@ namespace App12
             if (titleFieldText == "")
                 titleFieldText = "New Event";
 
+            string Image = FindImage.ParseForImage(titleFieldText);
+
             //  Save the text from the Description Field
             descFieldText = descField.Text;
 
@@ -269,6 +272,8 @@ namespace App12
 
             //  Transfer the End Date Picker to Main
             transferdata.tempEnd = endTime;
+
+            transferdata.tempImage = Image;
         }// END PrepareForSegue()
     }// END NewEventController
 }// END App12

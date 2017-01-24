@@ -44,8 +44,8 @@ namespace App12
             tableItems[index].Start = item.Start;
             tableItems[index].End = item.End;
             tableItems[index].ID = item.ID;
-
-            //AddItem(item);
+            tableItems[index].Image = item.Image;
+            Console.WriteLine("TableSource thinks Image path from " + item.Title + " is " + item.Image);
             DataAccess.SaveObject(item);
             ReloadSourceData();
 		}
@@ -142,7 +142,8 @@ namespace App12
             tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
             if (cell == null)
                 cell = new AgendaCell(cellIdentifier);
-            cell.UpdateCell(tableItems[indexPath.Row].Title, tableItems[indexPath.Row].Desc, tableItems[indexPath.Row].Start, tableItems[indexPath.Row].End);
+            cell.UpdateCell(tableItems[indexPath.Row].Title, tableItems[indexPath.Row].Desc, tableItems[indexPath.Row].Start, tableItems[indexPath.Row].End, tableItems[indexPath.Row].Image);
+            Console.WriteLine("Image Path for " + tableItems[indexPath.Row].Title + " is: " + tableItems[indexPath.Row].Image);
             return cell;
         }
         //  END GetCell()

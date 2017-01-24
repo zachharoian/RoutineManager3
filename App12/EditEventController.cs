@@ -8,7 +8,7 @@ namespace App12
     {
         //  Variables for data transfer for creating a new event.
         //  Variables for data transfer for creating a new event.
-		public string titleFieldText, descFieldText;
+		public string titleFieldText, descFieldText, imagePath;
         public DateTime startTime, endTime;
         public int ID;
         public UIColor backgroundColor;
@@ -261,6 +261,8 @@ namespace App12
             if (titleFieldText == "")
                 titleFieldText = "New Event";
 
+            imagePath = FindImage.ParseForImage(titleFieldText);
+
             //  Save the text from the Description Field
             descFieldText = descField.Text;
 
@@ -287,6 +289,9 @@ namespace App12
 
             //  Transfer the End Date Picker to Main
             transferdata.tempEnd = endTime;
+
+            transferdata.tempImage = imagePath;
+            Console.WriteLine("EditEvent Sends: " + imagePath + " from " + titleFieldText);
 
 			transferdata.tempIndexPath = currentTableCell;
         }// END PrepareForSegue()

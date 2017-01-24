@@ -96,6 +96,7 @@
     <Compile Include="EventData.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="FindImage.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="TableSource.cs" />
@@ -146,6 +147,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />
+    <BundleResource Include="Resources\toothbrush.png" />
+    <BundleResource Include="Resources\fork.png" />
+    <BundleResource Include="Resources\movie.png" />
+    <BundleResource Include="Resources\running.png" />
+    <BundleResource Include="Resources\swimming.png" />
+    <BundleResource Include="Resources\barbell.png" />
+    <BundleResource Include="Resources\shopping-bag.png" />
+    <BundleResource Include="Resources\toilet.png" />
+    <BundleResource Include="Resources\shower.png" />
+    <BundleResource Include="Resources\red-cross.png" />
+    <BundleResource Include="Resources\pencil.png" />
+    <BundleResource Include="Resources\bus.png" />
+    <BundleResource Include="Resources\university.png" />
+    <BundleResource Include="Resources\alarm.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

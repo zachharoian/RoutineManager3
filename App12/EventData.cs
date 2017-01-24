@@ -19,7 +19,7 @@ namespace App12
         public string Desc { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        //public UIImage Image { get; set; }
+        public string Image { get; set; }
         
 
         //  Constructor
@@ -36,13 +36,25 @@ namespace App12
             End = tempEnd;
         }
 
-        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd, int tempID)
+        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd, string tempImage)
+        {
+            Title = tempTitle;
+            Desc = tempDesc;
+            Start = tempStart;
+            End = tempEnd;
+            Image = tempImage;
+
+        }
+
+        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd, int tempID, string tempImage)
         {
             Title = tempTitle;
             Desc = tempDesc;
             Start = tempStart;
             End = tempEnd;
             ID = tempID;
+            Image = tempImage;
+            
         }
     }
 }

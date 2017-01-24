@@ -44,7 +44,7 @@ namespace App12
                 if (obj.ID != 0)
                 {
                     SQLiteCommand command = new SQLiteCommand(db);
-                    command.CommandText = "UPDATE EventData SET Title = '"+obj.Title+"', Desc = '"+obj.Desc+"', Start = '"+obj.Start+"', End = '"+obj.End+"' Where _id = '"+obj.ID+"'";
+                    command.CommandText = "UPDATE EventData SET Title = '"+obj.Title+"', Desc = '"+obj.Desc+"', Start = '"+obj.Start+"', End = '"+obj.End+"', Image = '"+obj.Image+"' Where _id = '"+obj.ID+"'";
                     command.ExecuteNonQuery();
                     Console.WriteLine("Database updated");
                 }
