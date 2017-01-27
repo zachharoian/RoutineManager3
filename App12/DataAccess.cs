@@ -77,7 +77,7 @@ namespace App12
 
         }
 
-        public static List<EventData> GetEvents()
+        public static List<EventData> GetEvents(DateTime Date)
         {
             List<EventData> tempList = new List<EventData>();
             List<EventData> returnList = new List<EventData>();
@@ -101,16 +101,20 @@ namespace App12
                     from EventData in tempList
                     orderby EventData.Start //descending
                     select EventData;
-                
+
                 foreach (EventData EventData in sortQuery)
                 {
-                    returnList.Add(EventData);
-                    Console.WriteLine("Event:" + EventData.Title + "/nTime: " + EventData.Start.ToString());
+                    
+                    if (EventData.DaysActive[(int)(Date.DayOfWeek)] == true || EventData.Start.Date == Date.Date)
+                        returnList.Add(EventData);
+                    Console.WriteLine("Event:" + EventData.Title + "/nTime: " + EventData.Start);
                 }
 
             }
             return returnList;
         }
+
+        private void 
 
         public static void DeleteObject (EventData obj)
         {

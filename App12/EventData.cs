@@ -20,6 +20,8 @@ namespace App12
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Image { get; set; }
+        public bool[] DaysActive = new bool[7] { false, false, false, false, false, false, false };
+        //  Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6
         
 
         //  Constructor

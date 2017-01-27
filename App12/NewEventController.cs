@@ -39,8 +39,11 @@ namespace App12
             //toggleStartDatePicker();
             startDatePicker.MinuteInterval = 5;
             endDatePicker.MinuteInterval = 5;
-
-            endDatePicker.Date.AddSeconds(3600);
+            NSCalendar calendar = NSCalendar.CurrentCalendar;
+            NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = 10, Minute = 0, Second = 0 };
+            startDatePicker.SetDate(calendar.DateFromComponents(comps), true);
+            comps.Hour = comps.Hour + 1;
+            endDatePicker.SetDate(calendar.DateFromComponents(comps), true);
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();
             endDatePickerChanged();
