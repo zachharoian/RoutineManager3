@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using UIKit;
+using UserNotifications;
 
 namespace App12
 {
@@ -16,10 +17,22 @@ namespace App12
             set;
         }
 
+        
+
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
+
+            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) =>
+            {
+                //  Handle approval
+            });
+
+            UNUserNotificationCenter.Current.GetNotificationSettings((settings) =>
+           {
+               var alertsAllowed = (settings.AlertSetting == UNNotificationSetting.Enabled);
+           });
 
             // Code to start the Xamarin Test Cloud Agent
 #if ENABLE_TEST_CLOUD

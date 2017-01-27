@@ -52,7 +52,7 @@ namespace App12
 
         private void ReloadSourceData()
         {
-            tableItems = DataAccess.GetEvents();
+            tableItems = DataAccess.GetEvents(DateTime.Now);
         }
 
 
