@@ -5,6 +5,7 @@ using System.Text;
 
 using SQLite;
 using UIKit;
+using UserNotifications;
 
 namespace App12
 {
@@ -23,6 +24,7 @@ namespace App12
         public bool[] DaysActive = new bool[7] { false, false, false, false, false, false, false };
         //  Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6
         
+
 
         //  Constructor
         public EventData()
@@ -58,5 +60,8 @@ namespace App12
             Image = tempImage;
             
         }
+
+        
+        
     }
 }

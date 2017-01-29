@@ -34,7 +34,7 @@ namespace App12
             //  View did load command.
             base.ViewDidLoad();
 
-            this.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(100, 200, 255);
+            this.NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
 
             //toggleStartDatePicker();
             startDatePicker.MinuteInterval = 5;

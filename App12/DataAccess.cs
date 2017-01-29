@@ -55,7 +55,7 @@ namespace App12
 
         }
 
-        public static nint Count ()
+        public static nint Count (DateTime Date)
         {
             object locker = new object();
             lock (locker)
@@ -71,7 +71,22 @@ namespace App12
 
                 //  Inserts the object into the database.
                 List<EventData> temp = db.Table<EventData>().ToList();
-                return temp.Count;
+                List<EventData> returnList = new List<EventData>();
+                IOrderedEnumerable<EventData> sortQuery =
+                    from EventData in temp
+                    orderby EventData.Start //descending
+                    select EventData;
+
+                foreach (EventData EventData in sortQuery)
+                {
+
+                    if (EventData.DaysActive[(int)(Date.DayOfWeek)] == true || EventData.Start.Date == Date.Date)
+                    {
+                        returnList.Add(EventData);
+                        Console.WriteLine("Event:" + EventData.Title + "\nTime: " + EventData.Start);
+                    }
+                }
+                return returnList.Count;
 
             }
 
@@ -104,17 +119,17 @@ namespace App12
 
                 foreach (EventData EventData in sortQuery)
                 {
-                    
+
                     if (EventData.DaysActive[(int)(Date.DayOfWeek)] == true || EventData.Start.Date == Date.Date)
+                    {
                         returnList.Add(EventData);
-                    Console.WriteLine("Event:" + EventData.Title + "/nTime: " + EventData.Start);
+                        Console.WriteLine("Event:" + EventData.Title + "\nTime: " + EventData.Start);
+                    }
                 }
 
             }
             return returnList;
-        }
-
-        private void 
+        } 
 
         public static void DeleteObject (EventData obj)
         {

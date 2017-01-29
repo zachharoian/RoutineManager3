@@ -17,6 +17,7 @@ namespace App12
         TableSource dataSource;
 
 		public string tempTitleFieldText;
+        public static UIColor BarTint = UIColor.FromRGB(33, 150, 243);
 
         public MasterViewController(IntPtr handle) : base(handle)
         {
@@ -27,9 +28,9 @@ namespace App12
         {
             base.ViewDidLoad();
             //  Create datastream
-            TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents());
+            TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents(DateTime.Now));
             TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-            this.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(100, 200, 255);
+            this.NavigationController.NavigationBar.BarTintColor = BarTint;
 
         }
 

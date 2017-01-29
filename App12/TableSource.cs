@@ -76,7 +76,7 @@ namespace App12
         public override nint RowsInSection(UITableView tableview, nint section)
         {
             //  Returns how many items are in the list.
-            return DataAccess.Count();
+            return DataAccess.Count(DateTime.Now);
 
         }
         //  END RowsInSection()
@@ -144,6 +144,8 @@ namespace App12
                 cell = new AgendaCell(cellIdentifier);
             cell.UpdateCell(tableItems[indexPath.Row].Title, tableItems[indexPath.Row].Desc, tableItems[indexPath.Row].Start, tableItems[indexPath.Row].End, tableItems[indexPath.Row].Image);
             Console.WriteLine("Image Path for " + tableItems[indexPath.Row].Title + " is: " + tableItems[indexPath.Row].Image);
+
+            
             return cell;
         }
         //  END GetCell()
