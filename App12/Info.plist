@@ -44,5 +44,7 @@
 			<true/>
 		</dict>
 	</dict>
+	<key>CFBundleName</key>
+	<string>Routines</string>
 </dict>
 </plist>

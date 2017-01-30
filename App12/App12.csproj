@@ -109,6 +109,10 @@
     <Compile Include="NewEventController.designer.cs">
       <DependentUpon>NewEventController.cs</DependentUpon>
     </Compile>
+    <Compile Include="RepeatViewController.cs" />
+    <Compile Include="RepeatViewController.designer.cs">
+      <DependentUpon>RepeatViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MasterViewController.cs" />

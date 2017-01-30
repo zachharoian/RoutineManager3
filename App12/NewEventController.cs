@@ -242,41 +242,43 @@ namespace App12
 		{
             //  Call the prepare for segue method
             base.PrepareForSegue(segue, sender);
+			if (segue.Identifier == "addEventSegue")
+			{
+				//  Save the text from the Title Field
+				titleFieldText = titleField.Text;
 
-            //  Save the text from the Title Field
-            titleFieldText = titleField.Text;
+				//  If the Title Field is null, set it to "New Event"
+				if (titleFieldText == "")
+					titleFieldText = "New Event";
 
-            //  If the Title Field is null, set it to "New Event"
-            if (titleFieldText == "")
-                titleFieldText = "New Event";
+				string Image = FindImage.ParseForImage(titleFieldText);
 
-            string Image = FindImage.ParseForImage(titleFieldText);
+				//  Save the text from the Description Field
+				descFieldText = descField.Text;
 
-            //  Save the text from the Description Field
-            descFieldText = descField.Text;
+				//  Save the NSDate from Start Date Picker and convert it to DateTime
+				startTime = NSDateToDateTime(startDatePicker.Date);
 
-            //  Save the NSDate from Start Date Picker and convert it to DateTime
-            startTime = NSDateToDateTime(startDatePicker.Date);
+				//  Save the NSDate from End Date Picker and convert it to DateTime
+				endTime = NSDateToDateTime(endDatePicker.Date);
 
-            //  Save the NSDate from End Date Picker and convert it to DateTime
-            endTime = NSDateToDateTime(endDatePicker.Date);
+				//  Create the transfer path to the Main controller
+				var transferdata = segue.DestinationViewController as MasterViewController;
 
-            //  Create the transfer path to the Main controller
-			var transferdata = segue.DestinationViewController as MasterViewController;
+				//  Transfer the Title Field to Main
+				transferdata.tempTitleFieldText = titleFieldText;
 
-            //  Transfer the Title Field to Main
-			transferdata.tempTitleFieldText = titleFieldText;
+				//  Transfer the Description Field to Main
+				transferdata.tempDesc = descFieldText;
 
-            //  Transfer the Description Field to Main
-            transferdata.tempDesc = descFieldText;
+				//  Transfer the Start Date Picker to Main
+				transferdata.tempStart = startTime;
 
-            //  Transfer the Start Date Picker to Main
-            transferdata.tempStart = startTime;
+				//  Transfer the End Date Picker to Main
+				transferdata.tempEnd = endTime;
 
-            //  Transfer the End Date Picker to Main
-            transferdata.tempEnd = endTime;
-
-            transferdata.tempImage = Image;
+				transferdata.tempImage = Image;
+			}
         }// END PrepareForSegue()
     }// END NewEventController
 }// END App12
