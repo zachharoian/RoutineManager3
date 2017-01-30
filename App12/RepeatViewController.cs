@@ -19,6 +19,7 @@ namespace App12
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
+            Console.WriteLine(indexPath.Row);
             if (indexPath.Row != 0)
             {
                 if (tableItems[0] == false)
@@ -29,22 +30,27 @@ namespace App12
                     tableItems[0] = false;
                 }
             }
-            else if (indexPath.Row == 0)
+            else 
             {
                 if (tableItems[0] == false)
                 {
-                    for (int i = 0; i < 8; i++)
+                    tableItems[0] = true;
+                    for (int i = 1; i < 8; i++)
                     {
-                        table
-                    }     
+                        tableItems[i] = false;
+                    }
                 }
+                else
+                    tableItems[0] = false;
             }
             var cell = GetCell(tableView, indexPath);
-            if (tableItems[indexPath.Row] == true)
-                cell.Accessory = UITableViewCellAccessory.Checkmark;
-            else
-                cell.Accessory = UITableViewCellAccessory.None;
-                
+            for (int i = 0; i < 8; i++)
+            {
+                if (tableItems[i] == true)
+                    cell.Accessory = UITableViewCellAccessory.Checkmark;
+                else
+                    cell.Accessory = UITableViewCellAccessory.None;
+            }
             tableView.DeselectRow(indexPath, true);
         }
 
