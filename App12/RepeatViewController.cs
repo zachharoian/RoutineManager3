@@ -7,7 +7,7 @@ namespace App12
 {
     public partial class RepeatViewController : UITableViewController
     {
-        private bool[] tableItems = new bool[8] { true, false, false, false, false, false, false, false };
+        public bool[] tableItems = new bool[8] { true, false, false, false, false, false, false, false };
         //  Never -> 0, Sunday = 1, Monday = 2, etc. Saturday = 7
 
         private string[] tableNames = new string[8] { "Never", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -105,6 +105,7 @@ namespace App12
             base.PrepareForSegue(segue, sender);
             var transferdata = segue.DestinationViewController as NewEventController;
             transferdata.repeatSubtitle = OverviewReturn();
+
         }
     }
 }

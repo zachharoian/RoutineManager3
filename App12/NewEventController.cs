@@ -246,6 +246,7 @@ namespace App12
 		{
             //  Call the prepare for segue method
             base.PrepareForSegue(segue, sender);
+			Console.WriteLine("test");
 			if (segue.Identifier == "addEventSegue")
 			{
 				//  Save the text from the Title Field
@@ -282,6 +283,12 @@ namespace App12
 				transferdata.tempEnd = endTime;
 
 				transferdata.tempImage = Image;
+			}
+			bool[] tableItems = new bool[8] { true, false, false, false, false, false, false, false };
+			if (segue.Identifier == "repeatSegueFromAdd")
+			{
+				var controller = segue.DestinationViewController as RepeatViewController;
+				controller.tableItems = tableItems;
 			}
         }// END PrepareForSegue()
     }// END NewEventController
