@@ -353,6 +353,7 @@
                         <outlet property="endDateSubtitle" destination="1503" id="name-outlet-1503"/>
                         <outlet property="endDatePicker" destination="1534" id="name-outlet-1534"/>
                         <outlet property="descField" destination="1596" id="name-outlet-1596"/>
+                        <outlet property="repeatText" destination="3533" id="name-outlet-3533"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1189" userLabel="First Responder" sceneMemberID="firstResponder"/>

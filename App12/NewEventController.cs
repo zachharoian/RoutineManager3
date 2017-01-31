@@ -11,13 +11,15 @@ namespace App12
 		string titleFieldText, descFieldText;
         DateTime startTime, endTime;
 
-
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDatePickerHidden = true;
         bool endDatePickerHidden = true;
         bool startDatePickerTextChanged = false;
         bool endDatePickerTextChanged = false;
 
+        //  Variable for repeat
+        bool[] DaysActive = new bool[8] {false, false, false, false, false, false, false, false };
+        public string repeatSubtitle ="Never";
         //  ---------------------------------
         //  NewEventController(): Constructor used for UI Construction
         //  ---------------------------------
@@ -47,6 +49,8 @@ namespace App12
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();
             endDatePickerChanged();
+
+            repeatText.Text = repeatSubtitle;
         }// END ViewDidLoad()
         
 
