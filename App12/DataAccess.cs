@@ -87,9 +87,6 @@ namespace App12
                 //  Creates the table for the data, if it doesn't exist already.
                 db.CreateTable<EventData>();
 
-                var table = db.Table<EventData>();
-                Console.WriteLine(table);
-
                 //  Inserts the object into the database.
                 List<EventData> temp = db.Table<EventData>().ToList();
                 List<EventData> returnList = new List<EventData>();
@@ -179,7 +176,6 @@ namespace App12
                     from EventData in tempList
                     orderby EventData.Start //descending
                     select EventData;
-                Console.WriteLine();
                 foreach (EventData EventData in sortQuery)
                 {                    
                     int DayOftheWeek = (int)(Date.DayOfWeek);
