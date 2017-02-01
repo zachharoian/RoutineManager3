@@ -21,7 +21,13 @@ namespace App12
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Image { get; set; }
-        public int Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday;
+        public int Sunday { get; set; }
+        public int Monday { get; set; }
+        public int Tuesday { get; set; }
+        public int Wednesday { get; set; }
+        public int Thursday { get; set; }
+        public int Friday { get; set; }
+        public int Saturday { get; set; }
 
 
         //  Constructor
@@ -46,39 +52,39 @@ namespace App12
             End = tempEnd;
             Image = tempImage;
             if (tempArray[0] == true)
-                Sunday = 1;
+                Sunday= 1;
             else
-                Sunday = 0;
+                Sunday= 0;
 
             if (tempArray[1] == true)
-                Monday = 1;
+                Monday= 1;
             else
-                Monday = 0;
+                Monday= 0;
 
             if (tempArray[2] == true)
-                Tuesday = 1;
+                Tuesday= 1;
             else
-                Tuesday = 0;
+                Tuesday= 0;
 
             if (tempArray[3] == true)
-                Wednesday = 1;
+                Wednesday= 1;
             else
-                Wednesday = 0;
+                Wednesday= 0;
 
             if (tempArray[4] == true)
-                Thursday = 1;
+                Thursday= 1;
             else
-                Thursday = 0;
+                Thursday= 0;
 
             if (tempArray[5] == true)
-                Friday = 1;
+                Friday= 1;
             else
-                Friday = 0;
+                Friday= 0;
 
             if (tempArray[6] == true)
-                Saturday = 1;
+                Saturday= 1;
             else
-                Saturday = 0;          
+                Saturday= 0;          
 
         }
 

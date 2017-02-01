@@ -52,7 +52,21 @@ namespace App12
                 {
                     db.Insert(obj);
                     Console.WriteLine("Object Added. Tuesday value:" + obj.Tuesday);
-                    Console.WriteLine(obj.ID);
+                    var o = db.Get<EventData>(obj.ID);
+                    Console.WriteLine("ID: " +obj.ID+ " -> " +o.ID);
+                    Console.WriteLine("Title: "+obj.Title + " -> " + o.Title);
+                    Console.WriteLine("Desc: " + obj.Desc + " -> " + o.Desc);
+                    Console.WriteLine("Start: "+ obj.Start + " -> " + o.Start);
+                    Console.WriteLine("End: " + obj.End + " -> " + o.End);
+                    Console.WriteLine("Sun: "+obj.Sunday + " -> " + o.Sunday);
+                    Console.WriteLine("Mon: "+obj.Monday + " -> " + o.Monday);
+                    Console.WriteLine("Tues: "+obj.Tuesday + " -> " + o.Tuesday);
+                    Console.WriteLine("Wed: "+obj.Wednesday + " -> " + o.Wednesday);
+                    Console.WriteLine("Thur: "+obj.Thursday + " -> " + o.Thursday);
+                    Console.WriteLine("Fri: "+obj.Friday + " -> " + o.Friday);
+                    Console.WriteLine("Sat: "+obj.Saturday + " -> " + o.Saturday);
+                    Console.WriteLine("Image: "+obj.Image + " -> " + o.Image);
+                    
                 }
                 
             }
@@ -73,6 +87,9 @@ namespace App12
                 //  Creates the table for the data, if it doesn't exist already.
                 db.CreateTable<EventData>();
 
+                var table = db.Table<EventData>();
+                Console.WriteLine(table);
+
                 //  Inserts the object into the database.
                 List<EventData> temp = db.Table<EventData>().ToList();
                 List<EventData> returnList = new List<EventData>();
@@ -80,7 +97,7 @@ namespace App12
                     from EventData in temp
                     orderby EventData.Start //descending
                     select EventData;
-                
+
                 foreach (EventData EventData in sortQuery)
                 {
                     int DayOftheWeek = (int)(Date.DayOfWeek);
@@ -122,6 +139,7 @@ namespace App12
                         
                     }
                     if (EventData.Start.Date == Date.Date)
+                    
                         returnList.Add(EventData);
 
                     /*
@@ -133,7 +151,6 @@ namespace App12
                     */
                 }
                 return returnList.Count;
-
             }
 
         }
@@ -162,9 +179,9 @@ namespace App12
                     from EventData in tempList
                     orderby EventData.Start //descending
                     select EventData;
-                Console.WriteLine("GetEvents has been called");
+                Console.WriteLine();
                 foreach (EventData EventData in sortQuery)
-                {
+                {                    
                     int DayOftheWeek = (int)(Date.DayOfWeek);
                     
                     Console.WriteLine("DateoftheWeek = " + DayOftheWeek);
@@ -180,9 +197,10 @@ namespace App12
                                 returnList.Add(EventData);
                             break;
                         case 2:
-                            Console.WriteLine(EventData.Tuesday);
+                            Console.WriteLine("About to be added");
                             if (EventData.Tuesday == 1)
                             {
+                                Console.WriteLine("Added " + EventData.Title + "!");
                                 returnList.Add(EventData);
                                 
                             }
@@ -210,7 +228,9 @@ namespace App12
                     
 
                     if (EventData.Start.Date == Date.Date)
+                    
                         returnList.Add(EventData);
+                        
                     /*
                     Console.WriteLine(EventData.Title + ": Days Active");
                     for (int i = 0; i < 7; i++)
