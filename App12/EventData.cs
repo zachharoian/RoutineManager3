@@ -21,9 +21,7 @@ namespace App12
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Image { get; set; }
-        public bool[] DaysActive = new bool[7] { false, false, false, false, false, false, false };
-        //  Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6
-        
+        public int Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday;
 
 
         //  Constructor
@@ -40,13 +38,47 @@ namespace App12
             End = tempEnd;
         }
 
-        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd, string tempImage)
+        public EventData(string tempTitle, string tempDesc, DateTime tempStart, DateTime tempEnd, string tempImage, bool[] tempArray)
         {
             Title = tempTitle;
             Desc = tempDesc;
             Start = tempStart;
             End = tempEnd;
             Image = tempImage;
+            if (tempArray[0] == true)
+                Sunday = 1;
+            else
+                Sunday = 0;
+
+            if (tempArray[1] == true)
+                Monday = 1;
+            else
+                Monday = 0;
+
+            if (tempArray[2] == true)
+                Tuesday = 1;
+            else
+                Tuesday = 0;
+
+            if (tempArray[3] == true)
+                Wednesday = 1;
+            else
+                Wednesday = 0;
+
+            if (tempArray[4] == true)
+                Thursday = 1;
+            else
+                Thursday = 0;
+
+            if (tempArray[5] == true)
+                Friday = 1;
+            else
+                Friday = 0;
+
+            if (tempArray[6] == true)
+                Saturday = 1;
+            else
+                Saturday = 0;          
 
         }
 
@@ -58,6 +90,7 @@ namespace App12
             End = tempEnd;
             ID = tempID;
             Image = tempImage;
+  
             
         }
 

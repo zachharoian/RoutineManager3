@@ -42,11 +42,12 @@ namespace App12
         public string tempDesc, tempImage;
         public DateTime tempStart, tempEnd;
         public int tempID;
+        public bool[] daysActive = new bool [7];
 		[Action("UnwindToNewEvent:")]
 		public void UnwindToNewEvent(UIStoryboardSegue segue)
 		{
 			var segueData = (UITableViewController)segue.SourceViewController;
-			if (tempIndexPath != null)
+			if (tempIndexPath != null)  //  Edit event
 			{
 				EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempID, tempImage);
                 Console.WriteLine("Image Path (From Master): " + tempImage);
@@ -57,9 +58,11 @@ namespace App12
 				//TableView.ReloadRows(new NSIndexPath[] { tempIndexPath}, UITableViewRowAnimation.Automatic);
 				tempIndexPath = null;
 			}
-			else
-			{
-                EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempImage);
+			else 
+			{// Create New Event
+                
+                EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempImage, daysActive);
+
                 Console.WriteLine("Image Path: " + tempImage);
                 dataSource.AddItem(newEvent);
                 TableView.ReloadData();

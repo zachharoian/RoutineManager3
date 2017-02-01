@@ -18,8 +18,8 @@ namespace App12
         bool endDatePickerTextChanged = false;
 
         //  Variable for repeat
-        bool[] DaysActive = new bool[8] {false, false, false, false, false, false, false, false };
-        public string repeatSubtitle ="Never";
+        //bool[] DaysActive = new bool[8] {false, false, false, false, false, false, false, false };
+        public string repeatSubtitle;
         //  ---------------------------------
         //  NewEventController(): Constructor used for UI Construction
         //  ---------------------------------
@@ -49,10 +49,62 @@ namespace App12
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();
             endDatePickerChanged();
-
+            repeatSubtitle = OverviewReturn();
             repeatText.Text = repeatSubtitle;
         }// END ViewDidLoad()
-        
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            repeatText.Text = OverviewReturn();
+            TableView.ReloadData();
+        }
+        public string OverviewReturn()
+        {
+            if (tableItems[0] == true)
+                return "Never";
+            if (tableItems[1] == true && tableItems[7] == true)
+            {
+                int count = 0;
+                for (int i = 2; i < 7; i++)
+                {
+                    if (tableItems[i] == false)
+                        count++;
+                }
+                if (count == 5)
+                    return "Weekends";
+                if (count == 0)
+                    return "Everyday";
+            }
+            else if (tableItems[1] == false && tableItems[7] == false)
+            {
+                int count = 0;
+                for (int i = 2; i < 7; i++)
+                {
+                    if (tableItems[i] == true)
+                        count++;
+                }
+                if (count == 5)
+                    return "Weekdays";
+            }
+            if (tableItems[0] == false)
+            {
+                int count = 0;
+                string day = "";
+                for (int i = 1; i < 8; i++)
+                {
+                    if (tableItems[i] == true)
+                    {
+                        count++;
+                        day = RepeatViewController.tableNames[i];
+                    }
+                }
+                if (count == 1)
+                    return day + "s";
+            }
+            return "Custom";
+
+        }
 
         //  ---------------------------------
         //  startDatePickerChanged(): Method for updating the cell containing Date Picker information.
@@ -238,6 +290,9 @@ namespace App12
             return reference.AddSeconds(date.SecondsSinceReferenceDate);
         }
 
+        public bool[] tableItems = new bool[8] { true, false, false, false, false, false, false, false };
+
+        
 
         //  ---------------------------------
         //  PrepareForSegue(): Save the date and transfer it back to the main screen to create a new event
@@ -246,12 +301,12 @@ namespace App12
 		{
             //  Call the prepare for segue method
             base.PrepareForSegue(segue, sender);
-			Console.WriteLine("test");
-			if (segue.Identifier == "addEventSegue")
+			//Console.WriteLine("test");
+			if (segue.Identifier != "repeatSegueFromAdd")
 			{
 				//  Save the text from the Title Field
 				titleFieldText = titleField.Text;
-
+                
 				//  If the Title Field is null, set it to "New Event"
 				if (titleFieldText == "")
 					titleFieldText = "New Event";
@@ -283,12 +338,21 @@ namespace App12
 				transferdata.tempEnd = endTime;
 
 				transferdata.tempImage = Image;
+
+                bool[] tempArray = new bool[7];
+                for (int i = 1; i < 8; i++)
+                {
+                    tempArray[i - 1] = tableItems[i];
+                    //Console.WriteLine(tempArray[i-1]);
+
+                }
+                transferdata.daysActive = tempArray;
 			}
-			bool[] tableItems = new bool[8] { true, false, false, false, false, false, false, false };
+			
 			if (segue.Identifier == "repeatSegueFromAdd")
 			{
 				var controller = segue.DestinationViewController as RepeatViewController;
-				controller.tableItems = tableItems;
+                controller.controller = this;
 			}
         }// END PrepareForSegue()
     }// END NewEventController
