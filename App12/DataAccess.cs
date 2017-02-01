@@ -44,28 +44,25 @@ namespace App12
                 if (obj.ID != 0)
                 {
                     SQLiteCommand command = new SQLiteCommand(db);
-                    command.CommandText = "UPDATE EventData SET Title = '" + obj.Title + "', Desc = '" + obj.Desc + "', Start = '" + obj.Start + "', End = '" + obj.End + "', Image = '" + obj.Image + "' Where _id = '" + obj.ID + "'";
+                    command.CommandText = "UPDATE EventData SET Title = '" + obj.Title + 
+                                          "', Desc = '" + obj.Desc + 
+                                          "', Start = '" + obj.Start + 
+                                          "', End = '" + obj.End + 
+                                          "', Image = '" + obj.Image + 
+                                          "', Sunday = '" + obj.Sunday + 
+                                          "', Monday = '" + obj.Monday + 
+                                          "', Tuesday = '" + obj.Tuesday + 
+                                          "', Wednesday = '"+ obj.Wednesday + 
+                                          "', Thursday = '" + obj.Thursday + 
+                                          "', Friday = '" + obj.Friday + 
+                                          "', Saturday = '" + obj.Saturday + 
+                                          "', Where _id = '" + obj.ID + "'";
                     command.ExecuteNonQuery();
                     Console.WriteLine("Database updated");
                 }
                 else
                 {
                     db.Insert(obj);
-                    Console.WriteLine("Object Added. Tuesday value:" + obj.Tuesday);
-                    var o = db.Get<EventData>(obj.ID);
-                    Console.WriteLine("ID: " +obj.ID+ " -> " +o.ID);
-                    Console.WriteLine("Title: "+obj.Title + " -> " + o.Title);
-                    Console.WriteLine("Desc: " + obj.Desc + " -> " + o.Desc);
-                    Console.WriteLine("Start: "+ obj.Start + " -> " + o.Start);
-                    Console.WriteLine("End: " + obj.End + " -> " + o.End);
-                    Console.WriteLine("Sun: "+obj.Sunday + " -> " + o.Sunday);
-                    Console.WriteLine("Mon: "+obj.Monday + " -> " + o.Monday);
-                    Console.WriteLine("Tues: "+obj.Tuesday + " -> " + o.Tuesday);
-                    Console.WriteLine("Wed: "+obj.Wednesday + " -> " + o.Wednesday);
-                    Console.WriteLine("Thur: "+obj.Thursday + " -> " + o.Thursday);
-                    Console.WriteLine("Fri: "+obj.Friday + " -> " + o.Friday);
-                    Console.WriteLine("Sat: "+obj.Saturday + " -> " + o.Saturday);
-                    Console.WriteLine("Image: "+obj.Image + " -> " + o.Image);
                     
                 }
                 
