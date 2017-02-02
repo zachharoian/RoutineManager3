@@ -31,6 +31,7 @@ namespace App12
             TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents(DateTime.Now));
             TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             this.NavigationController.NavigationBar.BarTintColor = BarTint;
+            
 
         }
 
