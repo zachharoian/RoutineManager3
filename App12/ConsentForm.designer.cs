@@ -7,11 +7,12 @@
 using Foundation;
 using System;
 using System.CodeDom.Compiler;
+using UIKit;
 
 namespace App12
 {
-    [Register ("AgendaCell")]
-    partial class AgendaCell
+    [Register ("ConsentForm")]
+    partial class ConsentForm
     {
         void ReleaseDesignerOutlets ()
         {

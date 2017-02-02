@@ -113,6 +113,10 @@
     <Compile Include="RepeatViewController.designer.cs">
       <DependentUpon>RepeatViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsentForm.cs" />
+    <Compile Include="ConsentForm.designer.cs">
+      <DependentUpon>ConsentForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MasterViewController.cs" />
