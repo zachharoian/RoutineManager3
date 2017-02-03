@@ -31,7 +31,10 @@ namespace App12
             TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents(DateTime.Now));
             TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             this.NavigationController.NavigationBar.BarTintColor = BarTint;
-            
+            addButton.Enabled = false;
+            addButton.TintColor = UIColor.Clear;
+            enableEditButton.Clicked += ToggleEditing;
+
 
         }
 
@@ -69,15 +72,29 @@ namespace App12
                 TableView.ReloadData();
 			}
 		}
+        bool isEditingEnabled = false; 
+        void ToggleEditing(object sender, EventArgs e)
+        {
+            isEditingEnabled = !isEditingEnabled;
+            addButton.Enabled = !addButton.Enabled;
+            if (addButton.Enabled == true)
+                addButton.TintColor = null;
+            else
+                addButton.TintColor = UIColor.Clear;
+            if (isEditingEnabled == false)
+                TableView.AllowsSelection = false;
+            else
+                TableView.AllowsSelection = true;
 
+        }
         
 
 		public NSIndexPath tempIndexPath;
 
-
 		public void SegueToEdit()
 		{
 			PerformSegue("editEventSegue", null);
+
 		}
         
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
@@ -91,7 +108,8 @@ namespace App12
                 var transferdata = segue.DestinationViewController as EditEventController;
 
 				transferdata.currentTableCell = indexPath;
-
+                transferdata.startDateEdit = isEditingEnabled;
+                transferdata.endDateEdit = isEditingEnabled;
                 transferdata.ID = item.ID;
                 transferdata.titleFieldText = item.Title;
                 transferdata.descFieldText = item.Desc;

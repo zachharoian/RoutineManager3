@@ -138,7 +138,7 @@ namespace App12
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(cellIdentifier) as AgendaCell;
-            tableView.AllowsSelection = true;
+            //tableView.AllowsSelection = true;
             tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
             if (cell == null)
                 cell = new AgendaCell(cellIdentifier);

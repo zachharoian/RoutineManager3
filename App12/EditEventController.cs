@@ -14,8 +14,8 @@ namespace App12
         public UIColor backgroundColor;
 
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
-        bool startDateEdit = true;
-        bool endDateEdit = true;
+        public bool startDateEdit = true;
+        public bool endDateEdit = true;
         bool startDatePickerHidden = true;
         bool endDatePickerHidden = true;
         bool startDatePickerTextChanged = false;
@@ -85,24 +85,24 @@ namespace App12
         //  ---------------------------------
         public void toggleStartDatePicker()
 		{
-            //  Create the path for the cell
-            NSIndexPath[] rows = new NSIndexPath[]{ NSIndexPath.FromRowSection(2,0)};
+            if (startDateEdit == true)
+            {
+                //  Toggle visibilty
+                startDatePickerHidden = !startDatePickerHidden;
 
-            //  Toggle visibilty
-            startDatePickerHidden = !startDatePickerHidden;
+                //  Toggle text color
+                startDatePickerTextChanged = !startDatePickerTextChanged;
 
-            //  Toggle text color
-            startDatePickerTextChanged = !startDatePickerTextChanged;
+                //  Flip the color of the subtitle text color from Black to Red if the DatePicker is active
+                if (startDatePickerTextChanged == true)
+                    startDateSubtitle.TextColor = UIColor.Red;
+                else
+                    startDateSubtitle.TextColor = UIColor.Black;
 
-            //  Flip the color of the subtitle text color from Black to Red if the DatePicker is active
-            if (startDatePickerTextChanged == true)
-                startDateSubtitle.TextColor = UIColor.Red;
-            else
-                startDateSubtitle.TextColor = UIColor.Black;
-
-            //  Update the cell
-            TableView.BeginUpdates();
-            TableView.EndUpdates();
+                //  Update the cell
+                TableView.BeginUpdates();
+                TableView.EndUpdates();
+            }
         }// END toggleStartDataPicker()
 
 
@@ -111,24 +111,25 @@ namespace App12
         //  ---------------------------------
         public void toggleEndDatePicker()
         {
-            //  Create the path for the cell
-            NSIndexPath[] rows = new NSIndexPath[]{NSIndexPath.FromRowSection(4,0)};
+            if (endDateEdit == true)
+            {
 
-            //  Toggle visiblity
-            endDatePickerHidden = !endDatePickerHidden;
+                //  Toggle visiblity
+                endDatePickerHidden = !endDatePickerHidden;
 
-            //  Toggle text color
-            endDatePickerTextChanged = !endDatePickerTextChanged;
+                //  Toggle text color
+                endDatePickerTextChanged = !endDatePickerTextChanged;
 
-            //  Flip the color of the subtitle text color from Black to Red if the DatePicker is active
-            if (endDatePickerTextChanged == true)
-                endDateSubtitle.TextColor = UIColor.Red;
-            else
-                endDateSubtitle.TextColor = UIColor.Black;
+                //  Flip the color of the subtitle text color from Black to Red if the DatePicker is active
+                if (endDatePickerTextChanged == true)
+                    endDateSubtitle.TextColor = UIColor.Red;
+                else
+                    endDateSubtitle.TextColor = UIColor.Black;
 
-            //  Update the cell
-            TableView.BeginUpdates();
-            TableView.EndUpdates();
+                //  Update the cell
+                TableView.BeginUpdates();
+                TableView.EndUpdates();
+            }
         }// END toggleEndDataPicker()
 
 
