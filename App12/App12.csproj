@@ -88,6 +88,10 @@
     <Compile Include="AgendaCell.designer.cs">
       <DependentUpon>AgendaCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="ContentViewController.cs" />
+    <Compile Include="ContentViewController.designer.cs">
+      <DependentUpon>ContentViewController.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess.cs" />
     <Compile Include="EditEventController.cs" />
     <Compile Include="EditEventController.designer.cs">
@@ -100,6 +104,10 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="TableSource.cs" />
+    <Compile Include="ViewController.cs" />
+    <Compile Include="ViewController.designer.cs">
+      <DependentUpon>ViewController.cs</DependentUpon>
+    </Compile>
     <InterfaceDefinition Include="AgendaCell.xib" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist" />
