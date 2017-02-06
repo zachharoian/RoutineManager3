@@ -39,7 +39,6 @@ namespace App12
             base.ViewDidLoad();
 
             //this.NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
-
             titleField.Text = titleFieldText;
             descField.Text = descFieldText;
             startDatePicker.SetDate(DateTimeToNSDate(startTime), false);
@@ -262,6 +261,8 @@ namespace App12
 
 		public NSIndexPath currentTableCell;
 
+		public bool[] tableItems = new bool[8];
+
         //  ---------------------------------
         //  PrepareForSegue(): Save the date and transfer it back to the main screen to create a new event
         //  ---------------------------------
@@ -269,47 +270,56 @@ namespace App12
 		{
             //  Call the prepare for segue method
             base.PrepareForSegue(segue, sender);
+			if (segue.Identifier != "repeatSegue")
+			{
+				//  Save the text from the Title Field
+				titleFieldText = titleField.Text;
 
-            //  Save the text from the Title Field
-            titleFieldText = titleField.Text;
+				//  If the Title Field is null, set it to "New Event"
+				if (titleFieldText == "")
+					titleFieldText = "New Event";
 
-            //  If the Title Field is null, set it to "New Event"
-            if (titleFieldText == "")
-                titleFieldText = "New Event";
+				imagePath = FindImage.ParseForImage(titleFieldText);
 
-            imagePath = FindImage.ParseForImage(titleFieldText);
+				//  Save the text from the Description Field
+				descFieldText = descField.Text;
 
-            //  Save the text from the Description Field
-            descFieldText = descField.Text;
+				//  Save the NSDate from Start Date Picker and convert it to DateTime
+				startTime = NSDateToDateTime(startDatePicker.Date);
 
-            //  Save the NSDate from Start Date Picker and convert it to DateTime
-            startTime = NSDateToDateTime(startDatePicker.Date);
+				//  Save the NSDate from End Date Picker and convert it to DateTime
+				endTime = NSDateToDateTime(endDatePicker.Date);
 
-            //  Save the NSDate from End Date Picker and convert it to DateTime
-            endTime = NSDateToDateTime(endDatePicker.Date);
+				//  Create the transfer path to the Main controller
+				var transferdata = segue.DestinationViewController as MasterViewController;
 
-            //  Create the transfer path to the Main controller
-			var transferdata = segue.DestinationViewController as MasterViewController;
+				//  Transfer ID to Main
+				transferdata.tempID = ID;
 
-            //  Transfer ID to Main
-            transferdata.tempID = ID;
+				//  Transfer the Title Field to Main
+				transferdata.tempTitleFieldText = titleFieldText;
 
-            //  Transfer the Title Field to Main
-			transferdata.tempTitleFieldText = titleFieldText;
+				//  Transfer the Description Field to Main
+				transferdata.tempDesc = descFieldText;
 
-            //  Transfer the Description Field to Main
-            transferdata.tempDesc = descFieldText;
+				//  Transfer the Start Date Picker to Main
+				transferdata.tempStart = startTime;
 
-            //  Transfer the Start Date Picker to Main
-            transferdata.tempStart = startTime;
+				//  Transfer the End Date Picker to Main
+				transferdata.tempEnd = endTime;
 
-            //  Transfer the End Date Picker to Main
-            transferdata.tempEnd = endTime;
+				transferdata.tempImage = imagePath;
+				Console.WriteLine("EditEvent Sends: " + imagePath + " from " + titleFieldText);
 
-            transferdata.tempImage = imagePath;
-            Console.WriteLine("EditEvent Sends: " + imagePath + " from " + titleFieldText);
+				transferdata.daysActive = tableItems;
 
-			transferdata.tempIndexPath = currentTableCell;
+				transferdata.tempIndexPath = currentTableCell;
+			}
+			else
+			{
+				var transferdata = segue.DestinationViewController as RepeatViewController;
+				transferdata.tableItems =  tableItems;
+			}
         }// END PrepareForSegue()
     }// END NewEventController
 }// END App12

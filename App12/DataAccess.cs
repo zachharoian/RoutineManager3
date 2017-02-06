@@ -21,6 +21,64 @@ namespace App12
         //  Database path
         public static string dbPath { get; set; }
 
+		public static bool GetKey()
+		{
+			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
+			object locker = new object();
+			lock (locker)
+			{
+				//  Sets the database path
+				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+
+				//  Connects to the database
+				var db = new SQLiteConnection(dbPath);
+				db.CreateTable<Key>();
+				Key obj;
+				try
+				{
+					obj = db.Get<Key>(1);
+				}
+				catch 
+				{
+					obj = new Key { ConsentFormComfirmation = 0 };
+				}
+
+				if (obj.ConsentFormComfirmation == 1)
+					return true;
+				else
+					return false;
+
+			}
+		}
+		class Key
+		{
+			[PrimaryKey, AutoIncrement, Column("ID")]
+			public int ID { get; set; }
+			public int ConsentFormComfirmation { get; set;}
+		}
+
+		public static void SaveKey()
+		{
+			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
+			object locker = new object();
+			lock (locker)
+			{
+				//  Sets the database path
+				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+
+				//  Connects to the database
+				var db = new SQLiteConnection(dbPath);
+
+				db.CreateTable<Key>();
+				int temp;
+				if (RootViewController.consentComfirmed == true)
+					temp = 1;
+				else
+					temp = 0;
+				db.Insert(new Key { ConsentFormComfirmation = temp} );
+			}
+		}
+
         //
         //  Saves the object in the database
         //

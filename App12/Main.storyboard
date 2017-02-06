@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5262">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
@@ -43,9 +43,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Master" id="tQt-TN-PWz">
                         <barButtonItem key="rightBarButtonItem" title="Add" style="plain" id="115">
-                            <connections>
-                                <segue id="1285" destination="1191" kind="presentation" modalPresentationStyle="pageSheet" modalTransitionStyle="coverVertical" identifier="addEventSegue"/>
-                            </connections>
+                            <connections/>
                         </barButtonItem>
                         <barButtonItem key="leftBarButtonItem" id="5216" systemItem="compose"/>
                     </navigationItem>
@@ -614,7 +612,39 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections/>
+                                        <connections>
+                                            <segue id="6672" destination="2756" kind="show" identifier="repeatSegue"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="6564">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6565">
+                                        <rect key="frame" x="0.0" y="1020" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6565" id="6566">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6571" translatesAutoresizingMaskIntoConstraints="NO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                                    <state key="normal" title="Delete">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleColor" colorSpace="calibratedRGB" red="1" green="0" blue="0" alpha="1"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue id="6600" destination="1630" kind="unwind" unwindAction="DeleteEvent:"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint id="6572" firstItem="6566" firstAttribute="trailing" secondItem="6571" secondAttribute="trailing"/>
+                                                <constraint id="6573" firstItem="6571" firstAttribute="top" secondItem="6566" secondAttribute="top"/>
+                                                <constraint id="6574" firstItem="6571" firstAttribute="leading" secondItem="6566" secondAttribute="leading"/>
+                                                <constraint id="6575" firstItem="6566" firstAttribute="bottom" secondItem="6571" secondAttribute="bottom"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -638,6 +668,7 @@
                         <outlet property="endDatePicker" destination="1624" id="1623"/>
                         <outlet property="descField" destination="1626" id="1625"/>
                         <outlet property="repeatsSubtitle" destination="2738" id="name-outlet-2738"/>
+                        <outlet property="deleteButton" destination="6571" id="name-outlet-6571"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1672" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -820,9 +851,13 @@
                         <subviews/>
                     </view>
                     <navigationItem title="Agenda" id="5305" key="navigationItem">
-                        <barButtonItem key="rightBarButtonItem" id="5308" systemItem="add"/>
+                        <barButtonItem key="rightBarButtonItem" id="5308" systemItem="add">
+                            <connections>
+                                <segue id="6554" destination="1191" kind="presentation" identifier="addEventSegue" modalPresentationStyle="pageSheet" modalTransitionStyle="coverVertical"/>
+                            </connections>
+                        </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="5426" selectedSegmentIndex="0">
-                            <rect key="frame" x="56" y="7.5" width="213.5" height="29"/>
+                            <rect key="frame" x="56.5" y="7.5" width="213" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="S"/>
@@ -841,11 +876,12 @@
                         <outlet property="segmentedControl" destination="5426" id="name-outlet-5426"/>
                         <outlet property="enableEditButton" destination="5434" id="name-outlet-5434"/>
                         <outlet property="addButton" destination="5308" id="name-outlet-5308"/>
+                        <segue id="6451" destination="6398" kind="presentation" modalPresentationStyle="pageSheet" modalTransitionStyle="coverVertical" identifier="consentForm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5230" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="194" y="-107"/>
+            <point key="canvasLocation" x="151" y="-80"/>
         </scene>
         <scene sceneID="5261">
             <objects>
@@ -865,11 +901,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5265" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-373" y="-143"/>
+            <point key="canvasLocation" x="-393" y="-425"/>
         </scene>
         <scene sceneID="5438">
             <objects>
-                <viewController id="5439" sceneMemberID="viewController" customClass="ConsentForm">
+                <viewController id="5439" sceneMemberID="viewController" customClass="ConsentForm" title="Consent Form">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5436"/>
                         <viewControllerLayoutGuide type="bottom" id="5437"/>
@@ -878,11 +914,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="5786" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="Agree" id="5787">
+                                        <connections>
+                                            <action selector="UnwindFromConsent:" destination="5439" id="6457"/>
+                                            <segue id="6490" destination="5456" kind="unwind" unwindAction="UnwindFromConsent:" identifier="UnwindFromConsent"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="5944" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <string key="text">    Thank you for your interest in my project! 
+
+    You must be 18 or older to continue. This application is designed to help autistic adults gain independence in their individual living situations. 
+    To participate, you first must sign this consent form to gain access to the app. Then, play around with the app and try it out. After you have tried some of the features, take the survey located in the top bar of the app. 
+
+    You should spend at least 5 minutes exploring the app before taking the survey. There are little to no risks for you, the user. There may be a slight increase in stress levels from being introduced to a new app or entering information. 
+But, it could be beneficial to you, as you may be able to use the app to help organize your daily routines. 
+
+    Confidentiality will be maintained throughout the process, as there is no personal information recorded from the app or the survey. If you have any questions or concerns, feel free to send contact Jeff Skaanland, my mentor, at JeffSkaanland@gmail.com. 
+
+    To proceed, you must agree to this form of consent. 
+
+    By tapping "Agree," I agree that I have read and understand the above terms, and confirm I am over the age of 18.</string>
+                            </textView>
+                        </subviews>
+                        <constraints>
+                            <constraint id="5945" firstItem="5944" firstAttribute="top" secondItem="5436" secondAttribute="bottom"/>
+                            <constraint id="5946" firstItem="5440" firstAttribute="trailing" secondItem="5944" secondAttribute="trailing"/>
+                            <constraint id="5947" firstItem="5944" firstAttribute="leading" secondItem="5440" secondAttribute="leading"/>
+                            <constraint id="5948" firstItem="5786" firstAttribute="top" secondItem="5944" secondAttribute="bottom"/>
+                            <constraint id="5949" firstItem="5786" firstAttribute="bottom" secondItem="5440" secondAttribute="bottom"/>
+                            <constraint id="5950" firstItem="5786" firstAttribute="leading" secondItem="5440" secondAttribute="leading"/>
+                            <constraint id="5951" firstItem="5786" firstAttribute="width" secondItem="5440" secondAttribute="width"/>
+                        </constraints>
                     </view>
+                    <navigationItem title="Consent Form" id="5783" key="navigationItem"/>
+                    <connections>
+                        <outlet property="consentFormAccept" destination="5787" id="name-outlet-5787"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5441" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="5456" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="772" y="-647"/>
+        </scene>
+        <scene sceneID="6397">
+            <objects>
+                <navigationController id="6398" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6400">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue id="6435" destination="5439" kind="relationship" relationship="rootViewController"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6401" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="316" y="-728"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

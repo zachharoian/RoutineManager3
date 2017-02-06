@@ -1,4 +1,4 @@
-﻿// WARNING
+// WARNING
 //
 // This file has been generated automatically by Xamarin Studio from the outlets and
 // actions declared in your storyboard file.
@@ -17,6 +17,10 @@ namespace App12
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIBarButtonItem buttonSave { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton deleteButton { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -63,6 +67,11 @@ namespace App12
             if (buttonSave != null) {
                 buttonSave.Dispose ();
                 buttonSave = null;
+            }
+
+            if (deleteButton != null) {
+                deleteButton.Dispose ();
+                deleteButton = null;
             }
 
             if (descField != null) {

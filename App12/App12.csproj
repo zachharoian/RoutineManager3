@@ -88,10 +88,6 @@
     <Compile Include="AgendaCell.designer.cs">
       <DependentUpon>AgendaCell.cs</DependentUpon>
     </Compile>
-    <Compile Include="ContentViewController.cs" />
-    <Compile Include="ContentViewController.designer.cs">
-      <DependentUpon>ContentViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataAccess.cs" />
     <Compile Include="EditEventController.cs" />
     <Compile Include="EditEventController.designer.cs">

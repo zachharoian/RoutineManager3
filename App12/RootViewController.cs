@@ -22,7 +22,9 @@ namespace App12
         {
         }
 
-        private int segmentIndex = 6;//(int)DateTime.Now.DayOfWeek;
+        private int segmentIndex = (int)DateTime.Now.DayOfWeek;
+
+		public static bool consentComfirmed = false;
 
         public override void ViewDidLoad()
         {
@@ -41,12 +43,16 @@ namespace App12
             View.AddSubview(PageViewController.View);
             segmentedControl.SelectedSegment = segmentIndex;
             segmentedControl.ValueChanged += valueChange;
-            /*
+			/*
             addButton.Enabled = false;
             addButton.TintColor = UIColor.Clear;
             */
+			consentComfirmed = DataAccess.GetKey();
             enableEditButton.Clicked += ToggleEditing;
-            
+			if (consentComfirmed == false)
+				PerformSegue("consentForm", null);
+
+
 
         }
 
@@ -64,9 +70,14 @@ namespace App12
         public static bool isEditingEnabled = true;
         void ToggleEditing(object sender, EventArgs e)
         {
-            UIApplication.SharedApplication.OpenUrl(new NSUrl("https://goo.gl/forms/pd8e5aonYweOewLw1"));
+			UIApplication.SharedApplication.OpenUrl(new NSUrl("https://goo.gl/forms/pd8e5aonYweOewLw1"));
 
         }
 
+
+		[Action("UnwindFromConsent:")]
+		public void UnwindFromConsent(UIStoryboardSegue segue)
+		{
+		}
     }
 }

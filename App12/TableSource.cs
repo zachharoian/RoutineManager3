@@ -36,7 +36,14 @@ namespace App12
             tableItems = currentEvents;
             
         }
-        //  END TableSource()
+		//  END TableSource()
+
+		public void DeleteItem(int tempID, NSIndexPath path) 
+		{
+			var obj = tableItems.ElementAt(path.Row);
+			tableItems.Remove(obj);
+			DataAccess.DeleteObject(obj);
+		}
 
 
         public void EditItem(int index, EventData item)
@@ -116,8 +123,10 @@ namespace App12
         //
         //  Deletes/Inserts cells
         //
+		/*
         public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
         {
+			
             if (editingStyle == UITableViewCellEditingStyle.Delete)
             {
                 EventData obj = tableItems[indexPath.Row];
@@ -130,9 +139,11 @@ namespace App12
             {
                 // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
             }
+
+			base.CommitEditingStyle();
         }
         //  END CommitEditingStyle()
-        
+        */
 
         //
         //  When the row is touched

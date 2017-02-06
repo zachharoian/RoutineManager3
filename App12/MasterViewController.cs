@@ -59,7 +59,7 @@ namespace App12
 			var segueData = (UITableViewController)segue.SourceViewController;
 			if (tempIndexPath != null)  //  Edit event
 			{
-				EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempID, tempImage);
+				EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempID, tempImage, daysActive);
                 Console.WriteLine("Image Path (From Master): " + tempImage);
                 dataSource.EditItem(tempIndexPath.Row, newEvent);
                 //TableView.BeginUpdates();
@@ -78,7 +78,15 @@ namespace App12
                 TableView.ReloadData();
 			}
 		}
-        
+
+		[Action("DeleteEvent:")]
+		public void DeleteEvent(UIStoryboardSegue segue) 
+		{
+
+			dataSource.DeleteItem(tempID, tempIndexPath);
+			tempIndexPath = null;
+			TableView.ReloadData();
+		}
         
 
 		public NSIndexPath tempIndexPath;
@@ -108,6 +116,7 @@ namespace App12
                 transferdata.startTime = item.Start;
                 transferdata.endTime = item.End;
                 transferdata.imagePath = item.Image;
+				transferdata.tableItems = item.getTableItems();
             }
         }
     }

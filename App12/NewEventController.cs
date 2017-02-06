@@ -352,7 +352,7 @@ namespace App12
 			if (segue.Identifier == "repeatSegueFromAdd")
 			{
 				var controller = segue.DestinationViewController as RepeatViewController;
-                controller.controller = this;
+                controller.tableItems = tableItems;
 			}
         }// END PrepareForSegue()
     }// END NewEventController
