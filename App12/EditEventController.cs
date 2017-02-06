@@ -38,7 +38,7 @@ namespace App12
             //  View did load command.
             base.ViewDidLoad();
 
-            this.NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
+            //this.NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
 
             titleField.Text = titleFieldText;
             descField.Text = descFieldText;
@@ -52,6 +52,17 @@ namespace App12
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();
             endDatePickerChanged();
+
+            if (RootViewController.isEditingEnabled == true)
+            {
+                titleField.Enabled = true;
+                descField.Editable = true;
+            }
+            else
+            {
+                titleField.Enabled = false;
+                descField.Editable = false;
+            }
         }// END ViewDidLoad()
         
         public NSDate DateTimeToNSDate (DateTime date)
@@ -212,6 +223,8 @@ namespace App12
             }
             else 
                 tableView.DeselectRow(indexPath, true);
+           
+
         }// END RowSelected()
 
 
@@ -221,15 +234,17 @@ namespace App12
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
 		{
             //  If the cell is a Date Picker Cell, and it is hidden, set the height to 0.
-            if (indexPath.Section == 0 && ( (indexPath.Row == 2 && startDatePickerHidden == true) || (indexPath.Row == 4 && endDatePickerHidden == true) ))
+            if (indexPath.Section == 0 && ((indexPath.Row == 2 && startDatePickerHidden == true) || (indexPath.Row == 4 && endDatePickerHidden == true)))
                 return 0;
 
             //  If the cell is Date Picker Cell, and it is not hidden, set the height to the height of the Date Picker Element (216 pts)
             else if (indexPath.Section == 0 && ((indexPath.Row == 2 && startDatePickerHidden == false) || (indexPath.Row == 4 && endDatePickerHidden == false)))
                 return 216;
             //  Else, return the standard row height
+            else if (indexPath.Section == 2 && RootViewController.isEditingEnabled == false)
+                return 0;
             else
-				return base.GetHeightForRow(tableView, indexPath);
+                return base.GetHeightForRow(tableView, indexPath);
         }// END GetHeightForRow()
 
 

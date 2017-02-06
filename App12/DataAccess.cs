@@ -85,10 +85,10 @@ namespace App12
                 db.CreateTable<EventData>();
 
                 //  Inserts the object into the database.
-                List<EventData> temp = db.Table<EventData>().ToList();
+                List<EventData> tempList = db.Table<EventData>().ToList();
                 List<EventData> returnList = new List<EventData>();
                 IOrderedEnumerable<EventData> sortQuery =
-                    from EventData in temp
+                    from EventData in tempList
                     orderby EventData.Start //descending
                     select EventData;
 
@@ -144,7 +144,7 @@ namespace App12
                     }
                     */
                 }
-                return returnList.Count;
+                return tempList.Count;
             }
 
         }
@@ -190,10 +190,8 @@ namespace App12
                                 returnList.Add(EventData);
                             break;
                         case 2:
-                            Console.WriteLine("About to be added");
                             if (EventData.Tuesday == 1)
                             {
-                                Console.WriteLine("Added " + EventData.Title + "!");
                                 returnList.Add(EventData);
                                 
                             }
@@ -241,7 +239,7 @@ namespace App12
                 }
 
             }
-            return returnList;
+            return tempList;
         } 
 
         public static void DeleteObject (EventData obj)

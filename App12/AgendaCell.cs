@@ -74,15 +74,18 @@ namespace App12
 
         public override void LayoutSubviews()
         {
+            //  140 px Total height
             base.LayoutSubviews();
-            int imageOffset = 35;
+            int imageOffset = 80 + 5;
+            //  130 px card height
+            //  120 px margins height
             card.Frame = new CGRect(5, 5, ContentView.Bounds.Width - 10, ContentView.Bounds.Height - 10);
             title.Frame = new CGRect(10 + imageOffset, 10, ContentView.Bounds.Width - (10 + imageOffset), 20);
             time.Frame = new CGRect(10 + imageOffset, 30, ContentView.Bounds.Width - (10 + imageOffset), 12);
             desc.Frame = new CGRect(10 + imageOffset, 42, ContentView.Bounds.Width - (10 + imageOffset), 12);
             //  Image will be 10 pixels from the left of the cell, 10 pixels from the top, 30 pixels diameter
             //  5 pixel margin from other text and card
-            imageView.Frame = new CGRect(10, 10, 30, 30);
+            imageView.Frame = new CGRect(10, 10, 80, 80);
                         
         }
 

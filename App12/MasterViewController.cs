@@ -21,21 +21,27 @@ namespace App12
 
         public MasterViewController(IntPtr handle) : base(handle)
         {
-            Title = NSBundle.MainBundle.LocalizedString("Agenda", "Agenda");
+            //Title = NSBundle.MainBundle.LocalizedString("Agenda", "Agenda");
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
             //  Create datastream
-            TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents(DateTime.Now));
+            TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents(Day));
             TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
-            this.NavigationController.NavigationBar.BarTintColor = BarTint;
-            addButton.Enabled = false;
-            addButton.TintColor = UIColor.Clear;
-            enableEditButton.Clicked += ToggleEditing;
+            //this.NavigationController.NavigationBar.BarTintColor = UIColor.Purple;
+            
 
 
+        }
+        public DateTime Day;
+        
+        
+        public DateTime GetDay ()
+        {
+            return Day;
         }
 
 		//	Unwind from cancel to Main Agenda
@@ -72,21 +78,7 @@ namespace App12
                 TableView.ReloadData();
 			}
 		}
-        bool isEditingEnabled = false; 
-        void ToggleEditing(object sender, EventArgs e)
-        {
-            isEditingEnabled = !isEditingEnabled;
-            addButton.Enabled = !addButton.Enabled;
-            if (addButton.Enabled == true)
-                addButton.TintColor = null;
-            else
-                addButton.TintColor = UIColor.Clear;
-            if (isEditingEnabled == false)
-                TableView.AllowsSelection = false;
-            else
-                TableView.AllowsSelection = true;
-
-        }
+        
         
 
 		public NSIndexPath tempIndexPath;
@@ -108,8 +100,8 @@ namespace App12
                 var transferdata = segue.DestinationViewController as EditEventController;
 
 				transferdata.currentTableCell = indexPath;
-                transferdata.startDateEdit = isEditingEnabled;
-                transferdata.endDateEdit = isEditingEnabled;
+                transferdata.startDateEdit = RootViewController.isEditingEnabled;
+                transferdata.endDateEdit = RootViewController.isEditingEnabled;
                 transferdata.ID = item.ID;
                 transferdata.titleFieldText = item.Title;
                 transferdata.descFieldText = item.Desc;

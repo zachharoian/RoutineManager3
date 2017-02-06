@@ -23,6 +23,8 @@ namespace App12
         //  Cell ID
         string cellIdentifier = "TableCell";
 
+        private DateTime date;
+
         //
         //  Constructor
         //
@@ -50,9 +52,15 @@ namespace App12
             ReloadSourceData();
 		}
 
+        public void ReloadDate(DateTime tempDate)
+        {
+            date = tempDate;
+            ReloadSourceData();
+        }
+
         private void ReloadSourceData()
         {
-            tableItems = DataAccess.GetEvents(DateTime.Now);
+            tableItems = DataAccess.GetEvents(date);
         }
 
 
@@ -75,8 +83,17 @@ namespace App12
         //
         public override nint RowsInSection(UITableView tableview, nint section)
         {
+            var items = DataAccess.Count(date);
+            if (items == 0)
+            {
+                UILabel noDataLabel = new UILabel(new CoreGraphics.CGRect(0, 0, tableview.Bounds.Width, tableview.Bounds.Height));
+                noDataLabel.Text = "No events today.";
+                noDataLabel.TextColor = UIColor.Black;
+                noDataLabel.TextAlignment = UITextAlignment.Center;
+                tableview.BackgroundView = noDataLabel;
+            }
             //  Returns how many items are in the list.
-            return DataAccess.Count(DateTime.Now);
+            return items;
 
         }
         //  END RowsInSection()
@@ -88,7 +105,10 @@ namespace App12
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
         {
             // Return false if you do not want the specified item to be editable.
-            return true;
+            if (RootViewController.isEditingEnabled == true)
+                return true;
+            else
+                return false;
         }
         //  END CanEditRow()
 
@@ -129,7 +149,7 @@ namespace App12
 
         public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
         {
-            return 115;
+            return 140;
         }// END GetHeightForRow()
 
         //  
