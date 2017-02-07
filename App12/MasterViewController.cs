@@ -14,10 +14,11 @@ namespace App12
 {
     public partial class MasterViewController : UITableViewController
     {
-        TableSource dataSource;
+        private TableSource dataSource;
 
-		public string tempTitleFieldText;
         public static UIColor BarTint = UIColor.FromRGB(33, 150, 243);
+
+		public EventData Event;
 
         public MasterViewController(IntPtr handle) : base(handle)
         {
@@ -29,7 +30,7 @@ namespace App12
             base.ViewDidLoad();
 
             //  Create datastream
-            TableView.Source = dataSource = new TableSource(this, DataAccess.GetEvents(Day));
+            TableView.Source = dataSource = new TableSource(this, Day);
             TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             //this.NavigationController.NavigationBar.BarTintColor = UIColor.Purple;
             
@@ -37,55 +38,51 @@ namespace App12
 
         }
         public DateTime Day;
-        
-        
-        public DateTime GetDay ()
-        {
-            return Day;
-        }
+
+		public override void ViewWillAppear(bool animated)
+		{
+			base.ViewWillAppear(animated);
+			//TableView.ReloadData();
+		}
+       
 
 		//	Unwind from cancel to Main Agenda
 		[Action("UnwindToMasterViewController:")]
 		public void UnwindToMasterViewController(UIStoryboardSegue segue)
 		{
 		}
-        public string tempDesc, tempImage;
-        public DateTime tempStart, tempEnd;
-        public int tempID;
+
         public bool[] daysActive = new bool [7];
 		[Action("UnwindToNewEvent:")]
 		public void UnwindToNewEvent(UIStoryboardSegue segue)
 		{
 			var segueData = (UITableViewController)segue.SourceViewController;
-			if (tempIndexPath != null)  //  Edit event
+			if (tempIndexPath != null)  
 			{
-				EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempID, tempImage, daysActive);
-                Console.WriteLine("Image Path (From Master): " + tempImage);
-                dataSource.EditItem(tempIndexPath.Row, newEvent);
-                //TableView.BeginUpdates();
-                //TableView.EndUpdates();
-                TableView.ReloadData();
-				//TableView.ReloadRows(new NSIndexPath[] { tempIndexPath}, UITableViewRowAnimation.Automatic);
+				//	Edit existing event
+                dataSource.EditItem(tempIndexPath.Row, Event);
 				tempIndexPath = null;
+
 			}
 			else 
-			{// Create New Event
-                
-                EventData newEvent = new EventData(tempTitleFieldText, tempDesc, tempStart, tempEnd, tempImage, daysActive);
-
-                Console.WriteLine("Image Path: " + tempImage);
-                dataSource.AddItem(newEvent);
-                TableView.ReloadData();
+			{
+				// Create New Event
+                dataSource.AddItem(Event);
 			}
+			dataSource.ReloadSourceData();
+			TableView.ReloadData();
+
+			//TableView.ReloadData();
 		}
 
 		[Action("DeleteEvent:")]
 		public void DeleteEvent(UIStoryboardSegue segue) 
 		{
 
-			dataSource.DeleteItem(tempID, tempIndexPath);
+			dataSource.DeleteItem(Event.ID, tempIndexPath);
 			tempIndexPath = null;
 			TableView.ReloadData();
+
 		}
         
 
@@ -104,19 +101,10 @@ namespace App12
 			{
                 base.PrepareForSegue(segue, sender);
                 var indexPath = TableView.IndexPathForSelectedRow;
-                var item = dataSource.tableItems[indexPath.Row];
                 var transferdata = segue.DestinationViewController as EditEventController;
 
 				transferdata.currentTableCell = indexPath;
-                transferdata.startDateEdit = RootViewController.isEditingEnabled;
-                transferdata.endDateEdit = RootViewController.isEditingEnabled;
-                transferdata.ID = item.ID;
-                transferdata.titleFieldText = item.Title;
-                transferdata.descFieldText = item.Desc;
-                transferdata.startTime = item.Start;
-                transferdata.endTime = item.End;
-                transferdata.imagePath = item.Image;
-				transferdata.tableItems = item.getTableItems();
+                transferdata.Event = dataSource.tableItems[indexPath.Row];
             }
         }
     }

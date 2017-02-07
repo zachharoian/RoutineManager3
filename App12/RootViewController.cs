@@ -31,7 +31,7 @@ namespace App12
             base.ViewDidLoad();
             
             NavigationController.NavigationBar.BarTintColor = UIColor.White;
-            NavigationController.NavigationBar.TintColor = UIColor.Red;
+			NavigationController.NavigationBar.TintColor = UIColor.Purple;
             ModelController = new ModelController();
             PageViewController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll, UIPageViewControllerNavigationOrientation.Horizontal);
             PageViewController.WeakDelegate = this;
@@ -53,8 +53,21 @@ namespace App12
 				PerformSegue("consentForm", null);
 
 
-
         }
+
+
+		public override void ViewWillAppear(bool animated)
+		{
+			base.ViewWillAppear(animated);
+			PageViewController = new UIPageViewController(UIPageViewControllerTransitionStyle.Scroll, UIPageViewControllerNavigationOrientation.Horizontal);
+			PageViewController.WeakDelegate = this;
+			var startingViewController = ModelController.GetViewController(segmentIndex, Storyboard);
+			var viewController = new UIViewController[] { startingViewController };
+			PageViewController.SetViewControllers(viewController, UIPageViewControllerNavigationDirection.Forward, false, null);
+			PageViewController.DataSource = null;
+			AddChildViewController(PageViewController);
+			View.AddSubview(PageViewController.View);
+		}
 
         void valueChange(object sender, EventArgs ea) {
             var futureViewController = ModelController.GetViewController((int)segmentedControl.SelectedSegment, Storyboard);

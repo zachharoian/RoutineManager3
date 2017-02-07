@@ -7,20 +7,15 @@ namespace App12
     public partial class EditEventController : UITableViewController
     {
         //  Variables for data transfer for creating a new event.
-        //  Variables for data transfer for creating a new event.
-		public string titleFieldText, descFieldText, imagePath;
-        public DateTime startTime, endTime;
-        public int ID;
+		public EventData Event;
         public UIColor backgroundColor;
 
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
-        public bool startDateEdit = true;
-        public bool endDateEdit = true;
         bool startDatePickerHidden = true;
         bool endDatePickerHidden = true;
         bool startDatePickerTextChanged = false;
         bool endDatePickerTextChanged = false;
-
+		public string repeatSubtitle;
         //  ---------------------------------
         //  NewEventController(): Constructor used for UI Construction
         //  ---------------------------------
@@ -38,13 +33,12 @@ namespace App12
             //  View did load command.
             base.ViewDidLoad();
 
-            //this.NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
-            titleField.Text = titleFieldText;
-            descField.Text = descFieldText;
-            startDatePicker.SetDate(DateTimeToNSDate(startTime), false);
-            endDatePicker.SetDate(DateTimeToNSDate(endTime), false);
+			titleField.Text = Event.Title;
+			descField.Text = Event.Desc;
+            startDatePicker.SetDate(DateTimeToNSDate(Event.Start), false);
+            endDatePicker.SetDate(DateTimeToNSDate(Event.End), false);
+			tableItems = Event.getTableItems(false);
 
-            //toggleStartDatePicker();
             startDatePicker.MinuteInterval = 5;
             endDatePicker.MinuteInterval = 5;
             
@@ -62,9 +56,66 @@ namespace App12
                 titleField.Enabled = false;
                 descField.Editable = false;
             }
-        }// END ViewDidLoad()
-        
-        public NSDate DateTimeToNSDate (DateTime date)
+			tableItems = Event.getTableItems(true);
+        	repeatSubtitle = OverviewReturn();
+			repeatText.Text = repeatSubtitle;
+		}// END ViewDidLoad()
+
+		public override void ViewDidAppear(bool animated)
+		{
+			base.ViewDidAppear(animated);
+			repeatText.Text = OverviewReturn();
+			TableView.ReloadData();
+		}
+		public string OverviewReturn()
+		{
+			if (tableItems[0] == true)
+				return "Never";
+			if (tableItems[1] == true && tableItems[7] == true)
+			{
+				int count = 0;
+				for (int i = 2; i < 7; i++)
+				{
+					if (tableItems[i] == false)
+						count++;
+				}
+				if (count == 5)
+					return "Weekends";
+				if (count == 0)
+					return "Everyday";
+			}
+			else if (tableItems[1] == false && tableItems[7] == false)
+			{
+				int count = 0;
+				for (int i = 2; i < 7; i++)
+				{
+					if (tableItems[i] == true)
+						count++;
+				}
+				if (count == 5)
+					return "Weekdays";
+			}
+			if (tableItems[0] == false)
+			{
+				int count = 0;
+				string day = "";
+				for (int i = 1; i < 8; i++)
+				{
+					if (tableItems[i] == true)
+					{
+						count++;
+						day = RepeatEditViewController.tableNames[i];
+					}
+				}
+				if (count == 1)
+					return day + "s";
+			}
+			return "Custom";
+
+		}
+
+
+		public NSDate DateTimeToNSDate (DateTime date)
         {
             DateTime newDate = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0));
             return NSDate.FromTimeIntervalSinceReferenceDate((date - newDate).TotalSeconds);
@@ -95,7 +146,7 @@ namespace App12
         //  ---------------------------------
         public void toggleStartDatePicker()
 		{
-            if (startDateEdit == true)
+			if (RootViewController.isEditingEnabled == true)
             {
                 //  Toggle visibilty
                 startDatePickerHidden = !startDatePickerHidden;
@@ -121,7 +172,7 @@ namespace App12
         //  ---------------------------------
         public void toggleEndDatePicker()
         {
-            if (endDateEdit == true)
+            if (RootViewController.isEditingEnabled == true)
             {
 
                 //  Toggle visiblity
@@ -260,9 +311,7 @@ namespace App12
         }
 
 		public NSIndexPath currentTableCell;
-
-		public bool[] tableItems = new bool[8];
-
+		public bool[] tableItems;
         //  ---------------------------------
         //  PrepareForSegue(): Save the date and transfer it back to the main screen to create a new event
         //  ---------------------------------
@@ -273,52 +322,42 @@ namespace App12
 			if (segue.Identifier != "repeatSegue")
 			{
 				//  Save the text from the Title Field
-				titleFieldText = titleField.Text;
+				Event.Title = titleField.Text;
 
 				//  If the Title Field is null, set it to "New Event"
-				if (titleFieldText == "")
-					titleFieldText = "New Event";
+				if (Event.Title == "")
+					Event.Title = "New Event";
 
-				imagePath = FindImage.ParseForImage(titleFieldText);
+				Event.Image = FindImage.ParseForImage(Event.Title);
 
 				//  Save the text from the Description Field
-				descFieldText = descField.Text;
+				Event.Desc = descField.Text;
 
 				//  Save the NSDate from Start Date Picker and convert it to DateTime
-				startTime = NSDateToDateTime(startDatePicker.Date);
+				Event.Start = NSDateToDateTime(startDatePicker.Date);
 
 				//  Save the NSDate from End Date Picker and convert it to DateTime
-				endTime = NSDateToDateTime(endDatePicker.Date);
+				Event.End = NSDateToDateTime(endDatePicker.Date);
 
+				bool[] tempArray = new bool[7];
+				for (int i = 1; i < 8; i++)
+				{
+					tempArray[i - 1] = tableItems[i];
+				}
+
+				Event.convertSevenItemArray(tempArray);
 				//  Create the transfer path to the Main controller
 				var transferdata = segue.DestinationViewController as MasterViewController;
 
-				//  Transfer ID to Main
-				transferdata.tempID = ID;
-
-				//  Transfer the Title Field to Main
-				transferdata.tempTitleFieldText = titleFieldText;
-
-				//  Transfer the Description Field to Main
-				transferdata.tempDesc = descFieldText;
-
-				//  Transfer the Start Date Picker to Main
-				transferdata.tempStart = startTime;
-
-				//  Transfer the End Date Picker to Main
-				transferdata.tempEnd = endTime;
-
-				transferdata.tempImage = imagePath;
-				Console.WriteLine("EditEvent Sends: " + imagePath + " from " + titleFieldText);
-
-				transferdata.daysActive = tableItems;
+				transferdata.Event = Event;
 
 				transferdata.tempIndexPath = currentTableCell;
 			}
 			else
 			{
-				var transferdata = segue.DestinationViewController as RepeatViewController;
-				transferdata.tableItems =  tableItems;
+				var transferdata = segue.DestinationViewController as RepeatEditViewController;
+				tableItems = Event.getTableItems(true);
+				transferdata.controller = this;
 			}
         }// END PrepareForSegue()
     }// END NewEventController

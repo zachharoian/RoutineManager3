@@ -55,15 +55,15 @@ namespace App12
             ContentView.AddSubviews(new UIView[] {card, title, desc, time, imageView});
         }
 
-        public void UpdateCell(string tempTitle, string tempDesc, DateTime start, DateTime end, string tempImage)
+        public void UpdateCell(EventData obj)
         {
             
-            title.Text = tempTitle;
-            desc.Text = tempDesc;
-            time.Text = start.ToShortTimeString() + " - " + end.ToShortTimeString();
+            title.Text = obj.Title;
+            desc.Text = obj.Desc;
+            time.Text = obj.Start.ToShortTimeString() + " - " + obj.End.ToShortTimeString();
             try
             {
-                imageView.Image = UIImage.FromFile(tempImage);
+                imageView.Image = UIImage.FromFile(obj.Image);
             }
             catch
             {

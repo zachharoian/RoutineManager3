@@ -7,10 +7,8 @@ namespace App12
 {
     public partial class NewEventController : UITableViewController
     {
-        //  Variables for data transfer for creating a new event.
-		string titleFieldText, descFieldText;
-        DateTime startTime, endTime;
-
+		//  Variables for data transfer for creating a new event.
+		public EventData Event;
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDatePickerHidden = true;
         bool endDatePickerHidden = true;
@@ -36,10 +34,11 @@ namespace App12
             //  View did load command.
             base.ViewDidLoad();
 
-            this.NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
-
+			//NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
+			NavigationController.NavigationBar.TintColor = UIColor.Purple;
             //toggleStartDatePicker();
-            startDatePicker.MinuteInterval = 5;
+			//TODO:  Change back to 5 and allow date selection
+            startDatePicker.MinuteInterval = 1;
             endDatePicker.MinuteInterval = 5;
             NSCalendar calendar = NSCalendar.CurrentCalendar;
             NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = 10, Minute = 0, Second = 0 };
@@ -96,7 +95,7 @@ namespace App12
                     if (tableItems[i] == true)
                     {
                         count++;
-                        day = RepeatViewController.tableNames[i];
+                        day = RepeatNewViewController.tableNames[i];
                     }
                 }
                 if (count == 1)
@@ -131,9 +130,6 @@ namespace App12
         //  ---------------------------------
         public void toggleStartDatePicker()
 		{
-            //  Create the path for the cell
-            NSIndexPath[] rows = new NSIndexPath[]{ NSIndexPath.FromRowSection(2,0)};
-
             //  Toggle visibilty
             startDatePickerHidden = !startDatePickerHidden;
 
@@ -156,10 +152,7 @@ namespace App12
         //  toggleEndDatePicker(): Flips the state of the End Date Picker
         //  ---------------------------------
         public void toggleEndDatePicker()
-        {
-            //  Create the path for the cell
-            NSIndexPath[] rows = new NSIndexPath[]{NSIndexPath.FromRowSection(4,0)};
-
+		{
             //  Toggle visiblity
             endDatePickerHidden = !endDatePickerHidden;
 
@@ -302,57 +295,50 @@ namespace App12
             //  Call the prepare for segue method
             base.PrepareForSegue(segue, sender);
 			//Console.WriteLine("test");
-			if (segue.Identifier != "repeatSegueFromAdd")
+			if (segue.Identifier != "repeatSegue" && segue.Identifier != "unwindFromCancel")
 			{
+				Event = new EventData();
 				//  Save the text from the Title Field
-				titleFieldText = titleField.Text;
-                
-				//  If the Title Field is null, set it to "New Event"
-				if (titleFieldText == "")
-					titleFieldText = "New Event";
+				Event.Title = titleField.Text;
 
-				string Image = FindImage.ParseForImage(titleFieldText);
+				//  If the Title Field is null, set it to "New Event"
+				if (Event.Title == "")
+					Event.Title = "New Event";
+
+				Event.Image = FindImage.ParseForImage(Event.Title);
 
 				//  Save the text from the Description Field
-				descFieldText = descField.Text;
+				Event.Desc = descField.Text;
 
 				//  Save the NSDate from Start Date Picker and convert it to DateTime
-				startTime = NSDateToDateTime(startDatePicker.Date);
+				Event.Start = NSDateToDateTime(startDatePicker.Date);
 
 				//  Save the NSDate from End Date Picker and convert it to DateTime
-				endTime = NSDateToDateTime(endDatePicker.Date);
+				Event.End = NSDateToDateTime(endDatePicker.Date);
+
+				bool[] tempArray = new bool[7];
+				for (int i = 1; i < 8; i++)
+				{
+					tempArray[i - 1] = tableItems[i];
+				}
+
+				Event.convertSevenItemArray(tempArray);
 
 				//  Create the transfer path to the Main controller
 				var transferdata = segue.DestinationViewController as MasterViewController;
 
 				//  Transfer the Title Field to Main
-				transferdata.tempTitleFieldText = titleFieldText;
+				transferdata.Event = Event;
 
-				//  Transfer the Description Field to Main
-				transferdata.tempDesc = descFieldText;
+				Event.enableNotification();
+				Console.WriteLine("Enabled Notifications");
 
-				//  Transfer the Start Date Picker to Main
-				transferdata.tempStart = startTime;
-
-				//  Transfer the End Date Picker to Main
-				transferdata.tempEnd = endTime;
-
-				transferdata.tempImage = Image;
-
-                bool[] tempArray = new bool[7];
-                for (int i = 1; i < 8; i++)
-                {
-                    tempArray[i - 1] = tableItems[i];
-                    //Console.WriteLine(tempArray[i-1]);
-
-                }
-                transferdata.daysActive = tempArray;
+				transferdata.daysActive = tempArray;
 			}
-			
-			if (segue.Identifier == "repeatSegueFromAdd")
+			else if (segue.Identifier != "unwindFromCancel") 
 			{
-				var controller = segue.DestinationViewController as RepeatViewController;
-                controller.tableItems = tableItems;
+				var transferdata = segue.DestinationViewController as RepeatNewViewController;
+                transferdata.controller = this;
 			}
         }// END PrepareForSegue()
     }// END NewEventController

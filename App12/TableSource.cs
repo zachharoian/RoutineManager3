@@ -28,46 +28,36 @@ namespace App12
         //
         //  Constructor
         //
-        public TableSource(MasterViewController controller, List<EventData> currentEvents)
+        public TableSource(MasterViewController controller, DateTime tempDate)
         {
             //  Set the current view controller to the controller input
             this.controller = controller;
-            
-            tableItems = currentEvents;
-            
+			date = tempDate;
+			tableItems = DataAccess.GetEvents(date);
+
         }
 		//  END TableSource()
 
 		public void DeleteItem(int tempID, NSIndexPath path) 
 		{
-			var obj = tableItems.ElementAt(path.Row);
-			tableItems.Remove(obj);
+			//var obj = tableItems.ElementAt(path.Row);
+
+			var obj = DataAccess.GetObject(tempID);
 			DataAccess.DeleteObject(obj);
+			ReloadSourceData();
 		}
 
 
         public void EditItem(int index, EventData item)
         {
-            tableItems[index].Title = item.Title;
-            tableItems[index].Desc = item.Desc;
-            tableItems[index].Start = item.Start;
-            tableItems[index].End = item.End;
-            tableItems[index].ID = item.ID;
-            tableItems[index].Image = item.Image;
-            Console.WriteLine("TableSource thinks Image path from " + item.Title + " is " + item.Image);
             DataAccess.SaveObject(item);
             ReloadSourceData();
 		}
 
-        public void ReloadDate(DateTime tempDate)
+        public void ReloadSourceData()
         {
-            date = tempDate;
-            ReloadSourceData();
-        }
+			tableItems = DataAccess.GetEvents(date);
 
-        private void ReloadSourceData()
-        {
-            tableItems = DataAccess.GetEvents(date);
         }
 
 
@@ -76,8 +66,6 @@ namespace App12
         //
         public void AddItem(EventData item)
         {
-            //  Inserts the object into the index provided.
-            //tableItems.Insert(index, item);
             DataAccess.SaveObject(item);
             ReloadSourceData();
             
@@ -90,17 +78,17 @@ namespace App12
         //
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            var items = DataAccess.Count(date);
-            if (items == 0)
+            nint itemCount = DataAccess.Count(date);
+            if (itemCount == 0)
             {
                 UILabel noDataLabel = new UILabel(new CoreGraphics.CGRect(0, 0, tableview.Bounds.Width, tableview.Bounds.Height));
                 noDataLabel.Text = "No events today.";
-                noDataLabel.TextColor = UIColor.Black;
+                noDataLabel.TextColor = UIColor.DarkGray;
                 noDataLabel.TextAlignment = UITextAlignment.Center;
                 tableview.BackgroundView = noDataLabel;
             }
             //  Returns how many items are in the list.
-            return items;
+            return itemCount;
 
         }
         //  END RowsInSection()
@@ -111,47 +99,16 @@ namespace App12
         //
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
         {
-            // Return false if you do not want the specified item to be editable.
-            if (RootViewController.isEditingEnabled == true)
-                return true;
-            else
-                return false;
+			return false;
         }
         //  END CanEditRow()
 
-
-        //
-        //  Deletes/Inserts cells
-        //
-		/*
-        public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
-        {
-			
-            if (editingStyle == UITableViewCellEditingStyle.Delete)
-            {
-                EventData obj = tableItems[indexPath.Row];
-                // Delete the row from the data source.
-                DataAccess.DeleteObject(obj);
-                ReloadSourceData();
-                controller.TableView.DeleteRows(new[] { indexPath }, UITableViewRowAnimation.Fade);
-            }
-            else if (editingStyle == UITableViewCellEditingStyle.Insert)
-            {
-                // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-            }
-
-			base.CommitEditingStyle();
-        }
-        //  END CommitEditingStyle()
-        */
 
         //
         //  When the row is touched
         //
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-			//  Displays alert when touched - Replace with segue call?
-			//new UIAlertView("Hey!", "You touched " + tableItems[indexPath.Row].Title, null, "OK", null).Show();
 			controller.SegueToEdit();
             //  Unselect row when completed, and show an animation for it.
             tableView.DeselectRow(indexPath, true);
@@ -169,13 +126,10 @@ namespace App12
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(cellIdentifier) as AgendaCell;
-            //tableView.AllowsSelection = true;
             tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
             if (cell == null)
                 cell = new AgendaCell(cellIdentifier);
-            cell.UpdateCell(tableItems[indexPath.Row].Title, tableItems[indexPath.Row].Desc, tableItems[indexPath.Row].Start, tableItems[indexPath.Row].End, tableItems[indexPath.Row].Image);
-            Console.WriteLine("Image Path for " + tableItems[indexPath.Row].Title + " is: " + tableItems[indexPath.Row].Image);
-
+            cell.UpdateCell(tableItems[indexPath.Row]);
             
             return cell;
         }

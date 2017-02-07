@@ -114,13 +114,17 @@
     <Compile Include="NewEventController.designer.cs">
       <DependentUpon>NewEventController.cs</DependentUpon>
     </Compile>
-    <Compile Include="RepeatViewController.cs" />
-    <Compile Include="RepeatViewController.designer.cs">
-      <DependentUpon>RepeatViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConsentForm.cs" />
     <Compile Include="ConsentForm.designer.cs">
       <DependentUpon>ConsentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepeatEditViewController.cs" />
+    <Compile Include="RepeatEditViewController.designer.cs">
+      <DependentUpon>RepeatEditViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepeatNewViewController.cs" />
+    <Compile Include="RepeatNewViewController.designer.cs">
+      <DependentUpon>RepeatNewViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

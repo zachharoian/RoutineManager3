@@ -36,7 +36,7 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel repeatsSubtitle { get; set; }
+        UIKit.UILabel repeatText { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -89,9 +89,9 @@ namespace App12
                 endDateSubtitle = null;
             }
 
-            if (repeatsSubtitle != null) {
-                repeatsSubtitle.Dispose ();
-                repeatsSubtitle = null;
+            if (repeatText != null) {
+                repeatText.Dispose ();
+                repeatText = null;
             }
 
             if (startDatePicker != null) {

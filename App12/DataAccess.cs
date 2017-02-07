@@ -97,7 +97,8 @@ namespace App12
                 //  Creates the table for the data, if it doesn't exist already.
                 db.CreateTable<EventData>();
 
-
+				obj.Title = obj.Title.Replace("'", "''");
+				obj.Desc = obj.Desc.Replace("'", "''");
                 //  Inserts the object into the database.
                 if (obj.ID != 0)
                 {
@@ -114,7 +115,7 @@ namespace App12
                                           "', Thursday = '" + obj.Thursday + 
                                           "', Friday = '" + obj.Friday + 
                                           "', Saturday = '" + obj.Saturday + 
-                                          "', Where _id = '" + obj.ID + "'";
+                                          "' Where _id = '" + obj.ID + "'";
                     command.ExecuteNonQuery();
                     Console.WriteLine("Database updated");
                 }
@@ -130,88 +131,8 @@ namespace App12
 
         public static nint Count (DateTime Date)
         {
-            object locker = new object();
-            lock (locker)
-            {
-                //  Sets the database path
-                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
-
-                //  Connects to the database
-                var db = new SQLiteConnection(dbPath);
-
-                //  Creates the table for the data, if it doesn't exist already.
-                db.CreateTable<EventData>();
-
-                //  Inserts the object into the database.
-                List<EventData> tempList = db.Table<EventData>().ToList();
-                List<EventData> returnList = new List<EventData>();
-                IOrderedEnumerable<EventData> sortQuery =
-                    from EventData in tempList
-                    orderby EventData.Start //descending
-                    select EventData;
-
-                foreach (EventData EventData in sortQuery)
-                {
-                    int DayOftheWeek = (int)(Date.DayOfWeek);
-                    switch (DayOftheWeek)
-                    {
-                        
-                        case 0:
-                            if (EventData.Sunday == 1)
-                                returnList.Add(EventData);
-                            break;
-                        case 1:
-                            if (EventData.Monday == 1)
-                                returnList.Add(EventData);
-                            break;
-                        case 2:
-                            if (EventData.Tuesday == 1)
-                            {
-                                returnList.Add(EventData);
-                            }
-                            break;
-                        case 3:
-                            if (EventData.Wednesday == 1)
-                                returnList.Add(EventData);
-                            break;
-                        case 4:
-                            if (EventData.Thursday == 1)
-                                returnList.Add(EventData);
-                            break;
-                        case 5:
-                            if (EventData.Friday == 1)
-                                returnList.Add(EventData);
-                            break;
-                        case 6:
-                            if (EventData.Saturday == 1)
-                                returnList.Add(EventData);
-                            break;
-                        default:
-                            break;
-                        
-                    }
-                    if (EventData.Start.Date == Date.Date)
-                    
-                        returnList.Add(EventData);
-
-                    /*
-                    if (EventData.DaysActive[(int)(Date.DayOfWeek)] == true || EventData.Start.Date == Date.Date)
-                    {
-                        returnList.Add(EventData);
-                        Console.WriteLine("Event:" + EventData.Title + "\nTime: " + EventData.Start);
-                    }
-                    */
-                }
-                return tempList.Count;
-            }
-
-        }
-
-        public static List<EventData> GetEvents(DateTime Date)
-        {
-            List<EventData> tempList = new List<EventData>();
-            List<EventData> returnList = new List<EventData>();
-            //  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
+			List<EventData> returnList = new List<EventData>();
+			List<EventData> tempList = new List<EventData>();
             object locker = new object();
             lock (locker)
             {
@@ -226,78 +147,169 @@ namespace App12
 
                 //  Inserts the object into the database.
                 tempList = db.Table<EventData>().ToList();
-
+      
                 IOrderedEnumerable<EventData> sortQuery =
                     from EventData in tempList
                     orderby EventData.Start //descending
                     select EventData;
+
                 foreach (EventData EventData in sortQuery)
-                {                    
-                    int DayOftheWeek = (int)(Date.DayOfWeek);
-                    
-                    Console.WriteLine("DateoftheWeek = " + DayOftheWeek);
+                {
+                    int DayOftheWeek = (int)(Date.DayOfWeek)+1;
+					//Console.WriteLine("Day of the Week: " + DayOftheWeek);
+					//Console.WriteLine(EventData.Title + " - Sunday: " + EventData.Sunday);
                     switch (DayOftheWeek)
                     {
-                        case 0:
-                            int temp = EventData.Sunday;
+                        
+                        case 1:
                             if (EventData.Sunday == 1)
                                 returnList.Add(EventData);
+							//Console.WriteLine("Count: " + EventData.Sunday);
                             break;
-                        case 1:
+							
+                        case 2:
                             if (EventData.Monday == 1)
                                 returnList.Add(EventData);
                             break;
-                        case 2:
-                            if (EventData.Tuesday == 1)
-                            {
-                                returnList.Add(EventData);
-                                
-                            }
-                            break;
                         case 3:
+							if (EventData.Tuesday == 1)
+								returnList.Add(EventData);
+                            break;
+                        case 4:
                             if (EventData.Wednesday == 1)
                                 returnList.Add(EventData);
                             break;
-                        case 4:
+                        case 5:
                             if (EventData.Thursday == 1)
                                 returnList.Add(EventData);
                             break;
-                        case 5:
+                        case 6:
                             if (EventData.Friday == 1)
                                 returnList.Add(EventData);
                             break;
-                        case 6:
+                        case 7:
                             if (EventData.Saturday == 1)
                                 returnList.Add(EventData);
                             break;
+                            
                         default:
                             break;
-
-                    }
-                    
-
-                    if (EventData.Start.Date == Date.Date)
-                    
-                        returnList.Add(EventData);
                         
-                    /*
-                    Console.WriteLine(EventData.Title + ": Days Active");
-                    for (int i = 0; i < 7; i++)
-                    {
-                        Console.WriteLine("     "+EventData.DaysActive[i]);
                     }
-                    
-                    if (EventData.DaysActive[(int)(Date.DayOfWeek)] == true || EventData.Start.Date == Date.Date)
-                    {
-                        
-                        returnList.Add(EventData);
-                        Console.WriteLine("Event:" + EventData.Title + "\nTime: " + EventData.Start);
-                    }
-                    */
+					/*
+					if (EventData.Start.Date == Date.Date)
+						returnList.Add(EventData);
+						*/
                 }
 
             }
-            return tempList;
+			//Console.WriteLine("DataAccess Count: " + returnList.Count);
+			return returnList.Count;
+        }
+		public static EventData GetObject(int ID)
+		{
+			object locker = new object();
+			lock (locker)
+			{
+				//  Sets the database path
+				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+
+				//  Connects to the database
+				var db = new SQLiteConnection(dbPath);
+
+				//  Creates the table for the data, if it doesn't exist already.
+				db.CreateTable<EventData>();
+
+				return db.Get<EventData>(ID);
+			}
+		}
+
+        public static List<EventData> GetEvents(DateTime Date)
+        {
+            List<EventData> tempList = new List<EventData>();
+            List<EventData> returnList = new List<EventData>();
+            //  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
+            object locker = new object();
+            lock (locker)
+			{
+				//  Sets the database path
+				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+
+				//  Connects to the database
+				var db = new SQLiteConnection(dbPath);
+
+				//  Creates the table for the data, if it doesn't exist already.
+				db.CreateTable<EventData>();
+
+				//  Inserts the object into the database.
+				tempList = db.Table<EventData>().ToList();
+
+				IOrderedEnumerable<EventData> sortQuery =
+					from EventData in tempList
+					orderby EventData.Start //descending
+					select EventData;
+				foreach (EventData EventData in sortQuery)
+				{
+					int DayOftheWeek = (int)(Date.DayOfWeek)+1;
+					//Console.WriteLine("Get Events Day of Week: " + DayOftheWeek);
+					switch (DayOftheWeek)
+					{
+						case 1:
+							if (EventData.Sunday == 1)
+							{
+								returnList.Add(EventData);
+							}
+							break;
+							
+						case 2:
+							if (EventData.Monday == 1)
+							{
+								returnList.Add(EventData);
+
+							}
+							break;
+						case 3:
+							if (EventData.Tuesday == 1)
+							{
+								returnList.Add(EventData);
+							}
+							break;
+						case 4:
+							if (EventData.Wednesday == 1)
+							{
+								returnList.Add(EventData);
+							}
+							break;
+						case 5:
+							if (EventData.Thursday == 1)
+							{
+								returnList.Add(EventData);
+							}
+							break;
+						case 6:
+							if (EventData.Friday == 1)
+							{
+								returnList.Add(EventData);
+							}
+							break;
+						case 7:
+							if (EventData.Saturday == 1)
+							{
+								returnList.Add(EventData);
+							}
+							break;
+							
+						default:
+							break;
+
+					}
+					/*
+					if (EventData.Start.Date == Date.Date && returnList.Contains(EventData) == false)
+						returnList.Add(EventData);*/
+				}
+
+			}
+			return returnList;
         } 
 
         public static void DeleteObject (EventData obj)

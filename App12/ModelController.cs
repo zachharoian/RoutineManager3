@@ -38,7 +38,7 @@ namespace App12
         public int IndexOf(MasterViewController viewController)
         {   
             //  Finds the index of the specific page.
-            return pageData.IndexOf(viewController.GetDay());
+			return pageData.IndexOf(viewController.Day);
         }
 
         public override UIViewController GetNextViewController(UIPageViewController pageViewController, UIViewController referenceViewController)

@@ -13,6 +13,7 @@ namespace App12
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+			NavigationController.NavigationBar.TintColor = UIColor.Purple;
 
 			consentFormAccept.Clicked += clicked;
 		}
