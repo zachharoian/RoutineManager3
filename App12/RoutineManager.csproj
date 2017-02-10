@@ -6,9 +6,9 @@
     <ProjectGuid>{8EE0A914-9305-4D05-AB00-CDBAD52E2C67}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>App12</RootNamespace>
+    <RootNamespace>RoutineManager</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>App12</AssemblyName>
+    <AssemblyName>RoutineManager</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -102,9 +102,14 @@
     <Compile Include="RootViewController.designer.cs">
       <DependentUpon>RootViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsViewController.cs" />
+    <Compile Include="SettingsViewController.designer.cs">
+      <DependentUpon>SettingsViewController.cs</DependentUpon>
+    </Compile>
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="TableSource.cs" />
+    <Compile Include="UserNotificationCenterDelegate.cs" />
     <InterfaceDefinition Include="AgendaCell.xib" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist" />
@@ -223,6 +228,7 @@
     <BundleResource Include="Resources\timpani.png" />
     <BundleResource Include="Resources\violin.png" />
     <BundleResource Include="Resources\washer-machine.png" />
+    <BundleResource Include="Resources\settings--2- %282%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

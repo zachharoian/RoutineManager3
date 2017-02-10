@@ -38,10 +38,11 @@ namespace App12
 			NavigationController.NavigationBar.TintColor = UIColor.Purple;
             //toggleStartDatePicker();
 			//TODO:  Change back to 5 and allow date selection
-            startDatePicker.MinuteInterval = 1;
+            startDatePicker.MinuteInterval = 5;
             endDatePicker.MinuteInterval = 5;
             NSCalendar calendar = NSCalendar.CurrentCalendar;
-            NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = 10, Minute = 0, Second = 0 };
+            
+            NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Hour, Minute = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Minute, Second = 0 };
             startDatePicker.SetDate(calendar.DateFromComponents(comps), true);
             comps.Hour = comps.Hour + 1;
             endDatePicker.SetDate(calendar.DateFromComponents(comps), true);
@@ -50,8 +51,50 @@ namespace App12
             endDatePickerChanged();
             repeatSubtitle = OverviewReturn();
             repeatText.Text = repeatSubtitle;
+            if (descField.Text.Equals("") == true || descField.Text.Equals("Description") == true)
+            {
+                descField.Text = "Description";
+                descField.TextColor = UIColor.Gray;
+            }
+            descField.Started += EditingStarted;
+            descField.Ended += EditingEnded;
+
+            tableItems[(int)DateTime.Now.DayOfWeek] = true;
         }// END ViewDidLoad()
 
+         DateTime RoundUp(NSDate dt, TimeSpan d)
+         {
+             DateTime ns = NSDateToDateTime(dt);
+             DateTime time = new DateTime(((ns.Ticks + d.Ticks - 1) / d.Ticks) * d.Ticks);
+             return time;
+        }
+         
+
+        public NSDate ConvertDateTimeToNSDate(DateTime date)
+        {
+            DateTime newDate = TimeZone.CurrentTimeZone.ToLocalTime(
+                new DateTime(2001, 1, 1, 0, 0, 0));
+            return NSDate.FromTimeIntervalSinceReferenceDate(
+                (date - newDate).TotalSeconds);
+        }
+
+        void EditingStarted(object sender, EventArgs ea)
+        {
+            if (descField.Text.Equals("Description") == true)
+            {
+                descField.Text = "";
+                descField.TextColor = UIColor.Black;
+            }
+        }
+
+        void EditingEnded(object sender, EventArgs ea)
+        {
+            if (descField.Text.Equals("") == true)
+            {
+                descField.Text = "Description";
+                descField.TextColor = UIColor.Gray;
+            }
+        }
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
@@ -112,6 +155,7 @@ namespace App12
 		{
             //  Convert the Date Picker information into a string and set it to the subtitle field of the cell.
 			startDateSubtitle.Text = NSDateFormatter.ToLocalizedString(startDatePicker.Date, NSDateFormatterStyle.None, NSDateFormatterStyle.Short);
+            
 		}// END startDatePickerChanged()
 
 
@@ -174,9 +218,9 @@ namespace App12
         //  ---------------------------------
         //  UpdateStartDatePicker: An action to tell when the Start Date Picker changes value.
         //  ---------------------------------
-        [Export ("UpdateStartDatePicker:")]
-		void UpdateStart(UIStoryboardSegue segue)
-		{
+        [Export("UpdateStartDatePicker:")]
+        void UpdateStart(UIStoryboardSegue segue)
+        {
             //  Updates the subtitle text
             startDatePickerChanged();
 
@@ -185,11 +229,15 @@ namespace App12
 
             //  If the Start date is after the End date, strike out the date. Else, unstrike the other if it is no longer an offender.
             if (startDatePicker.Date.SecondsSinceReferenceDate > endDatePicker.Date.SecondsSinceReferenceDate)
+            { 
                 startDateSubtitle.AttributedText = new NSAttributedString(tempText, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.Single });
+                buttonSave.Enabled = false;
+            }
             else
             {
                 string tempTextEnd = endDateSubtitle.Text;
                 endDateSubtitle.AttributedText = new NSAttributedString(tempTextEnd, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.None });
+                buttonSave.Enabled = true;
             }
         }// END UpdateStart()
 
@@ -208,11 +256,15 @@ namespace App12
 
             //  If the Start date is after the End date, strike out the date. Else, unstrike the other if it is no longer an offender.
             if (startDatePicker.Date.SecondsSinceReferenceDate > endDatePicker.Date.SecondsSinceReferenceDate)
+            {
                 endDateSubtitle.AttributedText = new NSAttributedString(tempText, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.Single });
+                buttonSave.Enabled = false;
+            }
             else
             {
                 string tempTextStart = startDateSubtitle.Text;
                 startDateSubtitle.AttributedText = new NSAttributedString(tempTextStart, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.None });
+                buttonSave.Enabled = true;
             }
         }// END UpdateEnd()
 
@@ -283,7 +335,7 @@ namespace App12
             return reference.AddSeconds(date.SecondsSinceReferenceDate);
         }
 
-        public bool[] tableItems = new bool[8] { true, false, false, false, false, false, false, false };
+        public bool[] tableItems = new bool[8];
 
         
 

@@ -1,27 +1,39 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-//  Database Package
+using System.IO;
 using SQLite;
 
-//  File System Access Package
-using System.IO;
 
 namespace App12
 {
     //
     //
-    //  Database Access
+    //  Database Access: Allows data to be stored after the application is closed.
     //
     //
     public class DataAccess
-    {   
-        //  Database path
-        public static string dbPath { get; set; }
+    {
+         #region Key Class
+        //
+        //  Key: An int value that saves the decision for the consent form
+        //
+        private class Key
+        {
+            //  ID column for the database that autoincrements
+            [PrimaryKey, AutoIncrement, Column("ID")]
+            public int ID { get; set; }
+            //  0 is false, 1 is true.
+            public int ConsentFormComfirmation { get; set; }
+        }
+        #endregion
 
-		public static bool GetKey()
+        #region Get ConsentForm Key
+        //
+        //  GetKey(): Retrieves the Consent Form key upon application launch to ensure 
+        //            the consent form has been accepted.
+        //
+        public static bool GetKey()
 		{
 			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
 			object locker = new object();
@@ -29,35 +41,38 @@ namespace App12
 			{
 				//  Sets the database path
 				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
-
-				//  Connects to the database
-				var db = new SQLiteConnection(dbPath);
+                //  Connects to the database
+                var db = new SQLiteConnection(dbPath);
+                //  Finds the table, creates it if it doesn't exist
 				db.CreateTable<Key>();
+
+                //  Creates a key to be saved
 				Key obj;
 				try
 				{
+                    //  If the key is retrieved, set it.
 					obj = db.Get<Key>(1);
 				}
 				catch 
 				{
+                    //  If it failed, create a new key and set it to false.
 					obj = new Key { ConsentFormComfirmation = 0 };
 				}
 
-				if (obj.ConsentFormComfirmation == 1)
-					return true;
-				else
-					return false;
-
+                //  If the key is true, return that consent has been confirmed. Else, it hasn't been confirmed.
+                if (obj.ConsentFormComfirmation == 1)
+                    return true;
+                else
+                    return false;
 			}
 		}
-		class Key
-		{
-			[PrimaryKey, AutoIncrement, Column("ID")]
-			public int ID { get; set; }
-			public int ConsentFormComfirmation { get; set;}
-		}
+        #endregion
 
-		public static void SaveKey()
+        #region Save ConsentForm Key
+        //
+        //  SaveKey(): Saves the ConsentForm Key to the database.
+        //
+        public static void SaveKey()
 		{
 			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
 			object locker = new object();
@@ -65,11 +80,10 @@ namespace App12
 			{
 				//  Sets the database path
 				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
-
-				//  Connects to the database
-				var db = new SQLiteConnection(dbPath);
-
-				db.CreateTable<Key>();
+                //  Connects to the database
+                var db = new SQLiteConnection(dbPath);
+                //  Finds the table, creates it if it doesn't 
+                db.CreateTable<Key>();
 				int temp;
 				if (RootViewController.consentComfirmed == true)
 					temp = 1;
@@ -78,6 +92,7 @@ namespace App12
 				db.Insert(new Key { ConsentFormComfirmation = temp} );
 			}
 		}
+        #endregion
 
         //
         //  Saves the object in the database
@@ -223,6 +238,36 @@ namespace App12
 				return db.Get<EventData>(ID);
 			}
 		}
+
+        public static EventData GetNotification(string Title, string Desc, Foundation.NSDate Start)
+        {
+            object locker = new object();
+            lock (locker)
+            {
+                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+
+                var db = new SQLiteConnection(dbPath);
+
+                db.CreateTable<EventData>();
+
+                var tempList = db.Table<EventData>().ToList();
+
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    if(tempList[i].Title.Equals(Title) == true && tempList[i].Desc.Equals(Desc) == true)
+                    {
+                        return tempList[i];
+                    }
+                }
+                return null;
+            }
+        }
+        public static DateTime NSDateToDateTime(Foundation.NSDate date)
+        {
+            DateTime reference = TimeZone.CurrentTimeZone.ToLocalTime(
+                new DateTime(2001, 1, 1, 0, 0, 0));
+            return reference.AddSeconds(date.SecondsSinceReferenceDate);
+        }
 
         public static List<EventData> GetEvents(DateTime Date)
         {

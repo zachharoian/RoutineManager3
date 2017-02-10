@@ -20,11 +20,11 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIBarButtonItem enableEditButton { get; set; }
+        UIKit.UISegmentedControl segmentedControl { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UISegmentedControl segmentedControl { get; set; }
+        UIKit.UIBarButtonItem settingsButton { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
@@ -33,14 +33,14 @@ namespace App12
                 addButton = null;
             }
 
-            if (enableEditButton != null) {
-                enableEditButton.Dispose ();
-                enableEditButton = null;
-            }
-
             if (segmentedControl != null) {
                 segmentedControl.Dispose ();
                 segmentedControl = null;
+            }
+
+            if (settingsButton != null) {
+                settingsButton.Dispose ();
+                settingsButton = null;
             }
         }
     }

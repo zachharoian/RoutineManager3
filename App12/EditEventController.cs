@@ -50,16 +50,46 @@ namespace App12
             {
                 titleField.Enabled = true;
                 descField.Editable = true;
+                buttonSave.Enabled = true;
+                buttonSave.TintColor = null;
             }
             else
             {
                 titleField.Enabled = false;
                 descField.Editable = false;
+                buttonSave.Enabled = false;
+                buttonSave.TintColor = UIColor.Clear;
             }
 			tableItems = Event.getTableItems(true);
         	repeatSubtitle = OverviewReturn();
 			repeatText.Text = repeatSubtitle;
+            if (descField.Text.Equals("") == true)
+            {
+                descField.Text = "Description";
+                descField.TextColor = UIColor.Gray;
+            }
+            descField.Started += EditingStarted;
+            descField.Ended += EditingEnded;
 		}// END ViewDidLoad()
+
+
+        void EditingStarted (object sender, EventArgs ea)
+        {
+            if (descField.Text.Equals("Description") == true)
+            {
+                descField.Text = "";
+                descField.TextColor = UIColor.Black;
+            }
+        }
+
+        void EditingEnded (object sender, EventArgs ea)
+        {
+            if(descField.Text.Equals("") == true)
+            {
+                descField.Text = "Description";
+                descField.TextColor = UIColor.Gray;
+            }
+        }
 
 		public override void ViewDidAppear(bool animated)
 		{
@@ -291,7 +321,7 @@ namespace App12
             else if (indexPath.Section == 0 && ((indexPath.Row == 2 && startDatePickerHidden == false) || (indexPath.Row == 4 && endDatePickerHidden == false)))
                 return 216;
             //  Else, return the standard row height
-            else if (indexPath.Section == 2 && RootViewController.isEditingEnabled == false)
+            else if ((indexPath.Section == 2 || indexPath.Section == 3 )&&RootViewController.isEditingEnabled == false)
                 return 0;
             else
                 return base.GetHeightForRow(tableView, indexPath);
@@ -327,6 +357,11 @@ namespace App12
 				//  If the Title Field is null, set it to "New Event"
 				if (Event.Title == "")
 					Event.Title = "New Event";
+
+                if (descField.Text.Equals("Description") == true)
+                {
+                    descField.Text = "";
+                }
 
 				Event.Image = FindImage.ParseForImage(Event.Title);
 

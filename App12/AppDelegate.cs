@@ -17,31 +17,30 @@ namespace App12
             set;
         }
 
-        
-
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            // Override point for customization after application launch.
-            // If not required for your application you can safely delete this method
-
-            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) =>
-            {
-                //  Handle approval
+            //  Ask for Notification access
+            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) => {
+                // Handle approval
+            });
+            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Sound, (approved, err) => {
+                // Handle approval
             });
 
-            UNUserNotificationCenter.Current.GetNotificationSettings((settings) =>
-           {
-               var alertsAllowed = (settings.AlertSetting == UNNotificationSetting.Enabled);
-           });
+            //  Check if the notifications are still allowed.
+            UNUserNotificationCenter.Current.GetNotificationSettings((settings) => {
+                var alertsAllowed = (settings.AlertSetting == UNNotificationSetting.Enabled);
+            });
+            UNUserNotificationCenter.Current.GetNotificationSettings((settings) => {
+                var soundsAllowed = (settings.SoundSetting == UNNotificationSetting.Enabled);
+            });
 
-            // Code to start the Xamarin Test Cloud Agent
-#if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
-#endif
+            //  Set the notification center delegate to the custom delegate
+            UNUserNotificationCenter.Current.Delegate = new UserNotificationCenterDelegate();
 
             return true;
         }
-
+        #region Unused overrides
         public override void OnResignActivation(UIApplication application)
         {
             // Invoked when the application is about to move from active to inactive state.
@@ -72,6 +71,7 @@ namespace App12
         {
             // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
         }
+        #endregion
     }
 }
 

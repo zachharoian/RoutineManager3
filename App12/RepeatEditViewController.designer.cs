@@ -1,4 +1,4 @@
-// WARNING
+﻿// WARNING
 //
 // This file has been generated automatically by Xamarin Studio from the outlets and
 // actions declared in your storyboard file.
@@ -14,16 +14,8 @@ namespace App12
     [Register ("RepeatEditViewController")]
     partial class RepeatEditViewController
     {
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIBarButtonItem saveButton { get; set; }
-
         void ReleaseDesignerOutlets ()
         {
-            if (saveButton != null) {
-                saveButton.Dispose ();
-                saveButton = null;
-            }
         }
     }
 }

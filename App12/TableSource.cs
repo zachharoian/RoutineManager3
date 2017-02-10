@@ -82,7 +82,17 @@ namespace App12
             if (itemCount == 0)
             {
                 UILabel noDataLabel = new UILabel(new CoreGraphics.CGRect(0, 0, tableview.Bounds.Width, tableview.Bounds.Height));
-                noDataLabel.Text = "No events today.";
+                if (controller.Day.DayOfWeek == DateTime.Now.DayOfWeek)
+                {
+                    noDataLabel.Text = "No events today.";
+                }else if(controller.Day.DayOfWeek == DateTime.Now.AddDays(1).DayOfWeek)
+                {
+                    noDataLabel.Text = "No events tomorrow.";
+                }
+                else
+                {
+                    noDataLabel.Text = "No events on " + controller.Day.DayOfWeek.ToString() + ".";
+                }
                 noDataLabel.TextColor = UIColor.DarkGray;
                 noDataLabel.TextAlignment = UITextAlignment.Center;
                 tableview.BackgroundView = noDataLabel;

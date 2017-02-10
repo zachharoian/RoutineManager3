@@ -25,26 +25,60 @@ namespace App12
 		public int Thursday { get; set; }
 		public int Friday { get; set; }
 		public int Saturday { get; set; }
-		UNMutableNotificationContent content = new UNMutableNotificationContent();
+
+        public int Displayed { get; set; } = 0;
 
 		public void enableNotification()
 		{
-			content.Title = Title;
-			content.Body = Desc;
-			NSDateComponents comps = ConvertDateTimeToNSDate(Start);
-			var trigger = UNCalendarNotificationTrigger.CreateTrigger(comps, false);
+            var actionID = "reply";
+            var title = "Reply";
+            var action = UNNotificationAction.FromIdentifier(actionID, title, UNNotificationActionOptions.None);
 
-			var requestID = Title;
-			var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
-			UNUserNotificationCenter.Current.AddNotificationRequest(request, (NSError obj) => {
-				if (obj != null)
-				{
-					Console.WriteLine("Failed to add: " + obj);
-				}
-				});
-		}
+            var categoryID = "message";
+            var actions = new UNNotificationAction[] { action };
+            var intentIDs = new string[] { };
+            var categoryOptions = new UNNotificationCategoryOptions[] { };
+            var category = UNNotificationCategory.FromIdentifier(categoryID, actions, intentIDs, UNNotificationCategoryOptions.None);
 
-		private NSDateComponents ConvertDateTimeToNSDate(DateTime date)
+            var attachmentID = "image";
+            var options = new UNNotificationAttachmentOptions();
+            NSUrl imagePath;
+            try
+            {
+                imagePath = NSUrl.FromFilename(Image);
+            }
+            catch
+            {
+                imagePath = NSUrl.FromFilename("alarm.png");
+            }
+            NSError error;
+            var attachment = UNNotificationAttachment.FromIdentifier(attachmentID, imagePath, options, out error);
+
+            var content = new UNMutableNotificationContent();            
+            content.Title = Title;
+            content.Body = Desc;
+            content.CategoryIdentifier = "message";
+            content.Attachments = new UNNotificationAttachment[] { attachment };
+            content.Sound = UNNotificationSound.Default;
+            var trigger = UNCalendarNotificationTrigger.CreateTrigger(ConvertDateTimeToNSDate(Start), false);
+
+            var requestID = "sampleRequest";
+            var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
+
+            UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { Console.WriteLine(err); });
+            Console.WriteLine("Displayed? "  + Displayed);
+            if (Displayed == 0 && DateTime.Now.Day == trigger.DateComponents.Day )
+            {
+                Displayed = 1;
+            } else
+            {
+                Displayed = 0;
+            }
+            Console.WriteLine("Displayed? "+ Displayed);
+
+        }
+
+        private NSDateComponents ConvertDateTimeToNSDate(DateTime date)
 		{
 			NSDateComponents comps = new NSDateComponents();
 			bool[] days = getTableItems(false);
@@ -63,7 +97,19 @@ namespace App12
 				tempDay = date;
 			}
 			else {
-				for (int i = (int)DateTime.Now.DayOfWeek; i != ((int)DateTime.Now.DayOfWeek - 1); i++)
+                DateTime j;
+                if (Displayed == 1)
+                {
+                    Console.WriteLine("Add days");
+                    j = DateTime.Now.AddDays(1);
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Didn't add days");
+                    j = DateTime.Now;
+                }
+				for (int i = (int)j.DayOfWeek; i != ((int)DateTime.Now.DayOfWeek - 1); i++)
 				{
 					Console.WriteLine("i: " + i);
 					if (i >= 7)
@@ -73,17 +119,18 @@ namespace App12
 					if (days[i] == true)
 					{
 						Console.WriteLine(DateTime.Now.Hour.CompareTo(date.Hour) +" and "+ DateTime.Now.Minute.CompareTo(date.Minute));
-						if (i == (int)DateTime.Now.DayOfWeek && ((DateTime.Now.Hour.CompareTo(date.Hour) < 0) || (DateTime.Now.Hour.CompareTo(date.Hour) == 0 && DateTime.Now.Minute.CompareTo(date.Minute) <0)))
+						if (i == (int)DateTime.Now.DayOfWeek && ((DateTime.Now.Hour.CompareTo(date.Hour) == -1) || (DateTime.Now.Hour.CompareTo(date.Hour) == 0 && DateTime.Now.Minute.CompareTo(date.Minute) == -1)))
 						{
 							Console.WriteLine("Same day");
-							tempDay = DateTime.Now;
+							tempDay = j;
 						}
 						else {
 
 							Console.WriteLine("Completed at i: " + i);
-							tempDay = Next(DateTime.Now, i);
+							tempDay = Next(j, i);
 						}
-						break;
+                            break;
+						
 					}
 				}
 			}

@@ -43,16 +43,11 @@ namespace App12
             View.AddSubview(PageViewController.View);
             segmentedControl.SelectedSegment = segmentIndex;
             segmentedControl.ValueChanged += valueChange;
-			/*
-            addButton.Enabled = false;
-            addButton.TintColor = UIColor.Clear;
-            */
 			consentComfirmed = DataAccess.GetKey();
-            enableEditButton.Clicked += ToggleEditing;
+            //enableEditButton.Clicked += ToggleEditing;
 			if (consentComfirmed == false)
 				PerformSegue("consentForm", null);
-
-
+            
         }
 
 
@@ -65,8 +60,19 @@ namespace App12
 			var viewController = new UIViewController[] { startingViewController };
 			PageViewController.SetViewControllers(viewController, UIPageViewControllerNavigationDirection.Forward, false, null);
 			PageViewController.DataSource = null;
+            PageViewController.View.Frame = new CoreGraphics.CGRect(0, 0, base.View.Bounds.Width, base.View.Bounds.Height);
 			AddChildViewController(PageViewController);
 			View.AddSubview(PageViewController.View);
+            //settingsButton.Image = UIImage.FromFile("settings--2- (2).png").Scale(new CoreGraphics.CGSize(22,22));
+            if (isEditingEnabled == true)
+            {
+                addButton.Enabled = true;
+                addButton.TintColor = null;
+            }else
+            {
+                addButton.Enabled = false;
+                addButton.TintColor = UIColor.Clear;
+            }
 		}
 
         void valueChange(object sender, EventArgs ea) {
@@ -80,13 +86,9 @@ namespace App12
         }
 
 
-        public static bool isEditingEnabled = true;
-        void ToggleEditing(object sender, EventArgs e)
-        {
-			UIApplication.SharedApplication.OpenUrl(new NSUrl("https://goo.gl/forms/pd8e5aonYweOewLw1"));
+        public static bool isEditingEnabled = false;
 
-        }
-
+        
 
 		[Action("UnwindFromConsent:")]
 		public void UnwindFromConsent(UIStoryboardSegue segue)
