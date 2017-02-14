@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ObjCRuntime;
 using UserNotifications;
+using UIKit;
 
 namespace App12
 {
@@ -21,28 +22,33 @@ namespace App12
             // Do something with the notification
             Console.WriteLine("Active Notification: {0}", notification);
             //notification.Request.Content.Title 
-
             EventData newEvent = DataAccess.GetNotification(Convert.ToInt32(notification.Request.Identifier));
-            Console.WriteLine(newEvent.Title);
             // Tell system to display the notification anyway or use
             // `None` to say we have handled the display locally.
-            //  Not being called? Notifcation not showing.
             completionHandler(UNNotificationPresentationOptions.Alert);
-            Console.WriteLine("Made it past Handler");
-            //newEvent.enableNotification();
+            newEvent.enableNotification();
 
 
         }
                 
         public override void DidReceiveNotificationResponse(UNUserNotificationCenter center, UNNotificationResponse response, Action completionHandler)
         {
+            EventData newEvent = DataAccess.GetNotification(Convert.ToInt32(response.Notification.Request.Identifier));
             switch (response.ActionIdentifier)
             {
                 case "reply":
-                    //Console.WriteLine("Reply clicked.");
+                    //  Reply action
                     break;
 
                 default:
+                    if (response.IsDefaultAction)
+                    {
+                        //  Default action
+                    }
+                    else if (response.IsDefaultAction)
+                    {
+                        //  Dismiss action
+                    }
                     break;
             }
 

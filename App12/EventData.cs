@@ -57,8 +57,7 @@ namespace App12
             content.Sound = UNNotificationSound.Default;
             var trigger = UNCalendarNotificationTrigger.CreateTrigger(ConvertDateTimeToNSDate(Start), false);
 
-            //var requestID = Convert.ToString(ID);
-            var requestID = "sampleRequest";
+            var requestID = Convert.ToString(ID);
             var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
 
             UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { if (err != null) { Console.WriteLine("Error: " + err); }; });

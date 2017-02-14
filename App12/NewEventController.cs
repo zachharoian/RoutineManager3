@@ -361,7 +361,7 @@ namespace App12
 
                 if (descField.Text.Equals("Description") == true)
                 {
-                    descField.Text = "";
+                    descField.Text = " ";
                 }
 
 				//  Save the text from the Description Field

@@ -111,8 +111,6 @@ namespace App12
 
         public static bool isEditingEnabled = false;
 
-        
-
 		[Action("UnwindFromConsent:")]
 		public void UnwindFromConsent(UIStoryboardSegue segue)
 		{

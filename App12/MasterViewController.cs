@@ -87,24 +87,39 @@ namespace App12
         
 
 		public NSIndexPath tempIndexPath;
-
+        private bool notification;
 		public void SegueToEdit()
 		{
 			PerformSegue("editEventSegue", null);
 
 		}
-        
+
+        public void SegueToEditFromNotification(EventData newEvent)
+        {
+            notification = true;
+            Event = newEvent;
+            PerformSegue("editEventSegue", null);
+
+        }
+
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
 			
 			if(segue.Identifier == "editEventSegue")
 			{
                 base.PrepareForSegue(segue, sender);
-                var indexPath = TableView.IndexPathForSelectedRow;
                 var transferdata = segue.DestinationViewController as EditEventController;
-
-				transferdata.currentTableCell = indexPath;
-                transferdata.Event = dataSource.tableItems[indexPath.Row];
+                if (notification == false)
+                {
+                    var indexPath = TableView.IndexPathForSelectedRow;
+                    transferdata.currentTableCell = indexPath;
+                    transferdata.Event = dataSource.tableItems[indexPath.Row];
+                }
+                else
+                {
+                    transferdata.Event = Event;
+                    notification = false;
+                }
             }
         }
     }

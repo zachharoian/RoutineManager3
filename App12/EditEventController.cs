@@ -394,7 +394,8 @@ namespace App12
 				var transferdata = segue.DestinationViewController as MasterViewController;
 
 				transferdata.Event = Event;
-
+                if (currentTableCell == null)
+                    currentTableCell = new NSIndexPath();
 				transferdata.tempIndexPath = currentTableCell;
                 
 			}
