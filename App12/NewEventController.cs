@@ -38,7 +38,7 @@ namespace App12
 			NavigationController.NavigationBar.TintColor = UIColor.Purple;
             //toggleStartDatePicker();
 			//TODO:  Change back to 5 and allow date selection
-            startDatePicker.MinuteInterval = 5;
+            startDatePicker.MinuteInterval = 1;
             endDatePicker.MinuteInterval = 5;
             NSCalendar calendar = NSCalendar.CurrentCalendar;
             
@@ -59,7 +59,7 @@ namespace App12
             descField.Started += EditingStarted;
             descField.Ended += EditingEnded;
 
-            tableItems[(int)DateTime.Now.DayOfWeek] = true;
+            tableItems[(int)DateTime.Now.DayOfWeek+1] = true;
         }// END ViewDidLoad()
 
          DateTime RoundUp(NSDate dt, TimeSpan d)
@@ -359,6 +359,11 @@ namespace App12
 
 				Event.Image = FindImage.ParseForImage(Event.Title);
 
+                if (descField.Text.Equals("Description") == true)
+                {
+                    descField.Text = "";
+                }
+
 				//  Save the text from the Description Field
 				Event.Desc = descField.Text;
 
@@ -382,7 +387,6 @@ namespace App12
 				//  Transfer the Title Field to Main
 				transferdata.Event = Event;
 
-				Event.enableNotification();
 				Console.WriteLine("Enabled Notifications");
 
 				transferdata.daysActive = tempArray;

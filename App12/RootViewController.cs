@@ -45,6 +45,7 @@ namespace App12
             segmentedControl.ValueChanged += valueChange;
 			consentComfirmed = DataAccess.GetKey();
             //enableEditButton.Clicked += ToggleEditing;
+            UpdatePrompt();
 			if (consentComfirmed == false)
 				PerformSegue("consentForm", null);
             
@@ -60,10 +61,9 @@ namespace App12
 			var viewController = new UIViewController[] { startingViewController };
 			PageViewController.SetViewControllers(viewController, UIPageViewControllerNavigationDirection.Forward, false, null);
 			PageViewController.DataSource = null;
-            PageViewController.View.Frame = new CoreGraphics.CGRect(0, 0, base.View.Bounds.Width, base.View.Bounds.Height);
+            PageViewController.View.Frame = new CoreGraphics.CGRect(0, base.View.Bounds.Y, base.View.Bounds.Width, base.View.Bounds.Height);
 			AddChildViewController(PageViewController);
 			View.AddSubview(PageViewController.View);
-            //settingsButton.Image = UIImage.FromFile("settings--2- (2).png").Scale(new CoreGraphics.CGSize(22,22));
             if (isEditingEnabled == true)
             {
                 addButton.Enabled = true;
@@ -73,7 +73,9 @@ namespace App12
                 addButton.Enabled = false;
                 addButton.TintColor = UIColor.Clear;
             }
+            UpdatePrompt();
 		}
+
 
         void valueChange(object sender, EventArgs ea) {
             var futureViewController = ModelController.GetViewController((int)segmentedControl.SelectedSegment, Storyboard);
@@ -83,8 +85,29 @@ namespace App12
             else if (segmentedControl.SelectedSegment < segmentIndex)
                 PageViewController.SetViewControllers(viewController, UIPageViewControllerNavigationDirection.Reverse, true, null);
             segmentIndex = (int)segmentedControl.SelectedSegment;
+            UpdatePrompt();
         }
 
+        private void UpdatePrompt()
+        {
+            if (segmentIndex == (int)DateTime.Now.DayOfWeek)
+            {
+                NavigationItem.Prompt = "Today's Agenda";
+            }
+            else if (segmentIndex == (int)DateTime.Now.AddDays(1).DayOfWeek)
+            {
+                NavigationItem.Prompt = "Tomorrow's Agenda";
+            }
+            else if (segmentIndex == (int)DateTime.Now.AddDays(-1).DayOfWeek)
+            {
+                NavigationItem.Prompt = "Yesterday's Agenda";
+            }
+            else
+            {
+                DateTime obj = new DateTime(2017, 1, segmentIndex + 1);
+                NavigationItem.Prompt = obj.DayOfWeek.ToString() + "'s Agenda";
+            }
+        }
 
         public static bool isEditingEnabled = false;
 

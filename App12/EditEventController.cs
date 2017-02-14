@@ -21,7 +21,7 @@ namespace App12
         //  ---------------------------------
         public EditEventController (IntPtr handle) : base (handle)
         {
-			Title = NSBundle.MainBundle.LocalizedString("Edit Event", "Edit Event");
+            
         }// END NewEventController()
 
 
@@ -32,8 +32,16 @@ namespace App12
 		{
             //  View did load command.
             base.ViewDidLoad();
-
-			titleField.Text = Event.Title;
+            if (RootViewController.isEditingEnabled == true)
+            {
+                Title = NSBundle.MainBundle.LocalizedString("Edit Event", "Edit Event");
+            }
+            else
+            {
+                Title = NSBundle.MainBundle.LocalizedString(Event.Title, Event.Title);
+            }
+            NavigationItem.Prompt = " ";
+            titleField.Text = Event.Title;
 			descField.Text = Event.Desc;
             startDatePicker.SetDate(DateTimeToNSDate(Event.Start), false);
             endDatePicker.SetDate(DateTimeToNSDate(Event.End), false);
@@ -381,12 +389,14 @@ namespace App12
 				}
 
 				Event.convertSevenItemArray(tempArray);
+
 				//  Create the transfer path to the Main controller
 				var transferdata = segue.DestinationViewController as MasterViewController;
 
 				transferdata.Event = Event;
 
 				transferdata.tempIndexPath = currentTableCell;
+                
 			}
 			else
 			{

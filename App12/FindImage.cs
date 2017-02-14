@@ -41,7 +41,7 @@ namespace App12
                                                 "bed", //   70
                                                 "drum", //  71
                                                 "zoo", "animals",   //  73
-                                                "gas", "oil",   //  75
+                                                "gas", "pump",   //  75
                                                 "bible", "church", "faith", "jesus",    //  79
                                                 "flight", "airplane", "international", //    82
                                                 "iron", "laundry",  //  84
@@ -109,7 +109,7 @@ namespace App12
 
                     //  Pack 2
                     else if (i <= 47)
-                        return "guitar.png";
+                        return "acoustic-guitar.png";
                     else if (i <= 49)
                         return "airplane.png";
                     else if (i <= 50)

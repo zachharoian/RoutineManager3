@@ -19,6 +19,7 @@ namespace App12
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+
             //  Ask for Notification access
             UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) => {
                 // Handle approval
@@ -26,7 +27,6 @@ namespace App12
             UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Sound, (approved, err) => {
                 // Handle approval
             });
-
             //  Check if the notifications are still allowed.
             UNUserNotificationCenter.Current.GetNotificationSettings((settings) => {
                 var alertsAllowed = (settings.AlertSetting == UNNotificationSetting.Enabled);
@@ -37,6 +37,17 @@ namespace App12
 
             //  Set the notification center delegate to the custom delegate
             UNUserNotificationCenter.Current.Delegate = new UserNotificationCenterDelegate();
+            var actionID = "reply";
+            var title = "Reply";
+            var action = UNNotificationAction.FromIdentifier(actionID, title, UNNotificationActionOptions.None);
+
+            var categoryID = "default";
+            var actions = new UNNotificationAction[] { action };
+            var intentIDs = new string[] { };
+            var categoryOptions = new UNNotificationCategoryOptions[] { };
+            var category = UNNotificationCategory.FromIdentifier(categoryID, actions, intentIDs, UNNotificationCategoryOptions.None);
+            var categories = new UNNotificationCategory[] { category };
+            UNUserNotificationCenter.Current.SetNotificationCategories(new NSSet<UNNotificationCategory>(categories));
 
             return true;
         }

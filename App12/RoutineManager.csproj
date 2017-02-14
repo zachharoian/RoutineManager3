@@ -190,7 +190,7 @@
     <BundleResource Include="Resources\bicycle.png" />
     <BundleResource Include="Resources\boat.png" />
     <BundleResource Include="Resources\bowling-ball.png" />
-    <BundleResource Include="Resources\brithday-cake-with-candle.png" />
+    <BundleResource Include="Resources\birthday-cake-with-candle.png" />
     <BundleResource Include="Resources\business.png" />
     <BundleResource Include="Resources\christian-coffin.png" />
     <BundleResource Include="Resources\coffee.png" />
@@ -229,6 +229,8 @@
     <BundleResource Include="Resources\violin.png" />
     <BundleResource Include="Resources\washer-machine.png" />
     <BundleResource Include="Resources\settings--2- %282%29.png" />
+    <BundleResource Include="Resources\Background.png" />
+    <BundleResource Include="Resources\AppIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

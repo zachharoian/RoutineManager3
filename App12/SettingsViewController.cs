@@ -14,6 +14,7 @@ namespace App12
         {
             base.ViewDidLoad();
             NavigationController.NavigationBar.TintColor = UIColor.Purple;
+            NavigationItem.Prompt = "Routine Manger";
             if (App12.RootViewController.isEditingEnabled == true)
             {
                 enableEditing.SetTitle("Disable Editing", UIControlState.Normal);

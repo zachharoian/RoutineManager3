@@ -1,6 +1,7 @@
 using Foundation;
 using System;
 using UIKit;
+using UserNotifications;
 
 namespace App12
 {
@@ -11,6 +12,9 @@ namespace App12
     //
 	public partial class ConsentForm : UIViewController
     {
+        public ConsentForm(IntPtr handle) : base (handle)
+        {
+        }
         #region Setup
         //
         //  ViewDidLoad(): Launches when the view is setup.
@@ -40,7 +44,8 @@ namespace App12
 			DataAccess.SaveKey();
             //  Go back to main agenda
 			PerformSegue("UnwindFromConsent", null);
-		}
+
+        }
         #endregion
     }
 }

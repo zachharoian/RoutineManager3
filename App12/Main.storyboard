@@ -845,19 +845,19 @@
                         <viewControllerLayoutGuide type="bottom" id="5226"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5229">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="94" width="320" height="474"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews/>
                     </view>
-                    <navigationItem title="Agenda" id="5305" key="navigationItem">
+                    <navigationItem title="Agenda" id="5305" key="navigationItem" prompt="Agenda">
                         <barButtonItem key="rightBarButtonItem" id="5308" systemItem="add">
                             <connections>
                                 <segue id="6554" destination="1191" kind="presentation" identifier="addEventSegue" modalPresentationStyle="pageSheet" modalTransitionStyle="coverVertical"/>
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="5426" selectedSegmentIndex="0">
-                            <rect key="frame" x="62.5" y="7.5" width="195" height="29"/>
+                            <rect key="frame" x="62.5" y="37.5" width="195" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="S"/>
@@ -1245,7 +1245,6 @@ But, it could be beneficial to you, as you may be able to use the app to help or
         <image name="bicycle.png" width="512" height="512"/>
         <image name="boat.png" width="512" height="512"/>
         <image name="bowling-ball.png" width="512" height="512"/>
-        <image name="brithday-cake-with-candle.png" width="512" height="512"/>
         <image name="bus.png" width="512" height="512"/>
         <image name="business.png" width="512" height="512"/>
         <image name="christian-coffin.png" width="512" height="512"/>
@@ -1298,5 +1297,8 @@ But, it could be beneficial to you, as you may be able to use the app to help or
         <image name="settings--2-.png" width="44" height="44"/>
         <image name="settings--2- (1).png" width="22" height="22"/>
         <image name="settings--2- (2).png" width="50" height="50"/>
+        <image name="AppIcon.png" width="953" height="1048"/>
+        <image name="Background.png" width="1080" height="1920"/>
+        <image name="birthday-cake-with-candle.png" width="512" height="512"/>
     </resources>
 </document>

@@ -62,7 +62,6 @@ namespace App12
 				//	Edit existing event
                 dataSource.EditItem(tempIndexPath.Row, Event);
 				tempIndexPath = null;
-
 			}
 			else 
 			{
@@ -71,6 +70,7 @@ namespace App12
 			}
 			dataSource.ReloadSourceData();
 			TableView.ReloadData();
+            Event.enableNotification();
 
 			//TableView.ReloadData();
 		}

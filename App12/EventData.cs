@@ -30,15 +30,6 @@ namespace App12
 
 		public void enableNotification()
 		{
-            var actionID = "reply";
-            var title = "Reply";
-            var action = UNNotificationAction.FromIdentifier(actionID, title, UNNotificationActionOptions.None);
-
-            var categoryID = "message";
-            var actions = new UNNotificationAction[] { action };
-            var intentIDs = new string[] { };
-            var categoryOptions = new UNNotificationCategoryOptions[] { };
-            var category = UNNotificationCategory.FromIdentifier(categoryID, actions, intentIDs, UNNotificationCategoryOptions.None);
 
             var attachmentID = "image";
             var options = new UNNotificationAttachmentOptions();
@@ -56,26 +47,21 @@ namespace App12
 
             var content = new UNMutableNotificationContent();            
             content.Title = Title;
-            content.Body = Desc;
-            content.CategoryIdentifier = "message";
+            if (Desc != "")
+            {
+                content.Body = Desc;
+            }
+            
+            content.CategoryIdentifier = "default";
             content.Attachments = new UNNotificationAttachment[] { attachment };
             content.Sound = UNNotificationSound.Default;
             var trigger = UNCalendarNotificationTrigger.CreateTrigger(ConvertDateTimeToNSDate(Start), false);
 
+            //var requestID = Convert.ToString(ID);
             var requestID = "sampleRequest";
             var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
 
-            UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { Console.WriteLine(err); });
-            Console.WriteLine("Displayed? "  + Displayed);
-            if (Displayed == 0 && DateTime.Now.Day == trigger.DateComponents.Day )
-            {
-                Displayed = 1;
-            } else
-            {
-                Displayed = 0;
-            }
-            Console.WriteLine("Displayed? "+ Displayed);
-
+            UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { if (err != null) { Console.WriteLine("Error: " + err); }; });
         }
 
         private NSDateComponents ConvertDateTimeToNSDate(DateTime date)
@@ -98,7 +84,7 @@ namespace App12
 			}
 			else {
                 DateTime j;
-                if (Displayed == 1)
+                if (date.Day == DateTime.Now.Day && ((date.Hour < DateTime.Now.Hour) || (date.Hour == DateTime.Now.Hour && date.Minute < DateTime.Now.Hour)))
                 {
                     Console.WriteLine("Add days");
                     j = DateTime.Now.AddDays(1);

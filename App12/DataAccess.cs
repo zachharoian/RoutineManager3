@@ -239,7 +239,7 @@ namespace App12
 			}
 		}
 
-        public static EventData GetNotification(string Title, string Desc, Foundation.NSDate Start)
+        public static EventData GetNotification(int ID)
         {
             object locker = new object();
             lock (locker)
@@ -250,16 +250,8 @@ namespace App12
 
                 db.CreateTable<EventData>();
 
-                var tempList = db.Table<EventData>().ToList();
-
-                for (int i = 0; i < tempList.Count; i++)
-                {
-                    if(tempList[i].Title.Equals(Title) == true && tempList[i].Desc.Equals(Desc) == true)
-                    {
-                        return tempList[i];
-                    }
-                }
-                return null;
+                var obj = db.Get<EventData>(ID);
+                return obj;
             }
         }
         public static DateTime NSDateToDateTime(Foundation.NSDate date)
