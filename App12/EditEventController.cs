@@ -71,7 +71,7 @@ namespace App12
 			tableItems = Event.getTableItems(true);
         	repeatSubtitle = OverviewReturn();
 			repeatText.Text = repeatSubtitle;
-            if (descField.Text.Equals("") == true)
+            if (descField.Text.Equals("") == true || descField.Text.Equals(" ") == true)
             {
                 descField.Text = "Description";
                 descField.TextColor = UIColor.Gray;
@@ -368,7 +368,7 @@ namespace App12
 
                 if (descField.Text.Equals("Description") == true)
                 {
-                    descField.Text = "";
+                    descField.Text = " ";
                 }
 
 				Event.Image = FindImage.ParseForImage(Event.Title);

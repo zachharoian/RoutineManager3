@@ -52,9 +52,9 @@ namespace App12
                 content.Body = Desc;
             }
             
-            content.CategoryIdentifier = "default";
+            //content.CategoryIdentifier = "default";
             content.Attachments = new UNNotificationAttachment[] { attachment };
-            content.Sound = UNNotificationSound.Default;
+            content.Sound = UNNotificationSound.GetSound("notification.wav");
             var trigger = UNCalendarNotificationTrigger.CreateTrigger(ConvertDateTimeToNSDate(Start), false);
 
             var requestID = Convert.ToString(ID);

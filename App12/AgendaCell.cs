@@ -11,7 +11,8 @@ namespace App12
     public partial class AgendaCell : UITableViewCell
     {
         #region Variables
-        UILabel title, desc, time;
+        UILabel title, time;
+        UILabel desc;
         UIColor backgroundColor = UIColor.White;
         UIView card;
         UIImageView imageView;
@@ -41,10 +42,11 @@ namespace App12
                 Font = UIFont.SystemFontOfSize(17),
                 TextColor = UIColor.Gray,
                 BackgroundColor = UIColor.Clear,
-                LineBreakMode = UILineBreakMode.WordWrap,
-                Lines = 0
-            };
-
+                LineBreakMode = UILineBreakMode.TailTruncation,
+                Lines = 3
+                
+                };
+            
             //  Instantiate the Time label
             time = new UILabel()
             {   //  Set text properties
@@ -111,11 +113,16 @@ namespace App12
             
             //  Sets frames for views.
             card.Frame = new CGRect(5, 5, ContentView.Bounds.Width - 10, ContentView.Bounds.Height - 10);
-            title.Frame = new CGRect(10 + imageOffset, 10, ContentView.Bounds.Width - (10 + imageOffset), 23);
-            time.Frame = new CGRect(10 + imageOffset, 33, ContentView.Bounds.Width - (10 + imageOffset), 19);
-            desc.Frame = new CGRect(10 + imageOffset, 52, ContentView.Bounds.Width - (10 + imageOffset), 20);
+            title.Frame = new CGRect(10 + imageOffset, 10, ContentView.Bounds.Width - (10 + imageOffset)-10, 23);
+            time.Frame = new CGRect(10 + imageOffset, 33, ContentView.Bounds.Width - (10 + imageOffset)-10, 19);
+            desc.Frame = new CGRect(10 + imageOffset, 52, ContentView.Bounds.Width - (10 + imageOffset)-10, 78);
             //  Image will be 10 pixels from the left of the cell, 10 pixels from the top, 80 pixels diameter
             imageView.Frame = new CGRect(10, 10, 80, 80);
+            desc.SizeToFit();
+            if (desc.Frame.Height > 78)
+            {
+                desc.Frame = new CGRect(desc.Frame.X, desc.Frame.Y, desc.Frame.Width, 78);
+            }
         }
         #endregion
     }

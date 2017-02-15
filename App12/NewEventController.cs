@@ -38,7 +38,7 @@ namespace App12
 			NavigationController.NavigationBar.TintColor = UIColor.Purple;
             //toggleStartDatePicker();
 			//TODO:  Change back to 5 and allow date selection
-            startDatePicker.MinuteInterval = 1;
+            startDatePicker.MinuteInterval = 5;
             endDatePicker.MinuteInterval = 5;
             NSCalendar calendar = NSCalendar.CurrentCalendar;
             

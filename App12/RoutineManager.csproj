@@ -231,6 +231,7 @@
     <BundleResource Include="Resources\settings--2- %282%29.png" />
     <BundleResource Include="Resources\Background.png" />
     <BundleResource Include="Resources\AppIcon.png" />
+    <BundleResource Include="Resources\notification.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
