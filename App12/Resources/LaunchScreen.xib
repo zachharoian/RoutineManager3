@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
@@ -17,50 +17,16 @@
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="24" translatesAutoresizingMaskIntoConstraints="NO">
-                    <rect key="frame" x="50" y="203.5" width="380" height="256"/>
-                    <variation key="heightClass=regular-widthClass=compact" image="AppIcon.png"/>
-                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="1/3" constant="1" id="5cJ-9S-tgC"/>
                 <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
-                <constraint id="25" firstItem="24" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="21"/>
-                <constraint id="26" firstItem="24" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="71">
-                    <variation key="heightClass=regular-widthClass=compact" constant="50"/>
-                </constraint>
-                <constraint id="27" firstItem="iN0-l3-epB" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" constant="153">
-                    <variation key="heightClass=regular-widthClass=compact" constant="50"/>
-                </constraint>
-                <constraint id="30" firstItem="iN0-l3-epB" firstAttribute="bottom" secondItem="24" secondAttribute="bottom" constant="20"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="548" y="455"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="24"/>
-                </mask>
-                <mask key="constraints">
-                    <exclude reference="25"/>
-                    <exclude reference="26"/>
-                    <exclude reference="27"/>
-                    <exclude reference="30"/>
-                </mask>
-            </variation>
-            <variation key="heightClass=regular-widthClass=compact">
-                <mask key="subviews">
-                    <include reference="24"/>
-                </mask>
-                <mask key="constraints">
-                    <include reference="25"/>
-                    <include reference="26"/>
-                    <include reference="27"/>
-                    <include reference="30"/>
-                </mask>
-            </variation>
         </view>
     </objects>
     <resources>

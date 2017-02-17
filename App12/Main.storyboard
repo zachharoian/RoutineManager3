@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5262">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
@@ -1293,9 +1293,6 @@ But, it could be beneficial to you, as you may be able to use the app to help or
         <image name="university.png" width="512" height="512"/>
         <image name="violin.png" width="512" height="512"/>
         <image name="washer-machine.png" width="512" height="512"/>
-        <image name="settings (2).png" width="64" height="64"/>
-        <image name="settings--2-.png" width="44" height="44"/>
-        <image name="settings--2- (1).png" width="22" height="22"/>
         <image name="settings--2- (2).png" width="50" height="50"/>
         <image name="AppIcon.png" width="953" height="1048"/>
         <image name="Background.png" width="1080" height="1920"/>
