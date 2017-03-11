@@ -47,8 +47,8 @@ namespace App12
             endDatePicker.SetDate(DateTimeToNSDate(Event.End), false);
 			tableItems = Event.getTableItems(false);
 
-            startDatePicker.MinuteInterval = 5;
-            endDatePicker.MinuteInterval = 5;
+            startDatePicker.MinuteInterval = 1;
+            endDatePicker.MinuteInterval = 1;
             
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();

@@ -38,14 +38,14 @@ namespace App12
 			NavigationController.NavigationBar.TintColor = UIColor.Purple;
             //toggleStartDatePicker();
 			//TODO:  Change back to 5 and allow date selection
-            startDatePicker.MinuteInterval = 5;
-            endDatePicker.MinuteInterval = 5;
-            NSCalendar calendar = NSCalendar.CurrentCalendar;
-            
-            NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Hour, Minute = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Minute, Second = 0 };
-            startDatePicker.SetDate(calendar.DateFromComponents(comps), true);
-            comps.Hour = comps.Hour + 1;
-            endDatePicker.SetDate(calendar.DateFromComponents(comps), true);
+            startDatePicker.MinuteInterval = 1;
+            endDatePicker.MinuteInterval = 1;
+			//NSCalendar calendar = NSCalendar.CurrentCalendar;
+			//NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Hour, Minute = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Minute, Second = 0 };
+			//startDatePicker.SetDate(calendar.DateFromComponents(comps), true);
+			//comps.Hour = comps.Hour + 1;
+			//endDatePicker.SetDate(calendar.DateFromComponents(comps), true);
+			endDatePicker.SetDate(startDatePicker.Date.AddSeconds(3600), false);
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();
             endDatePickerChanged();

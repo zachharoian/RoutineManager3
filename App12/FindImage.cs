@@ -40,7 +40,7 @@ namespace App12
                                                 "haircut",  //  69
                                                 "bed", //   70
                                                 "drum", //  71
-                                                "zoo", "animals",   //  73
+                                                "zoo", "animal",   //  73
                                                 "gas", "pump",   //  75
                                                 "bible", "church", "faith", "jesus",    //  79
                                                 "flight", "airplane", "international", //    82
@@ -48,7 +48,7 @@ namespace App12
                                                 "science", "laboratory", "microscope",    //  87
                                                 "earth", "leaf", "green", //    90
                                                 "court", "judge", "jury",   //  93
-                                                "scooba", "diving", "dive", //  96
+                                                "scuba", "diving", "dive", //  96
                                                 "medicine", "pill", "vitamin",  //  99
                                                 "sing", "vocal", // 101
                                                 "music", // 102

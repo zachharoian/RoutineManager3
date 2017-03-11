@@ -9,9 +9,8 @@ namespace App12
     [Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
-        // class-level declarations
-
-        public override UIWindow Window
+		#region Overrides
+		public override UIWindow Window
         {
             get;
             set;
@@ -44,15 +43,16 @@ namespace App12
             var categoryID = "default";
             var actions = new UNNotificationAction[] { action };
             var intentIDs = new string[] { };
-            var categoryOptions = new UNNotificationCategoryOptions[] { };
             var category = UNNotificationCategory.FromIdentifier(categoryID, actions, intentIDs, UNNotificationCategoryOptions.None);
             var categories = new UNNotificationCategory[] { category };
             UNUserNotificationCenter.Current.SetNotificationCategories(new NSSet<UNNotificationCategory>(categories));
 
             return true;
         }
-        #region Unused overrides
-        public override void OnResignActivation(UIApplication application)
+		#endregion	
+
+		#region Unused overrides
+		public override void OnResignActivation(UIApplication application)
         {
             // Invoked when the application is about to move from active to inactive state.
             // This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) 

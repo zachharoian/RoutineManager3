@@ -5,9 +5,9 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.nwtechguy.RoutineManager</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
@@ -43,6 +43,6 @@
 		</dict>
 	</dict>
 	<key>CFBundleName</key>
-	<string>Routine Manager</string>
+	<string>Routines</string>
 </dict>
 </plist>

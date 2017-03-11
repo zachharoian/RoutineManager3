@@ -78,7 +78,7 @@ namespace App12
 		[Action("DeleteEvent:")]
 		public void DeleteEvent(UIStoryboardSegue segue) 
 		{
-
+			Event.disableNotification();
 			dataSource.DeleteItem(Event.ID, tempIndexPath);
 			tempIndexPath = null;
 			TableView.ReloadData();

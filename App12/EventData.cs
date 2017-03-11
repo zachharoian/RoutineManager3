@@ -63,6 +63,11 @@ namespace App12
             UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { if (err != null) { Console.WriteLine("Error: " + err); }; });
         }
 
+		public void disableNotification()
+		{
+			UNUserNotificationCenter.Current.RemovePendingNotificationRequests(new string[] {Convert.ToString(ID) });
+		}
+
         private NSDateComponents ConvertDateTimeToNSDate(DateTime date)
 		{
 			NSDateComponents comps = new NSDateComponents();

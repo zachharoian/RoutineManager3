@@ -89,7 +89,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     <constraints>
-                                                        <constraint id="1478" firstAttribute="width" constant="280"/>
                                                         <constraint id="1479" firstAttribute="height" constant="30"/>
                                                     </constraints>
                                                     <connections>
@@ -98,8 +97,9 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint id="1476" firstItem="1453" firstAttribute="trailing" secondItem="1474" secondAttribute="trailing" constant="20"/>
                                                 <constraint id="1477" firstItem="1453" firstAttribute="bottom" secondItem="1474" secondAttribute="bottom" constant="6"/>
+                                                <constraint id="7434" firstItem="1474" firstAttribute="leading" secondItem="1453" secondAttribute="leading" constant="20"/>
+                                                <constraint id="7437" firstItem="1453" firstAttribute="trailing" secondItem="1474" secondAttribute="trailing" constant="20"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -392,7 +392,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <constraints>
-                                                        <constraint id="1639" firstAttribute="width" constant="280"/>
                                                         <constraint id="1640" firstAttribute="height" constant="30"/>
                                                     </constraints>
                                                     <connections>
@@ -401,8 +400,9 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint id="1641" firstItem="1637" firstAttribute="trailing" secondItem="1618" secondAttribute="trailing" constant="20"/>
                                                 <constraint id="1642" firstItem="1637" firstAttribute="bottom" secondItem="1618" secondAttribute="bottom" constant="6"/>
+                                                <constraint id="7433" firstItem="1618" firstAttribute="leading" secondItem="1637" secondAttribute="leading" constant="20"/>
+                                                <constraint id="7438" firstItem="1637" firstAttribute="trailing" secondItem="1618" secondAttribute="trailing" constant="20"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -930,24 +930,33 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="5944" translatesAutoresizingMaskIntoConstraints="NO">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="5944" translatesAutoresizingMaskIntoConstraints="NO" usesAttributedText="YES" editable="NO" selectable="NO">
                                 <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <string key="text">    Thank you for your interest in my project! 
-
-    You must be 18 or older to continue. This application is designed to help autistic adults gain independence in their individual living situations. 
-    To participate, you first must sign this consent form to gain access to the app. Then, play around with the app and try it out. After you have tried some of the features, take the survey located in the top bar of the app. 
-
-    You should spend at least 5 minutes exploring the app before taking the survey. There are little to no risks for you, the user. There may be a slight increase in stress levels from being introduced to a new app or entering information. 
-But, it could be beneficial to you, as you may be able to use the app to help organize your daily routines. 
-
-    Confidentiality will be maintained throughout the process, as there is no personal information recorded from the app or the survey. If you have any questions or concerns, feel free to send contact Jeff Skaanland, my mentor, at JeffSkaanland@gmail.com. 
-
-    To proceed, you must agree to this form of consent. 
-
-    By tapping "Agree," I agree that I have read and understand the above terms, and confirm I am over the age of 18.</string>
+                                <attributedString key="attributedText">
+                                    <fragment content="    Thank you for your interest in my project! ">
+                                        <attributes>
+                                            <font key="NSFont" name="HelveticaNeue-Bold" family="Helvetica Neue" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="&#xA;&#xA;    ">
+                                        <attributes>
+                                            <font key="NSFont" name="HelveticaNeue" family="Helvetica Neue" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="You must be 18 or older to continue.">
+                                        <attributes>
+                                            <font key="NSFont" name="HelveticaNeue-Italic" family="Helvetica Neue" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" This application is designed to help autistic adults gain independence in their individual living situations. &#xA;    To participate, you first must sign this consent form to gain access to the app. Then, play around with the app and try it out. After you have tried some of the features, take the survey located in the top bar of the app. &#xA;&#xA;    You should spend at least 5 minutes exploring the app before taking the survey. There are little to no risks for you, the user. There may be a slight increase in stress levels from being introduced to a new app or entering information. &#xA;But, it could be beneficial to you, as you may be able to use the app to help organize your daily routines. &#xA;&#xA;    Confidentiality will be maintained throughout the process, as there is no personal information recorded from the app or the survey. If you have any questions or concerns, feel free to send contact Jeff Skaanland, my mentor, at JeffSkaanland@gmail.com. &#xA;&#xA;    To proceed, you must agree to this form of consent. &#xA;&#xA;    By tapping &quot;Agree,&quot; I agree that I have read and understand the above terms, and confirm I am over the age of 18.">
+                                        <attributes>
+                                            <font key="NSFont" name="HelveticaNeue" family="Helvetica Neue" size="14"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <dataDetectorType key="dataDetectorTypes" address="YES"/>
                             </textView>
                         </subviews>
                         <constraints>
@@ -1173,9 +1182,9 @@ But, it could be beneficial to you, as you may be able to use the app to help or
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7335" translatesAutoresizingMaskIntoConstraints="NO" text="Zach@Haroian.net">
                                 <rect key="frame" x="20" y="319.5" width="280" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Info:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7357" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="20" y="274" width="280" height="20.5"/>

@@ -33,7 +33,7 @@ namespace App12
                 
         public override void DidReceiveNotificationResponse(UNUserNotificationCenter center, UNNotificationResponse response, Action completionHandler)
         {
-            EventData newEvent = DataAccess.GetNotification(Convert.ToInt32(response.Notification.Request.Identifier));
+            //EventData newEvent = DataAccess.GetNotification(Convert.ToInt32(response.Notification.Request.Identifier));
             switch (response.ActionIdentifier)
             {
                 case "reply":
