@@ -7,17 +7,19 @@ namespace App12
 {
     public partial class NewEventController : UITableViewController
     {
-        //  Variables for data transfer for creating a new event.
-		string titleFieldText, descFieldText;
-        DateTime startTime, endTime;
-
-
+		//  Variables for data transfer for creating a new event.
+		public EventData Event;
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDatePickerHidden = true;
         bool endDatePickerHidden = true;
         bool startDatePickerTextChanged = false;
         bool endDatePickerTextChanged = false;
 
+
+		public NSDate dateOfNever;
+        //  Variable for repeat
+        //bool[] DaysActive = new bool[8] {false, false, false, false, false, false, false, false };
+        public string repeatSubtitle;
         //  ---------------------------------
         //  NewEventController(): Constructor used for UI Construction
         //  ---------------------------------
@@ -34,21 +36,125 @@ namespace App12
             //  View did load command.
             base.ViewDidLoad();
 
-            this.NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
-
+			//NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
+			NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(0.012f, 0.663f, 0.957f);
+			NavigationController.NavigationBar.TintColor = UIColor.White;
             //toggleStartDatePicker();
-            startDatePicker.MinuteInterval = 5;
-            endDatePicker.MinuteInterval = 5;
-            NSCalendar calendar = NSCalendar.CurrentCalendar;
-            NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = 10, Minute = 0, Second = 0 };
-            startDatePicker.SetDate(calendar.DateFromComponents(comps), true);
-            comps.Hour = comps.Hour + 1;
-            endDatePicker.SetDate(calendar.DateFromComponents(comps), true);
+            startDatePicker.MinuteInterval = 1;
+            endDatePicker.MinuteInterval = 1;
+			//NSCalendar calendar = NSCalendar.CurrentCalendar;
+			//NSDateComponents comps = new NSDateComponents { Year = 2017, Month = 1, Day = 1, Hour = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Hour, Minute = RoundUp(NSDate.Now, new TimeSpan(0, 5, 0)).Minute, Second = 0 };
+			//startDatePicker.SetDate(calendar.DateFromComponents(comps), true);
+			//comps.Hour = comps.Hour + 1;
+			//endDatePicker.SetDate(calendar.DateFromComponents(comps), true);
+			endDatePicker.SetDate(startDatePicker.Date.AddSeconds(3600), false);
             //  Update the text of the date cell to match the Date Picker.
             startDatePickerChanged();
             endDatePickerChanged();
+            repeatSubtitle = OverviewReturn();
+            repeatText.Text = repeatSubtitle;
+            if (descField.Text.Equals("") == true || descField.Text.Equals("Description") == true)
+            {
+                descField.Text = "Description";
+                descField.TextColor = UIColor.FromRGB(199, 199, 205);
+            }
+            descField.Started += EditingStarted;
+            descField.Ended += EditingEnded;
+
+			this.titleField.ShouldReturn += (textField) =>
+			{
+				textField.ResignFirstResponder();
+				return true;
+			};
+
+            tableItems[(int)DateTime.Now.DayOfWeek+1] = true;
         }// END ViewDidLoad()
-        
+
+         DateTime RoundUp(NSDate dt, TimeSpan d)
+         {
+             DateTime ns = NSDateToDateTime(dt);
+             DateTime time = new DateTime(((ns.Ticks + d.Ticks - 1) / d.Ticks) * d.Ticks);
+             return time;
+        }
+         
+
+        public NSDate ConvertDateTimeToNSDate(DateTime date)
+        {
+            DateTime newDate = TimeZone.CurrentTimeZone.ToLocalTime(
+                new DateTime(2001, 1, 1, 0, 0, 0));
+            return NSDate.FromTimeIntervalSinceReferenceDate(
+                (date - newDate).TotalSeconds);
+        }
+
+        void EditingStarted(object sender, EventArgs ea)
+        {
+            if (descField.Text.Equals("Description") == true)
+            {
+                descField.Text = "";
+                descField.TextColor = UIColor.Black;
+            }
+        }
+
+        void EditingEnded(object sender, EventArgs ea)
+        {
+            if (descField.Text.Equals("") == true)
+            {
+                descField.Text = "Description";
+                descField.TextColor = UIColor.FromRGB(199, 199, 205);;
+            }
+        }
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            repeatText.Text = OverviewReturn();
+            TableView.ReloadData();
+        }
+        public string OverviewReturn()
+        {
+            if (tableItems[0] == true)
+                return NSDateFormatter.ToLocalizedString(dateOfNever, NSDateFormatterStyle.Medium, NSDateFormatterStyle.None);
+            if (tableItems[1] == true && tableItems[7] == true)
+            {
+                int count = 0;
+                for (int i = 2; i < 7; i++)
+                {
+                    if (tableItems[i] == false)
+                        count++;
+                }
+                if (count == 5)
+                    return "Weekends";
+                if (count == 0)
+                    return "Everyday";
+            }
+            else if (tableItems[1] == false && tableItems[7] == false)
+            {
+                int count = 0;
+                for (int i = 2; i < 7; i++)
+                {
+                    if (tableItems[i] == true)
+                        count++;
+                }
+                if (count == 5)
+                    return "Weekdays";
+            }
+            if (tableItems[0] == false)
+            {
+                int count = 0;
+                string day = "";
+                for (int i = 1; i < 8; i++)
+                {
+                    if (tableItems[i] == true)
+                    {
+                        count++;
+                        day = RepeatNewViewController.tableNames[i];
+                    }
+                }
+                if (count == 1)
+                    return day + "s";
+            }
+            return "Custom";
+
+        }
 
         //  ---------------------------------
         //  startDatePickerChanged(): Method for updating the cell containing Date Picker information.
@@ -57,6 +163,7 @@ namespace App12
 		{
             //  Convert the Date Picker information into a string and set it to the subtitle field of the cell.
 			startDateSubtitle.Text = NSDateFormatter.ToLocalizedString(startDatePicker.Date, NSDateFormatterStyle.None, NSDateFormatterStyle.Short);
+            
 		}// END startDatePickerChanged()
 
 
@@ -75,9 +182,6 @@ namespace App12
         //  ---------------------------------
         public void toggleStartDatePicker()
 		{
-            //  Create the path for the cell
-            NSIndexPath[] rows = new NSIndexPath[]{ NSIndexPath.FromRowSection(2,0)};
-
             //  Toggle visibilty
             startDatePickerHidden = !startDatePickerHidden;
 
@@ -100,10 +204,7 @@ namespace App12
         //  toggleEndDatePicker(): Flips the state of the End Date Picker
         //  ---------------------------------
         public void toggleEndDatePicker()
-        {
-            //  Create the path for the cell
-            NSIndexPath[] rows = new NSIndexPath[]{NSIndexPath.FromRowSection(4,0)};
-
+		{
             //  Toggle visiblity
             endDatePickerHidden = !endDatePickerHidden;
 
@@ -125,9 +226,9 @@ namespace App12
         //  ---------------------------------
         //  UpdateStartDatePicker: An action to tell when the Start Date Picker changes value.
         //  ---------------------------------
-        [Export ("UpdateStartDatePicker:")]
-		void UpdateStart(UIStoryboardSegue segue)
-		{
+        [Export("UpdateStartDatePicker:")]
+        void UpdateStart(UIStoryboardSegue segue)
+        {
             //  Updates the subtitle text
             startDatePickerChanged();
 
@@ -136,11 +237,15 @@ namespace App12
 
             //  If the Start date is after the End date, strike out the date. Else, unstrike the other if it is no longer an offender.
             if (startDatePicker.Date.SecondsSinceReferenceDate > endDatePicker.Date.SecondsSinceReferenceDate)
+            { 
                 startDateSubtitle.AttributedText = new NSAttributedString(tempText, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.Single });
+                buttonSave.Enabled = false;
+            }
             else
             {
                 string tempTextEnd = endDateSubtitle.Text;
                 endDateSubtitle.AttributedText = new NSAttributedString(tempTextEnd, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.None });
+                buttonSave.Enabled = true;
             }
         }// END UpdateStart()
 
@@ -159,11 +264,15 @@ namespace App12
 
             //  If the Start date is after the End date, strike out the date. Else, unstrike the other if it is no longer an offender.
             if (startDatePicker.Date.SecondsSinceReferenceDate > endDatePicker.Date.SecondsSinceReferenceDate)
+            {
                 endDateSubtitle.AttributedText = new NSAttributedString(tempText, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.Single });
+                buttonSave.Enabled = false;
+            }
             else
             {
                 string tempTextStart = startDateSubtitle.Text;
                 startDateSubtitle.AttributedText = new NSAttributedString(tempTextStart, new UIStringAttributes { StrikethroughStyle = NSUnderlineStyle.None });
+                buttonSave.Enabled = true;
             }
         }// END UpdateEnd()
 
@@ -227,13 +336,12 @@ namespace App12
         //  ---------------------------------
         public static DateTime NSDateToDateTime(NSDate date)
         {
-            //  Create a reference date for conversion
-            DateTime reference = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0));
-
-            //  Add the amount of time since the reference date from the NSDate input.
-            return reference.AddSeconds(date.SecondsSinceReferenceDate);
+			return ((DateTime)date).ToLocalTime();
         }
 
+        public bool[] tableItems = new bool[8];
+
+        
 
         //  ---------------------------------
         //  PrepareForSegue(): Save the date and transfer it back to the main screen to create a new event
@@ -242,41 +350,63 @@ namespace App12
 		{
             //  Call the prepare for segue method
             base.PrepareForSegue(segue, sender);
+			//Console.WriteLine("test");
+			if (segue.Identifier != "repeatSegue" && segue.Identifier != "unwindFromCancel")
+			{
+				Event = new EventData();
+				//  Save the text from the Title Field
+				Event.Title = titleField.Text;
 
-            //  Save the text from the Title Field
-            titleFieldText = titleField.Text;
+				//  If the Title Field is null, set it to "New Event"
+				if (Event.Title == "")
+					Event.Title = "New Event";
 
-            //  If the Title Field is null, set it to "New Event"
-            if (titleFieldText == "")
-                titleFieldText = "New Event";
+				Event.Image = FindImage.ParseForImage(Event.Title);
 
-            string Image = FindImage.ParseForImage(titleFieldText);
+                if (descField.Text.Equals("Description") == true)
+                {
+                    descField.Text = " ";
+                }
 
-            //  Save the text from the Description Field
-            descFieldText = descField.Text;
+				//  Save the text from the Description Field
+				Event.Desc = descField.Text;
 
-            //  Save the NSDate from Start Date Picker and convert it to DateTime
-            startTime = NSDateToDateTime(startDatePicker.Date);
+				//  Save the NSDate from Start Date Picker and convert it to DateTime
+				Event.Start = NSDateToDateTime(startDatePicker.Date);
+				Event.Start = new DateTime(2017, 1, 1, Event.Start.Hour, Event.Start.Minute, 0);
+				//  Save the NSDate from End Date Picker and convert it to DateTime
+				Event.End = NSDateToDateTime(endDatePicker.Date);
+				Event.End = new DateTime(2017, 1, 1, Event.End.Hour, Event.End.Minute, 0);
 
-            //  Save the NSDate from End Date Picker and convert it to DateTime
-            endTime = NSDateToDateTime(endDatePicker.Date);
+				if (tableItems[0] == true)
+				{
+					DateTime date = ((DateTime)(dateOfNever)).ToLocalTime();
+					Event.Start = new DateTime(date.Year, date.Month, date.Day, Event.Start.Hour, Event.Start.Minute, 0);
+					Event.End = new DateTime(date.Year, date.Month, date.Day, Event.End.Hour, Event.End.Minute, 0);
+				}
+				bool[] tempArray = new bool[7];
+				for (int i = 1; i < 8; i++)
+				{
+					tempArray[i - 1] = tableItems[i];
+				}
 
-            //  Create the transfer path to the Main controller
-			var transferdata = segue.DestinationViewController as MasterViewController;
+				Event.convertSevenItemArray(tempArray);
 
-            //  Transfer the Title Field to Main
-			transferdata.tempTitleFieldText = titleFieldText;
+				//  Create the transfer path to the Main controller
+				var transferdata = segue.DestinationViewController as MasterViewController;
 
-            //  Transfer the Description Field to Main
-            transferdata.tempDesc = descFieldText;
+				//  Transfer the Title Field to Main
+				transferdata.Event = Event;
 
-            //  Transfer the Start Date Picker to Main
-            transferdata.tempStart = startTime;
+				Console.WriteLine("Enabled Notifications");
 
-            //  Transfer the End Date Picker to Main
-            transferdata.tempEnd = endTime;
-
-            transferdata.tempImage = Image;
+				transferdata.daysActive = tempArray;
+			}
+			else if (segue.Identifier != "unwindFromCancel") 
+			{
+				var transferdata = segue.DestinationViewController as RepeatNewViewController;
+                transferdata.controller = this;
+			}
         }// END PrepareForSegue()
     }// END NewEventController
 }// END App12

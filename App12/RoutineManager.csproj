@@ -6,9 +6,9 @@
     <ProjectGuid>{8EE0A914-9305-4D05-AB00-CDBAD52E2C67}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>App12</RootNamespace>
+    <RootNamespace>RoutineManager</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>App12</AssemblyName>
+    <AssemblyName>RoutineManager</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,18 +97,44 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="FindImage.cs" />
+    <Compile Include="ModelController.cs" />
+    <Compile Include="RootViewController.cs" />
+    <Compile Include="RootViewController.designer.cs">
+      <DependentUpon>RootViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsViewController.cs" />
+    <Compile Include="SettingsViewController.designer.cs">
+      <DependentUpon>SettingsViewController.cs</DependentUpon>
+    </Compile>
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="TableSource.cs" />
+    <Compile Include="UserNotificationCenterDelegate.cs" />
     <InterfaceDefinition Include="AgendaCell.xib" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <ITunesArtwork Include="iTunesArtwork" />
     <None Include="packages.config" />
     <Compile Include="NewEventController.cs" />
     <Compile Include="NewEventController.designer.cs">
       <DependentUpon>NewEventController.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsentForm.cs" />
+    <Compile Include="ConsentForm.designer.cs">
+      <DependentUpon>ConsentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepeatEditViewController.cs" />
+    <Compile Include="RepeatEditViewController.designer.cs">
+      <DependentUpon>RepeatEditViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RepeatNewViewController.cs" />
+    <Compile Include="RepeatNewViewController.designer.cs">
+      <DependentUpon>RepeatNewViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextToSpeechImplementation.cs" />
+    <Compile Include="DateTimeExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MasterViewController.cs" />
@@ -144,6 +170,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="RadialProgress.iOS">
+      <HintPath>..\Components\radialprogress-1.0.1.3\lib\ios-unified\RadialProgress.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />
@@ -168,7 +197,7 @@
     <BundleResource Include="Resources\bicycle.png" />
     <BundleResource Include="Resources\boat.png" />
     <BundleResource Include="Resources\bowling-ball.png" />
-    <BundleResource Include="Resources\brithday-cake-with-candle.png" />
+    <BundleResource Include="Resources\birthday-cake-with-candle.png" />
     <BundleResource Include="Resources\business.png" />
     <BundleResource Include="Resources\christian-coffin.png" />
     <BundleResource Include="Resources\coffee.png" />
@@ -206,6 +235,17 @@
     <BundleResource Include="Resources\timpani.png" />
     <BundleResource Include="Resources\violin.png" />
     <BundleResource Include="Resources\washer-machine.png" />
+    <BundleResource Include="Resources\settings--2- %282%29.png" />
+    <BundleResource Include="Resources\Background.png" />
+    <BundleResource Include="Resources\AppIcon.png" />
+    <BundleResource Include="Resources\notification.wav" />
+    <BundleResource Include="Resources\speakers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="radialprogress">
+      <Version>1.0.1.3</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

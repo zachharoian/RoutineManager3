@@ -1,4 +1,4 @@
-﻿// WARNING
+// WARNING
 //
 // This file has been generated automatically by Xamarin Studio from the outlets and
 // actions declared in your storyboard file.
@@ -29,6 +29,10 @@ namespace App12
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel endDateSubtitle { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel repeatText { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -74,6 +78,11 @@ namespace App12
             if (endDateSubtitle != null) {
                 endDateSubtitle.Dispose ();
                 endDateSubtitle = null;
+            }
+
+            if (repeatText != null) {
+                repeatText.Dispose ();
+                repeatText = null;
             }
 
             if (startDatePicker != null) {

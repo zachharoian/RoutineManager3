@@ -1,4 +1,4 @@
-﻿// WARNING
+// WARNING
 //
 // This file has been generated automatically by Xamarin Studio from the outlets and
 // actions declared in your storyboard file.
@@ -20,6 +20,10 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton deleteButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextView descField { get; set; }
 
         [Outlet]
@@ -32,7 +36,7 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel repeatsSubtitle { get; set; }
+        UIKit.UILabel repeatText { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -65,6 +69,11 @@ namespace App12
                 buttonSave = null;
             }
 
+            if (deleteButton != null) {
+                deleteButton.Dispose ();
+                deleteButton = null;
+            }
+
             if (descField != null) {
                 descField.Dispose ();
                 descField = null;
@@ -80,9 +89,9 @@ namespace App12
                 endDateSubtitle = null;
             }
 
-            if (repeatsSubtitle != null) {
-                repeatsSubtitle.Dispose ();
-                repeatsSubtitle = null;
+            if (repeatText != null) {
+                repeatText.Dispose ();
+                repeatText = null;
             }
 
             if (startDatePicker != null) {
