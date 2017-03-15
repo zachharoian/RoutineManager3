@@ -135,16 +135,27 @@ namespace App12
         //
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
+			Console.WriteLine("GetCell Launched");
             var cell = tableView.DequeueReusableCell(cellIdentifier) as AgendaCell;
             tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
             if (cell == null)
                 cell = new AgendaCell(cellIdentifier);
             cell.UpdateCell(tableItems[indexPath.Row]);
-            
+
+			cell.speech.TouchUpInside += delegate {
+				SpeakTitle(cell);
+			};
+			Console.WriteLine("GetCell Finished");
             return cell;
         }
         //  END GetCell()
 
+		void SpeakTitle(AgendaCell cell)
+		{
+			string[] times = cell.time.Text.Split(new char[] { '-' });
+			string text = cell.title.Text + ", occurs from " + times[0] + ". to " + times[1] + ". " + cell.desc.Text;
+			TextToSpeechImplementation.Speak(text);
+		}
     }
     //  END TableSource Class
 

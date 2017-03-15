@@ -16,6 +16,8 @@ namespace App12
         bool startDatePickerTextChanged = false;
         bool endDatePickerTextChanged = false;
 		public string repeatSubtitle;
+		public NSDate dateOfNever;
+
         //  ---------------------------------
         //  NewEventController(): Constructor used for UI Construction
         //  ---------------------------------
@@ -40,6 +42,8 @@ namespace App12
             {
                 Title = NSBundle.MainBundle.LocalizedString(Event.Title, Event.Title);
             }
+			DateTime temp = Event.Start.ToLocalTime();
+			dateOfNever = (NSDate)temp;
             NavigationItem.Prompt = " ";
             titleField.Text = Event.Title;
 			descField.Text = Event.Desc;
@@ -74,10 +78,16 @@ namespace App12
             if (descField.Text.Equals("") == true || descField.Text.Equals(" ") == true)
             {
                 descField.Text = "Description";
-                descField.TextColor = UIColor.Gray;
+                descField.TextColor = UIColor.FromRGB(199, 199, 205);;
             }
             descField.Started += EditingStarted;
             descField.Ended += EditingEnded;
+			this.titleField.ShouldReturn += (textField) =>
+			{
+				textField.ResignFirstResponder();
+				return true;
+			};
+
 		}// END ViewDidLoad()
 
 
@@ -95,7 +105,7 @@ namespace App12
             if(descField.Text.Equals("") == true)
             {
                 descField.Text = "Description";
-                descField.TextColor = UIColor.Gray;
+                descField.TextColor = UIColor.FromRGB(199, 199, 205);;
             }
         }
 
@@ -107,8 +117,9 @@ namespace App12
 		}
 		public string OverviewReturn()
 		{
+			Console.WriteLine("tableitems[0]: " + tableItems[0]);
 			if (tableItems[0] == true)
-				return "Never";
+				return NSDateFormatter.ToLocalizedString(dateOfNever, NSDateFormatterStyle.Medium, NSDateFormatterStyle.None);
 			if (tableItems[1] == true && tableItems[7] == true)
 			{
 				int count = 0;
@@ -153,10 +164,11 @@ namespace App12
 		}
 
 
+
 		public NSDate DateTimeToNSDate (DateTime date)
         {
-            DateTime newDate = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0));
-            return NSDate.FromTimeIntervalSinceReferenceDate((date - newDate).TotalSeconds);
+			date = DateTime.SpecifyKind(date, DateTimeKind.Local);
+			return (NSDate)date;
         }
 
         //  ---------------------------------
@@ -341,11 +353,7 @@ namespace App12
         //  ---------------------------------
         public static DateTime NSDateToDateTime(NSDate date)
         {
-            //  Create a reference date for conversion
-            DateTime reference = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0));
-
-            //  Add the amount of time since the reference date from the NSDate input.
-            return reference.AddSeconds(date.SecondsSinceReferenceDate);
+			return ((DateTime)date).ToLocalTime();
         }
 
 		public NSIndexPath currentTableCell;
@@ -378,10 +386,17 @@ namespace App12
 
 				//  Save the NSDate from Start Date Picker and convert it to DateTime
 				Event.Start = NSDateToDateTime(startDatePicker.Date);
-
+				Event.Start = new DateTime(2017, 1, 1, Event.Start.Hour, Event.Start.Minute, 0);
 				//  Save the NSDate from End Date Picker and convert it to DateTime
 				Event.End = NSDateToDateTime(endDatePicker.Date);
+				Event.End = new DateTime(2017, 1, 1, Event.End.Hour, Event.End.Minute, 0);
 
+				if (tableItems[0] == true)
+				{
+					DateTime date = ((DateTime)(dateOfNever)).ToLocalTime();
+					Event.Start = new DateTime(date.Year, date.Month, date.Day, Event.Start.Hour, Event.Start.Minute, 0);
+					Event.End = new DateTime(date.Year, date.Month, date.Day, Event.End.Hour, Event.End.Minute, 0);
+				}
 				bool[] tempArray = new bool[7];
 				for (int i = 1; i < 8; i++)
 				{

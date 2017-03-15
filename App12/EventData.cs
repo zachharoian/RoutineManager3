@@ -26,41 +26,53 @@ namespace App12
 		public int Friday { get; set; }
 		public int Saturday { get; set; }
 
+		public int Color { get; set; } = 0;
+
         public int Displayed { get; set; } = 0;
+
+		public int Repeat { get; set; } = 1;
 
 		public void enableNotification()
 		{
+			if (Repeat == 1)
+			{
+				if (Sunday == 0 && Monday == 0 && Tuesday == 0 && Wednesday == 0 && Thursday == 0 && Friday == 0 && Saturday == 0)
+				{
+					Repeat = 0;
+				}
+				var attachmentID = "image";
+				var options = new UNNotificationAttachmentOptions();
+				NSUrl imagePath;
+				try
+				{
+					imagePath = NSUrl.FromFilename(Image);
+				}
+				catch
+				{
+					imagePath = NSUrl.FromFilename("alarm.png");
+				}
+				NSError error;
+				var attachment = UNNotificationAttachment.FromIdentifier(attachmentID, imagePath, options, out error);
 
-            var attachmentID = "image";
-            var options = new UNNotificationAttachmentOptions();
-            NSUrl imagePath;
-            try
-            {
-                imagePath = NSUrl.FromFilename(Image);
-            }
-            catch
-            {
-                imagePath = NSUrl.FromFilename("alarm.png");
-            }
-            NSError error;
-            var attachment = UNNotificationAttachment.FromIdentifier(attachmentID, imagePath, options, out error);
+				var content = new UNMutableNotificationContent();
+				content.Title = Title;
+				if (Desc != "")
+				{
+					content.Body = Desc;
+				}
 
-            var content = new UNMutableNotificationContent();            
-            content.Title = Title;
-            if (Desc != "")
-            {
-                content.Body = Desc;
-            }
-            
-            //content.CategoryIdentifier = "default";
-            content.Attachments = new UNNotificationAttachment[] { attachment };
-            content.Sound = UNNotificationSound.GetSound("notification.wav");
-            var trigger = UNCalendarNotificationTrigger.CreateTrigger(ConvertDateTimeToNSDate(Start), false);
+				//content.CategoryIdentifier = "default";
+				content.Attachments = new UNNotificationAttachment[] { attachment };
+				content.Sound = UNNotificationSound.GetSound("notification.wav");
+				var trigger = UNCalendarNotificationTrigger.CreateTrigger(ConvertDateTimeToNSDate(Start), false);
 
-            var requestID = Convert.ToString(ID);
-            var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
 
-            UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { if (err != null) { Console.WriteLine("Error: " + err); }; });
+				var requestID = Convert.ToString(ID);
+				var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
+
+				UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { if (err != null) { Console.WriteLine("Error: " + err); }; });
+
+			}
         }
 
 		public void disableNotification()
@@ -84,7 +96,14 @@ namespace App12
 			}
 			if (count == 0)
 			{
-				tempDay = date;
+				if (Repeat == 0)
+				{
+					tempDay = Start;
+				}
+				else
+				{
+					tempDay = date;
+				}
 			}
 			else {
                 DateTime j;
@@ -215,7 +234,7 @@ namespace App12
 			}
 			if (includeNever == true)
 			{
-				if (count == 0)
+				if (count == 8)
 					returnList[0] = true;
 				return returnList;
 			}

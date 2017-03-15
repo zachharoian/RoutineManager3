@@ -14,8 +14,25 @@ namespace App12
     [Register ("RepeatNewViewController")]
     partial class RepeatNewViewController
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIDatePicker neverDatePicker { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel subtitleLabel { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
+            if (neverDatePicker != null) {
+                neverDatePicker.Dispose ();
+                neverDatePicker = null;
+            }
+
+            if (subtitleLabel != null) {
+                subtitleLabel.Dispose ();
+                subtitleLabel = null;
+            }
         }
     }
 }

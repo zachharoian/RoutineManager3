@@ -42,8 +42,21 @@ namespace App12
 			RootViewController.consentComfirmed = true;
             //  Save the value
 			DataAccess.SaveKey();
+
+
             //  Go back to main agenda
 			PerformSegue("UnwindFromConsent", null);
+			UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) =>
+			{
+				// Handle approval
+			});
+			UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Sound, (approved, err) =>
+			{
+				// Handle approval
+			});
+			//  Ask for Notification access
+			//TODO: Add onboarding screen. Replace boring consent form with images and a UIPageView.
+
 
         }
         #endregion

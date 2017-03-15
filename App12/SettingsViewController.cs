@@ -13,7 +13,7 @@ namespace App12
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            NavigationController.NavigationBar.TintColor = UIColor.Purple;
+            //NavigationController.NavigationBar.TintColor = UIColor.Purple;
             NavigationItem.Prompt = "Routine Manger";
             if (App12.RootViewController.isEditingEnabled == true)
             {
@@ -49,7 +49,7 @@ namespace App12
 
         partial void SurveyButton_TouchUpInside(UIButton sender)
         {
-            UIApplication.SharedApplication.OpenUrl(new NSUrl("https://goo.gl/forms/pd8e5aonYweOewLw1"));
+			UIApplication.SharedApplication.OpenUrl(new NSUrl("https://goo.gl/forms/pd8e5aonYweOewLw1"));
         }
     }
 }

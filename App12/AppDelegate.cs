@@ -19,13 +19,8 @@ namespace App12
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
 
-            //  Ask for Notification access
-            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) => {
-                // Handle approval
-            });
-            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Sound, (approved, err) => {
-                // Handle approval
-            });
+            
+
             //  Check if the notifications are still allowed.
             UNUserNotificationCenter.Current.GetNotificationSettings((settings) => {
                 var alertsAllowed = (settings.AlertSetting == UNNotificationSetting.Enabled);
@@ -33,6 +28,7 @@ namespace App12
             UNUserNotificationCenter.Current.GetNotificationSettings((settings) => {
                 var soundsAllowed = (settings.SoundSetting == UNNotificationSetting.Enabled);
             });
+
 
             //  Set the notification center delegate to the custom delegate
             UNUserNotificationCenter.Current.Delegate = new UserNotificationCenterDelegate();
@@ -46,14 +42,21 @@ namespace App12
             var category = UNNotificationCategory.FromIdentifier(categoryID, actions, intentIDs, UNNotificationCategoryOptions.None);
             var categories = new UNNotificationCategory[] { category };
             UNUserNotificationCenter.Current.SetNotificationCategories(new NSSet<UNNotificationCategory>(categories));
-
             return true;
         }
+
+		public override void WillTerminate(UIApplication application)
+		{
+			
+			// Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
+		}
 		#endregion	
 
 		#region Unused overrides
 		public override void OnResignActivation(UIApplication application)
         {
+			DataAccess.SaveEdit();
+			//System.Console.WriteLine("Saved database");
             // Invoked when the application is about to move from active to inactive state.
             // This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) 
             // or when the user quits the application and it begins the transition to the background state.
@@ -76,11 +79,6 @@ namespace App12
         {
             // Restart any tasks that were paused (or not yet started) while the application was inactive. 
             // If the application was previously in the background, optionally refresh the user interface.
-        }
-
-        public override void WillTerminate(UIApplication application)
-        {
-            // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
         }
         #endregion
     }

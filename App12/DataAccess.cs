@@ -18,7 +18,7 @@ namespace App12
         //
         //  Key: An int value that saves the decision for the consent form
         //
-        private class Key
+        class Key
         {
             //  ID column for the database that autoincrements
             [PrimaryKey, AutoIncrement, Column("ID")]
@@ -27,6 +27,15 @@ namespace App12
             public int ConsentFormComfirmation { get; set; }
         }
         #endregion
+
+		class Editing
+		{
+			//  ID column for the database that autoincrements
+			[PrimaryKey, AutoIncrement, Column("ID")]
+			public int ID { get; set; }
+			//  0 is false, 1 is true.
+			public int EditEnabled { get; set; }
+		}
 
         #region Get ConsentForm Key
         //
@@ -58,7 +67,7 @@ namespace App12
                     //  If it failed, create a new key and set it to false.
 					obj = new Key { ConsentFormComfirmation = 0 };
 				}
-
+				//db.Insert(obj);
                 //  If the key is true, return that consent has been confirmed. Else, it hasn't been confirmed.
                 if (obj.ConsentFormComfirmation == 1)
                     return true;
@@ -67,6 +76,42 @@ namespace App12
 			}
 		}
         #endregion
+
+		public static bool GetEdit()
+		{
+			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
+			object locker = new object();
+			lock (locker)
+			{
+				//  Sets the database path
+				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				//  Connects to the database
+				var db = new SQLiteConnection(dbPath);
+				//  Finds the table, creates it if it doesn't exist
+				db.CreateTable<Editing>();
+
+				//  Creates a key to be saved
+				Editing obj;
+				try
+				{
+					//  If the key is retrieved, set it.
+					obj = db.Get<Editing>(1);
+				}
+				catch
+				{
+					//  If it failed, create a new key and set it to true.
+					obj = new Editing { EditEnabled = 1 };
+				}
+				db.Insert(obj);
+				//Console.WriteLine(obj.EditEnabled);
+				//  If the key is true, return that consent has been confirmed. Else, it hasn't been confirmed.
+				if (obj.EditEnabled == 1)
+					return true;
+				else
+					return false;
+				
+			}
+		}
 
         #region Save ConsentForm Key
         //
@@ -93,6 +138,42 @@ namespace App12
 			}
 		}
         #endregion
+
+		public static void SaveEdit()
+		{
+			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
+			object locker = new object();
+			lock (locker)
+			{
+				//  Sets the database path
+				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				//  Connects to the database
+				var db = new SQLiteConnection(dbPath);
+				//  Finds the table, creates it if it doesn't 
+				db.CreateTable<Editing>();
+				int temp;
+				if (RootViewController.isEditingEnabled == true)
+					temp = 1;
+				else
+					temp = 0;
+				Console.WriteLine(temp);
+				try
+				{
+					SQLiteCommand command = new SQLiteCommand(db);
+					command.CommandText = "UPDATE Editing SET EditEnabled = '" + temp + "' Where ID = '1'";
+					command.ExecuteNonQuery();
+
+					Console.WriteLine("obj = " + db.Get<Editing>(1).EditEnabled);
+				}
+				catch
+				{
+					Console.WriteLine("Save failed");
+					//  If it failed, create a new key and set it to true.
+					db.Insert(new Editing { EditEnabled = temp});
+				}
+
+			}
+		}
 
         //
         //  Saves the object in the database
@@ -211,10 +292,14 @@ namespace App12
                             break;
                         
                     }
-					/*
-					if (EventData.Start.Date == Date.Date)
-						returnList.Add(EventData);
-						*/
+					if (EventData.Start.Date.DayOfWeek == Date.Date.DayOfWeek)
+					{
+						DateTime dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
+						if (dt.DayOfYear <= EventData.Start.DayOfYear && EventData.Start.DayOfYear < dt.DayOfYear + 7)
+						{
+							returnList.Add(EventData);
+						}
+					}
                 }
 
             }
@@ -340,14 +425,22 @@ namespace App12
 							break;
 
 					}
-					/*
-					if (EventData.Start.Date == Date.Date && returnList.Contains(EventData) == false)
-						returnList.Add(EventData);*/
+					Console.WriteLine("EventData.Start: " + EventData.Start.Date + ". Date.Date: " + Date.Date);
+					if (EventData.Start.Date.DayOfWeek == Date.Date.DayOfWeek)
+					{ 
+						DateTime dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
+						if (dt.DayOfYear <= EventData.Start.DayOfYear && EventData.Start.DayOfYear < dt.DayOfYear + 7)
+						{
+							Console.WriteLine("True");
+							returnList.Add(EventData);
+						}
+					}
 				}
 
 			}
 			return returnList;
         } 
+
 
         public static void DeleteObject (EventData obj)
         {

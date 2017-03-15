@@ -37,6 +37,9 @@ namespace App12
 
 
         }
+
+
+
         public DateTime Day;
 
 		public override void ViewWillAppear(bool animated)

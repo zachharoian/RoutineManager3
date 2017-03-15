@@ -15,6 +15,8 @@ namespace App12
         bool startDatePickerTextChanged = false;
         bool endDatePickerTextChanged = false;
 
+
+		public NSDate dateOfNever;
         //  Variable for repeat
         //bool[] DaysActive = new bool[8] {false, false, false, false, false, false, false, false };
         public string repeatSubtitle;
@@ -35,9 +37,9 @@ namespace App12
             base.ViewDidLoad();
 
 			//NavigationController.NavigationBar.BarTintColor = MasterViewController.BarTint;
-			NavigationController.NavigationBar.TintColor = UIColor.Purple;
+			NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(0.012f, 0.663f, 0.957f);
+			NavigationController.NavigationBar.TintColor = UIColor.White;
             //toggleStartDatePicker();
-			//TODO:  Change back to 5 and allow date selection
             startDatePicker.MinuteInterval = 1;
             endDatePicker.MinuteInterval = 1;
 			//NSCalendar calendar = NSCalendar.CurrentCalendar;
@@ -54,10 +56,16 @@ namespace App12
             if (descField.Text.Equals("") == true || descField.Text.Equals("Description") == true)
             {
                 descField.Text = "Description";
-                descField.TextColor = UIColor.Gray;
+                descField.TextColor = UIColor.FromRGB(199, 199, 205);
             }
             descField.Started += EditingStarted;
             descField.Ended += EditingEnded;
+
+			this.titleField.ShouldReturn += (textField) =>
+			{
+				textField.ResignFirstResponder();
+				return true;
+			};
 
             tableItems[(int)DateTime.Now.DayOfWeek+1] = true;
         }// END ViewDidLoad()
@@ -92,7 +100,7 @@ namespace App12
             if (descField.Text.Equals("") == true)
             {
                 descField.Text = "Description";
-                descField.TextColor = UIColor.Gray;
+                descField.TextColor = UIColor.FromRGB(199, 199, 205);;
             }
         }
         public override void ViewDidAppear(bool animated)
@@ -104,7 +112,7 @@ namespace App12
         public string OverviewReturn()
         {
             if (tableItems[0] == true)
-                return "Never";
+                return NSDateFormatter.ToLocalizedString(dateOfNever, NSDateFormatterStyle.Medium, NSDateFormatterStyle.None);
             if (tableItems[1] == true && tableItems[7] == true)
             {
                 int count = 0;
@@ -328,11 +336,7 @@ namespace App12
         //  ---------------------------------
         public static DateTime NSDateToDateTime(NSDate date)
         {
-            //  Create a reference date for conversion
-            DateTime reference = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0));
-
-            //  Add the amount of time since the reference date from the NSDate input.
-            return reference.AddSeconds(date.SecondsSinceReferenceDate);
+			return ((DateTime)date).ToLocalTime();
         }
 
         public bool[] tableItems = new bool[8];
@@ -369,10 +373,17 @@ namespace App12
 
 				//  Save the NSDate from Start Date Picker and convert it to DateTime
 				Event.Start = NSDateToDateTime(startDatePicker.Date);
-
+				Event.Start = new DateTime(2017, 1, 1, Event.Start.Hour, Event.Start.Minute, 0);
 				//  Save the NSDate from End Date Picker and convert it to DateTime
 				Event.End = NSDateToDateTime(endDatePicker.Date);
+				Event.End = new DateTime(2017, 1, 1, Event.End.Hour, Event.End.Minute, 0);
 
+				if (tableItems[0] == true)
+				{
+					DateTime date = ((DateTime)(dateOfNever)).ToLocalTime();
+					Event.Start = new DateTime(date.Year, date.Month, date.Day, Event.Start.Hour, Event.Start.Minute, 0);
+					Event.End = new DateTime(date.Year, date.Month, date.Day, Event.End.Hour, Event.End.Minute, 0);
+				}
 				bool[] tempArray = new bool[7];
 				for (int i = 1; i < 8; i++)
 				{
