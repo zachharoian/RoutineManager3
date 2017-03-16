@@ -3,6 +3,7 @@ using System;
 using SQLite;
 using UserNotifications;
 using Foundation;
+using UIKit;
 
 namespace App12
 {
@@ -26,7 +27,7 @@ namespace App12
 		public int Friday { get; set; }
 		public int Saturday { get; set; }
 
-		public int Color { get; set; } = 0;
+		public int Color { get; set; } = -1;
 
         public int Displayed { get; set; } = 0;
 
@@ -43,6 +44,7 @@ namespace App12
 				var attachmentID = "image";
 				var options = new UNNotificationAttachmentOptions();
 				NSUrl imagePath;
+
 				try
 				{
 					imagePath = NSUrl.FromFilename(Image);
@@ -51,6 +53,7 @@ namespace App12
 				{
 					imagePath = NSUrl.FromFilename("alarm.png");
 				}
+
 				NSError error;
 				var attachment = UNNotificationAttachment.FromIdentifier(attachmentID, imagePath, options, out error);
 
@@ -61,6 +64,7 @@ namespace App12
 					content.Body = Desc;
 				}
 
+				content.Subtitle = Start.ToShortTimeString() + " - " + End.ToShortTimeString();
 				//content.CategoryIdentifier = "default";
 				content.Attachments = new UNNotificationAttachment[] { attachment };
 				content.Sound = UNNotificationSound.GetSound("notification.wav");

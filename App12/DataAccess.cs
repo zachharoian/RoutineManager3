@@ -211,6 +211,7 @@ namespace App12
                                           "', Thursday = '" + obj.Thursday + 
                                           "', Friday = '" + obj.Friday + 
                                           "', Saturday = '" + obj.Saturday + 
+										  "', Color = '" + obj.Color +
                                           "' Where _id = '" + obj.ID + "'";
                     command.ExecuteNonQuery();
                     Console.WriteLine("Database updated");
@@ -246,7 +247,7 @@ namespace App12
       
                 IOrderedEnumerable<EventData> sortQuery =
                     from EventData in tempList
-                    orderby EventData.Start //descending
+                    orderby EventData.Start.Hour //descending
                     select EventData;
 
                 foreach (EventData EventData in sortQuery)
@@ -300,6 +301,7 @@ namespace App12
 							returnList.Add(EventData);
 						}
 					}
+
                 }
 
             }
@@ -368,8 +370,10 @@ namespace App12
 
 				IOrderedEnumerable<EventData> sortQuery =
 					from EventData in tempList
-					orderby EventData.Start //descending
+					orderby (EventData.Start.Hour*60 + EventData.Start.Minute) //descending
 					select EventData;
+
+
 				foreach (EventData EventData in sortQuery)
 				{
 					int DayOftheWeek = (int)(Date.DayOfWeek)+1;
@@ -425,13 +429,11 @@ namespace App12
 							break;
 
 					}
-					Console.WriteLine("EventData.Start: " + EventData.Start.Date + ". Date.Date: " + Date.Date);
 					if (EventData.Start.Date.DayOfWeek == Date.Date.DayOfWeek)
 					{ 
 						DateTime dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
 						if (dt.DayOfYear <= EventData.Start.DayOfYear && EventData.Start.DayOfYear < dt.DayOfYear + 7)
 						{
-							Console.WriteLine("True");
 							returnList.Add(EventData);
 						}
 					}

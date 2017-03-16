@@ -1,6 +1,5 @@
 using Foundation;
 using System;
-using System.Globalization;
 using UIKit;
 
 namespace App12
@@ -12,9 +11,9 @@ namespace App12
         //  Variable for Start Date Picker - checks if the Date Picker is visible. 
         bool startDatePickerHidden = true;
         bool endDatePickerHidden = true;
-        bool startDatePickerTextChanged = false;
-        bool endDatePickerTextChanged = false;
-
+        bool startDatePickerTextChanged;
+        bool endDatePickerTextChanged;
+		public int EventColor = -1;
 
 		public NSDate dateOfNever;
         //  Variable for repeat
@@ -61,26 +60,34 @@ namespace App12
             descField.Started += EditingStarted;
             descField.Ended += EditingEnded;
 
-			this.titleField.ShouldReturn += (textField) =>
+			titleField.ShouldReturn += (textField) =>
 			{
 				textField.ResignFirstResponder();
 				return true;
 			};
 
             tableItems[(int)DateTime.Now.DayOfWeek+1] = true;
+
+			//	New Changes
+			//EventColor = Event.Color for Edit;
+			colorLabel.Text = AgendaCell.GetColorName(EventColor);
+			colorCell.ImageView.Image = AgendaCell.GetColorImage(EventColor);
+
         }// END ViewDidLoad()
+
+
 
          DateTime RoundUp(NSDate dt, TimeSpan d)
          {
-             DateTime ns = NSDateToDateTime(dt);
-             DateTime time = new DateTime(((ns.Ticks + d.Ticks - 1) / d.Ticks) * d.Ticks);
+             var ns = NSDateToDateTime(dt);
+             var time = new DateTime(((ns.Ticks + d.Ticks - 1) / d.Ticks) * d.Ticks);
              return time;
         }
          
 
         public NSDate ConvertDateTimeToNSDate(DateTime date)
         {
-            DateTime newDate = TimeZone.CurrentTimeZone.ToLocalTime(
+            var newDate = TimeZone.CurrentTimeZone.ToLocalTime(
                 new DateTime(2001, 1, 1, 0, 0, 0));
             return NSDate.FromTimeIntervalSinceReferenceDate(
                 (date - newDate).TotalSeconds);
@@ -100,14 +107,16 @@ namespace App12
             if (descField.Text.Equals("") == true)
             {
                 descField.Text = "Description";
-                descField.TextColor = UIColor.FromRGB(199, 199, 205);;
+                descField.TextColor = UIColor.FromRGB(199, 199, 205);
             }
         }
-        public override void ViewDidAppear(bool animated)
+        public override void ViewWillAppear(bool animated)
         {
-            base.ViewDidAppear(animated);
+            base.ViewWillAppear(animated);
             repeatText.Text = OverviewReturn();
-            TableView.ReloadData();
+			colorLabel.Text = AgendaCell.GetColorName(EventColor);
+			colorCell.ImageView.Image = AgendaCell.GetColorImage(EventColor);
+			TableView.ReloadData();
         }
         public string OverviewReturn()
         {
@@ -323,11 +332,11 @@ namespace App12
                 return 0;
 
             //  If the cell is Date Picker Cell, and it is not hidden, set the height to the height of the Date Picker Element (216 pts)
-            else if (indexPath.Section == 0 && ((indexPath.Row == 2 && startDatePickerHidden == false) || (indexPath.Row == 4 && endDatePickerHidden == false)))
+            if (indexPath.Section == 0 && ((indexPath.Row == 2 && startDatePickerHidden == false) || (indexPath.Row == 4 && endDatePickerHidden == false)))
                 return 216;
             //  Else, return the standard row height
-            else
-				return base.GetHeightForRow(tableView, indexPath);
+            
+			return base.GetHeightForRow(tableView, indexPath);
         }// END GetHeightForRow()
 
 
@@ -351,9 +360,13 @@ namespace App12
             //  Call the prepare for segue method
             base.PrepareForSegue(segue, sender);
 			//Console.WriteLine("test");
-			if (segue.Identifier != "repeatSegue" && segue.Identifier != "unwindFromCancel")
+			if (segue.Identifier != "repeatSegue" && segue.Identifier != "unwindFromCancel" && segue.Identifier != "colorSegue")
 			{
 				Event = new EventData();
+
+				//	NEW
+				Event.Color = EventColor;
+
 				//  Save the text from the Title Field
 				Event.Title = titleField.Text;
 
@@ -380,7 +393,7 @@ namespace App12
 
 				if (tableItems[0] == true)
 				{
-					DateTime date = ((DateTime)(dateOfNever)).ToLocalTime();
+					var date = ((DateTime)(dateOfNever)).ToLocalTime();
 					Event.Start = new DateTime(date.Year, date.Month, date.Day, Event.Start.Hour, Event.Start.Minute, 0);
 					Event.End = new DateTime(date.Year, date.Month, date.Day, Event.End.Hour, Event.End.Minute, 0);
 				}
@@ -398,14 +411,17 @@ namespace App12
 				//  Transfer the Title Field to Main
 				transferdata.Event = Event;
 
-				Console.WriteLine("Enabled Notifications");
-
 				transferdata.daysActive = tempArray;
 			}
-			else if (segue.Identifier != "unwindFromCancel") 
+			else if (segue.Identifier == "repeatSegue") 
 			{
 				var transferdata = segue.DestinationViewController as RepeatNewViewController;
                 transferdata.controller = this;
+			}
+			if (segue.Identifier == "colorSegue")
+			{
+				var transferdata = segue.DestinationViewController as RoutineManager.ColorNewViewController;
+				transferdata.controller = this;
 			}
         }// END PrepareForSegue()
     }// END NewEventController

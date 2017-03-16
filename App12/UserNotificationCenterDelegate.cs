@@ -43,9 +43,12 @@ namespace App12
                 default:
                     if (response.IsDefaultAction)
                     {
-                        //  Default action
-
-                    }
+						//  Default action
+						EventData Event = DataAccess.GetNotification(Convert.ToInt32(response.Notification.Request.Identifier));
+						var RootView = RootViewController.CurrentRootViewController;
+						MasterViewController MasterView = (MasterViewController)RootView.PageViewController.ViewControllers[0];
+						MasterView.SegueToEditFromNotification(Event);
+					}
                     else if (response.IsDefaultAction)
                     {
                         //  Dismiss action

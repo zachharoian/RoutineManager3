@@ -20,6 +20,14 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITableViewCell colorCell { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel colorLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton deleteButton { get; set; }
 
         [Outlet]
@@ -67,6 +75,16 @@ namespace App12
             if (buttonSave != null) {
                 buttonSave.Dispose ();
                 buttonSave = null;
+            }
+
+            if (colorCell != null) {
+                colorCell.Dispose ();
+                colorCell = null;
+            }
+
+            if (colorLabel != null) {
+                colorLabel.Dispose ();
+                colorLabel = null;
             }
 
             if (deleteButton != null) {

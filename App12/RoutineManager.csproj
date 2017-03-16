@@ -135,6 +135,14 @@
     </Compile>
     <Compile Include="TextToSpeechImplementation.cs" />
     <Compile Include="DateTimeExtension.cs" />
+    <Compile Include="ColorNewViewController.cs" />
+    <Compile Include="ColorNewViewController.designer.cs">
+      <DependentUpon>ColorNewViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorEditViewController.cs" />
+    <Compile Include="ColorEditViewController.designer.cs">
+      <DependentUpon>ColorEditViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MasterViewController.cs" />
@@ -240,6 +248,24 @@
     <BundleResource Include="Resources\AppIcon.png" />
     <BundleResource Include="Resources\notification.wav" />
     <BundleResource Include="Resources\speakers.png" />
+    <BundleResource Include="Resources\menu-button-of-three-horizonta.png" />
+    <BundleResource Include="Resources\Deep_Orange.jpg" />
+    <BundleResource Include="Resources\Orange.jpg" />
+    <BundleResource Include="Resources\Amber.jpg" />
+    <BundleResource Include="Resources\Yellow.jpg" />
+    <BundleResource Include="Resources\Lime.jpg" />
+    <BundleResource Include="Resources\Light_Green.jpg" />
+    <BundleResource Include="Resources\Green.jpg" />
+    <BundleResource Include="Resources\Teal.jpg" />
+    <BundleResource Include="Resources\Cyan.jpg" />
+    <BundleResource Include="Resources\Light_Blue.jpg" />
+    <BundleResource Include="Resources\Blue.jpg" />
+    <BundleResource Include="Resources\Indigo.jpg" />
+    <BundleResource Include="Resources\Deep_Purple.jpg" />
+    <BundleResource Include="Resources\Purple.jpg" />
+    <BundleResource Include="Resources\Pink.jpg" />
+    <BundleResource Include="Resources\Red.jpg" />
+    <BundleResource Include="Resources\White.jpg" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="radialprogress">

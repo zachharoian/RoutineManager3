@@ -23,7 +23,7 @@ namespace App12
         //  Cell ID
         string cellIdentifier = "TableCell";
 
-        private DateTime date;
+        DateTime date;
 
         //
         //  Constructor
@@ -135,7 +135,6 @@ namespace App12
         //
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
-			Console.WriteLine("GetCell Launched");
             var cell = tableView.DequeueReusableCell(cellIdentifier) as AgendaCell;
             tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
             if (cell == null)
@@ -145,7 +144,6 @@ namespace App12
 			cell.speech.TouchUpInside += delegate {
 				SpeakTitle(cell);
 			};
-			Console.WriteLine("GetCell Finished");
             return cell;
         }
         //  END GetCell()

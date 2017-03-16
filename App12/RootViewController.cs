@@ -23,7 +23,7 @@ namespace App12
         {
         }
 
-
+		public static RootViewController CurrentRootViewController;
 
         private int segmentIndex = (int)DateTime.Now.DayOfWeek;
 
@@ -53,7 +53,7 @@ namespace App12
 			isEditingEnabled = DataAccess.GetEdit();
 			if (consentComfirmed == false)
 				PerformSegue("consentForm", null);
-
+			CurrentRootViewController = this;
         }
 
 
