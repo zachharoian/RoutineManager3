@@ -18,8 +18,13 @@ namespace RoutineManager
 
 			//TableView.Source = dataSource = new ColorViewDataSource();
 			//dataSource.EventColor = controller.EventColor
-			var cell = GetCell(TableView, NSIndexPath.FromRowSection(0, 0));
+			var cell = GetCell(TableView, NSIndexPath.FromRowSection(controller.EventColor + 1, 0));
 			cell.Accessory = UITableViewCellAccessory.Checkmark;
+			var whiteCell = GetCell(TableView, NSIndexPath.FromRowSection(0, 0));
+			if (whiteCell.Accessory == UITableViewCellAccessory.Checkmark && cell.TextLabel.Text != whiteCell.TextLabel.Text)
+			{
+				whiteCell.Accessory = UITableViewCellAccessory.None;
+			}
 			TableView.ReloadRows(new NSIndexPath[] { NSIndexPath.FromRowSection(0, 0) }, UITableViewRowAnimation.Automatic);
 		}
 
@@ -72,7 +77,7 @@ namespace RoutineManager
 				oldCell.Accessory = UITableViewCellAccessory.None;
 				Console.WriteLine("Old Cell unchecked");
 				var cellWhite = GetCell(tableView, NSIndexPath.FromRowSection(0, 0));
-				if (cellWhite.Accessory == UITableViewCellAccessory.Checkmark)
+				if (cellWhite.Accessory == UITableViewCellAccessory.Checkmark && cell.TextLabel.Text != cellWhite.TextLabel.Text)
 				{
 					cellWhite.Accessory = UITableViewCellAccessory.None;
 				}

@@ -44,6 +44,14 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView headerView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton imageView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel repeatText { get; set; }
 
         [Outlet]
@@ -105,6 +113,16 @@ namespace App12
             if (endDateSubtitle != null) {
                 endDateSubtitle.Dispose ();
                 endDateSubtitle = null;
+            }
+
+            if (headerView != null) {
+                headerView.Dispose ();
+                headerView = null;
+            }
+
+            if (imageView != null) {
+                imageView.Dispose ();
+                imageView = null;
             }
 
             if (repeatText != null) {

@@ -45,11 +45,11 @@ namespace App12
         public static bool GetKey()
 		{
 			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
-			object locker = new object();
+			var locker = new object();
 			lock (locker)
 			{
 				//  Sets the database path
-				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
                 //  Connects to the database
                 var db = new SQLiteConnection(dbPath);
                 //  Finds the table, creates it if it doesn't exist
@@ -80,11 +80,11 @@ namespace App12
 		public static bool GetEdit()
 		{
 			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
-			object locker = new object();
+			var locker = new object();
 			lock (locker)
 			{
 				//  Sets the database path
-				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 				//  Connects to the database
 				var db = new SQLiteConnection(dbPath);
 				//  Finds the table, creates it if it doesn't exist
@@ -120,11 +120,11 @@ namespace App12
         public static void SaveKey()
 		{
 			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
-			object locker = new object();
+			var locker = new object();
 			lock (locker)
 			{
 				//  Sets the database path
-				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
                 //  Connects to the database
                 var db = new SQLiteConnection(dbPath);
                 //  Finds the table, creates it if it doesn't 
@@ -142,11 +142,11 @@ namespace App12
 		public static void SaveEdit()
 		{
 			//  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
-			object locker = new object();
+			var locker = new object();
 			lock (locker)
 			{
 				//  Sets the database path
-				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 				//  Connects to the database
 				var db = new SQLiteConnection(dbPath);
 				//  Finds the table, creates it if it doesn't 
@@ -159,7 +159,7 @@ namespace App12
 				Console.WriteLine(temp);
 				try
 				{
-					SQLiteCommand command = new SQLiteCommand(db);
+					var command = new SQLiteCommand(db);
 					command.CommandText = "UPDATE Editing SET EditEnabled = '" + temp + "' Where ID = '1'";
 					command.ExecuteNonQuery();
 
@@ -181,11 +181,11 @@ namespace App12
         public static void SaveObject(EventData obj)
         {
             //  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
-            object locker = new object();
+            var locker = new object();
             lock (locker)
             {
                 //  Sets the database path
-                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+                var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 
                 //  Connects to the database
                 var db = new SQLiteConnection(dbPath);
@@ -198,7 +198,8 @@ namespace App12
                 //  Inserts the object into the database.
                 if (obj.ID != 0)
                 {
-                    SQLiteCommand command = new SQLiteCommand(db);
+					var typeofimage = (int)obj.TypeOfImage;
+                    var command = new SQLiteCommand(db);
                     command.CommandText = "UPDATE EventData SET Title = '" + obj.Title + 
                                           "', Desc = '" + obj.Desc + 
                                           "', Start = '" + obj.Start + 
@@ -212,6 +213,7 @@ namespace App12
                                           "', Friday = '" + obj.Friday + 
                                           "', Saturday = '" + obj.Saturday + 
 										  "', Color = '" + obj.Color +
+										  "', TypeOfImage = '" + typeofimage +
                                           "' Where _id = '" + obj.ID + "'";
                     command.ExecuteNonQuery();
                     Console.WriteLine("Database updated");
@@ -228,13 +230,13 @@ namespace App12
 
         public static nint Count (DateTime Date)
         {
-			List<EventData> returnList = new List<EventData>();
-			List<EventData> tempList = new List<EventData>();
-            object locker = new object();
+			var returnList = new List<EventData>();
+			var tempList = new List<EventData>();
+            var locker = new object();
             lock (locker)
             {
                 //  Sets the database path
-                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+                var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 
                 //  Connects to the database
                 var db = new SQLiteConnection(dbPath);
@@ -295,7 +297,7 @@ namespace App12
                     }
 					if (EventData.Start.Date.DayOfWeek == Date.Date.DayOfWeek)
 					{
-						DateTime dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
+						var dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
 						if (dt.DayOfYear <= EventData.Start.DayOfYear && EventData.Start.DayOfYear < dt.DayOfYear + 7)
 						{
 							returnList.Add(EventData);
@@ -310,11 +312,11 @@ namespace App12
         }
 		public static EventData GetObject(int ID)
 		{
-			object locker = new object();
+			var locker = new object();
 			lock (locker)
 			{
 				//  Sets the database path
-				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 
 				//  Connects to the database
 				var db = new SQLiteConnection(dbPath);
@@ -328,10 +330,10 @@ namespace App12
 
         public static EventData GetNotification(int ID)
         {
-            object locker = new object();
+            var locker = new object();
             lock (locker)
             {
-                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+                var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 
                 var db = new SQLiteConnection(dbPath);
 
@@ -343,21 +345,21 @@ namespace App12
         }
         public static DateTime NSDateToDateTime(Foundation.NSDate date)
         {
-            DateTime reference = TimeZone.CurrentTimeZone.ToLocalTime(
+            var reference = TimeZone.CurrentTimeZone.ToLocalTime(
                 new DateTime(2001, 1, 1, 0, 0, 0));
             return reference.AddSeconds(date.SecondsSinceReferenceDate);
         }
 
         public static List<EventData> GetEvents(DateTime Date)
         {
-            List<EventData> tempList = new List<EventData>();
-            List<EventData> returnList = new List<EventData>();
+            var tempList = new List<EventData>();
+            var returnList = new List<EventData>();
             //  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
-            object locker = new object();
+            var locker = new object();
             lock (locker)
 			{
 				//  Sets the database path
-				string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+				var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 
 				//  Connects to the database
 				var db = new SQLiteConnection(dbPath);
@@ -431,7 +433,7 @@ namespace App12
 					}
 					if (EventData.Start.Date.DayOfWeek == Date.Date.DayOfWeek)
 					{ 
-						DateTime dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
+						var dt = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
 						if (dt.DayOfYear <= EventData.Start.DayOfYear && EventData.Start.DayOfYear < dt.DayOfYear + 7)
 						{
 							returnList.Add(EventData);
@@ -447,11 +449,11 @@ namespace App12
         public static void DeleteObject (EventData obj)
         {
             //  Creates a locker to prevent other objects from accessing the SQL database when this object is using it.
-            object locker = new object();
+            var locker = new object();
             lock (locker)
             {
                 //  Sets the database path
-                string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
+                var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db3");
 
                 //  Connects to the database
                 var db = new SQLiteConnection(dbPath);

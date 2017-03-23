@@ -1,4 +1,6 @@
-﻿using Foundation;
+﻿using System.Threading.Tasks;
+using AVFoundation;
+using Foundation;
 using UIKit;
 using UserNotifications;
 
@@ -15,11 +17,19 @@ namespace App12
             get;
             set;
         }
+		static async public Task AuthorizeCameraUse()
+		{
+			var authStatus = AVCaptureDevice.GetAuthorizationStatus(AVMediaType.Video);
+			if (authStatus != AVAuthorizationStatus.Authorized)
+			{
+				await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVMediaType.Video);
+			}
+		}
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
 
-            
+
 
             //  Check if the notifications are still allowed.
             UNUserNotificationCenter.Current.GetNotificationSettings((settings) => {
@@ -28,6 +38,7 @@ namespace App12
             UNUserNotificationCenter.Current.GetNotificationSettings((settings) => {
                 var soundsAllowed = (settings.SoundSetting == UNNotificationSetting.Enabled);
             });
+
 
 
             //  Set the notification center delegate to the custom delegate

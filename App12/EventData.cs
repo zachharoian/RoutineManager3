@@ -4,10 +4,14 @@ using SQLite;
 using UserNotifications;
 using Foundation;
 using UIKit;
+using System.IO;
+using CoreGraphics;
+using System.Drawing;
 
 namespace App12
 {
-	public class EventData 
+	public enum TypeOfImage { Default, Custom }
+	public class EventData
 	{
 		//  SQLite setup information
 		[PrimaryKey, AutoIncrement, Column("_id")]
@@ -19,6 +23,8 @@ namespace App12
 		public DateTime Start { get; set; }
 		public DateTime End { get; set; }
 		public string Image { get; set; }
+
+
 		public int Sunday { get; set; }
 		public int Monday { get; set; }
 		public int Tuesday { get; set; }
@@ -28,10 +34,158 @@ namespace App12
 		public int Saturday { get; set; }
 
 		public int Color { get; set; } = -1;
+		public int TintColor { get; set; } = -1;
 
-        public int Displayed { get; set; } = 0;
+		public int Displayed { get; set; } = 0;
 
 		public int Repeat { get; set; } = 1;
+
+		public TypeOfImage TypeOfImage { get; set; }
+
+		public UIImage GetImage(bool isThumbnail)
+		{
+			switch (TypeOfImage)
+			{
+				//	For icons selected by the app - no need for thumbnail
+				case TypeOfImage.Default:
+					{
+						try
+						{
+							Console.WriteLine("Get Image: " + Image);
+							return UIImage.FromFile(Image);
+						}
+						catch
+						{
+							return UIImage.FromFile("alarm.png");
+						}
+					}
+
+				//	For images selected by the user
+				case TypeOfImage.Custom:
+					{
+						if (isThumbnail == true)
+						{
+							Console.WriteLine("From GetImage: " + Filename(true, true));
+							return UIImage.FromFile(Filename(true, true));
+						}
+						return UIImage.FromFile(Filename(false, true));
+					}
+				default:
+					return UIImage.FromFile("alarm.png");
+			}
+		}
+		public void SetImage(UIImage image, string newTitle, TypeOfImage newImageType)
+		{
+			switch (newImageType)
+			{
+				//	Default icon - find image, and set icon
+				case TypeOfImage.Default:
+					{
+						Title = newTitle;
+						Image = FindImage.ParseForImage(Title);
+						break;
+					}
+				case TypeOfImage.Custom:
+					{
+						var thumbnailPath = Filename(true, true);
+						var fullPath = Filename(false, true);
+						//	Save original image
+						var fullPathData = image.AsPNG();
+						NSError fullErr;
+						fullPathData.Save(fullPath, false, out fullErr);
+
+						//	Create the mask with the right tint
+						var mask = UIImage.FromFile("imagemask.png");
+						Console.WriteLine(mask.Size);
+						mask = mask.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+						var view = new UIImageView(mask);
+						view.TintColor = AgendaCell.GetColor(Color);
+						UIGraphics.BeginImageContextWithOptions(mask.Size, false, 0);
+						var context = UIGraphics.GetCurrentContext();
+						view.Layer.RenderInContext(context);
+						mask = UIGraphics.GetImageFromCurrentImageContext();
+						Console.WriteLine(mask.Size);
+						UIGraphics.EndImageContext();
+						//	Draw the thumbnail image
+						UIGraphics.BeginImageContext(new CGSize(240, 240));
+						image.Draw(new CGRect(0, 0, 240, 240));
+						mask.Draw(new CGRect(0, 0, 240, 240));
+						var export = UIGraphics.GetImageFromCurrentImageContext();
+						UIGraphics.EndImageContext();
+						var thumbnailPathData = export.AsPNG();
+
+						NSError thumbErr;
+						thumbnailPathData.Save(thumbnailPath, false, out thumbErr);
+						Console.WriteLine("Error: " + thumbErr);
+
+						/*
+						UIImage imageEdited;
+						//UIGraphics.BeginImageContext(new CGSize(240, 240));
+						//var context = UIGraphics.GetCurrentContext();
+						//context.DrawImage(new CGRect(0, 0, 240, 240), image.CGImage);
+						//image.Draw(new CGRect(0, 0, 240, 240));
+						imageEdited = MaxResizeImage(image, 240, 240);//UIGraphics.GetImageFromCurrentImageContext();
+						//UIGraphics.EndImageContext();
+						var data = imageEdited.AsPNG();
+						data.Save(Filename(true, true), false, out fullErr);
+						*/
+						TintColor = Color;
+						break;
+					}
+			}
+			TintColor = Color;
+			TypeOfImage = newImageType;
+		}
+
+		public UIImage MaxResizeImage(UIImage sourceImage, float maxWidth, float maxHeight)
+		{
+			var sourceSize = sourceImage.Size;
+			var maxResizeFactor = Math.Min(maxWidth / sourceSize.Width, maxHeight / sourceSize.Height);
+			if (maxResizeFactor > 1) return sourceImage;
+			var width = maxResizeFactor * sourceSize.Width;
+			var height = maxResizeFactor * sourceSize.Height;
+			UIGraphics.BeginImageContext(new SizeF((float)width, (float)height));
+			sourceImage.Draw(new RectangleF(0, 0, (float)width, (float)height));
+			var resultImage = UIGraphics.GetImageFromCurrentImageContext();
+			UIGraphics.EndImageContext();
+			return resultImage;
+		}
+		string Filename(bool isThumbnail, bool fullPath)
+		{
+			var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			string path = null;
+			if (ID < 10)
+			{
+				path = "IMG_000" + ID.ToString();
+			}
+			else if (ID < 100)
+			{
+				path = "IMG_00" + ID.ToString();
+			}
+			else if (ID < 1000)
+			{
+				path = "IMG_0" + ID.ToString();
+			}
+			else if (ID < 10000)
+			{
+				path = "IMG_" + ID.ToString();
+			}
+			if (isThumbnail == true)
+			{
+			}
+			else
+			{
+				path = path + "_Full.png";
+			}
+			Console.WriteLine("Before combine: "+path);
+			if (fullPath == true)
+			{
+				path = Path.Combine(documents, path);
+				Console.WriteLine("After combine: "+path);
+			}
+			
+			return path;
+		}
 
 		public void enableNotification()
 		{
@@ -43,15 +197,15 @@ namespace App12
 				}
 				var attachmentID = "image";
 				var options = new UNNotificationAttachmentOptions();
-				NSUrl imagePath;
+				NSUrl imagePath = null;
 
-				try
+				if (TypeOfImage == TypeOfImage.Default)
 				{
 					imagePath = NSUrl.FromFilename(Image);
 				}
-				catch
+				else
 				{
-					imagePath = NSUrl.FromFilename("alarm.png");
+					imagePath = NSUrl.FromFilename(Filename(true, true));
 				}
 
 				NSError error;
@@ -74,20 +228,19 @@ namespace App12
 				var requestID = Convert.ToString(ID);
 				var request = UNNotificationRequest.FromIdentifier(requestID, content, trigger);
 
-				UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { if (err != null) { Console.WriteLine("Error: " + err); }; });
-
+				UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) => { if (err != null) { Console.WriteLine("Error: " + err); } });
 			}
-        }
+		}
 
 		public void disableNotification()
 		{
-			UNUserNotificationCenter.Current.RemovePendingNotificationRequests(new string[] {Convert.ToString(ID) });
+			UNUserNotificationCenter.Current.RemovePendingNotificationRequests(new string[] { Convert.ToString(ID) });
 		}
 
-        private NSDateComponents ConvertDateTimeToNSDate(DateTime date)
+		NSDateComponents ConvertDateTimeToNSDate(DateTime date)
 		{
-			NSDateComponents comps = new NSDateComponents();
-			bool[] days = getTableItems(false);
+			var comps = new NSDateComponents();
+			var days = getTableItems(false);
 			DateTime tempDay = DateTime.Now;
 			Console.WriteLine("Conversion Started");
 			int count = 0;
@@ -109,19 +262,20 @@ namespace App12
 					tempDay = date;
 				}
 			}
-			else {
-                DateTime j;
-                if (date.Day == DateTime.Now.Day && ((date.Hour < DateTime.Now.Hour) || (date.Hour == DateTime.Now.Hour && date.Minute < DateTime.Now.Hour)))
-                {
-                    Console.WriteLine("Add days");
-                    j = DateTime.Now.AddDays(1);
-                    
-                }
-                else
-                {
-                    Console.WriteLine("Didn't add days");
-                    j = DateTime.Now;
-                }
+			else
+			{
+				DateTime j;
+				if (date.Day == DateTime.Now.Day && ((date.Hour < DateTime.Now.Hour) || (date.Hour == DateTime.Now.Hour && date.Minute < DateTime.Now.Hour)))
+				{
+					Console.WriteLine("Add days");
+					j = DateTime.Now.AddDays(1);
+
+				}
+				else
+				{
+					Console.WriteLine("Didn't add days");
+					j = DateTime.Now;
+				}
 				for (int i = (int)j.DayOfWeek; i != ((int)DateTime.Now.DayOfWeek - 1); i++)
 				{
 					Console.WriteLine("i: " + i);
@@ -131,19 +285,20 @@ namespace App12
 					}
 					if (days[i] == true)
 					{
-						Console.WriteLine(DateTime.Now.Hour.CompareTo(date.Hour) +" and "+ DateTime.Now.Minute.CompareTo(date.Minute));
+						Console.WriteLine(DateTime.Now.Hour.CompareTo(date.Hour) + " and " + DateTime.Now.Minute.CompareTo(date.Minute));
 						if (i == (int)DateTime.Now.DayOfWeek && ((DateTime.Now.Hour.CompareTo(date.Hour) == -1) || (DateTime.Now.Hour.CompareTo(date.Hour) == 0 && DateTime.Now.Minute.CompareTo(date.Minute) == -1)))
 						{
 							Console.WriteLine("Same day");
 							tempDay = j;
 						}
-						else {
+						else
+						{
 
 							Console.WriteLine("Completed at i: " + i);
 							tempDay = Next(j, i);
 						}
-                            break;
-						
+						break;
+
 					}
 				}
 			}
@@ -161,7 +316,7 @@ namespace App12
 
 		public DateTime Next(DateTime from, int DayOfWeek)
 		{
-			int start = (int)from.DayOfWeek;
+			var start = (int)from.DayOfWeek;
 			int target = DayOfWeek;
 			if (target <= start)
 				target += 7;
@@ -242,15 +397,12 @@ namespace App12
 					returnList[0] = true;
 				return returnList;
 			}
-			else
+			bool[] returnList2 = new bool[7];
+			for (int i = 1; i < 8; i++)
 			{
-				bool[] returnList2 = new bool[7];
-				for (int i = 1; i < 8; i++)
-				{
-					returnList2[i - 1] = returnList[i];
-				}
-				return returnList2;
+				returnList2[i - 1] = returnList[i];
 			}
+			return returnList2;
 		}
 	}
 }

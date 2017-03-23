@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using System;
 using UIKit;
+using System.Linq;
 
 namespace App12
 {
@@ -19,6 +20,9 @@ namespace App12
 		public NSDate dateOfNever;
 
 		public int EventColor = -1;
+
+
+		UIImagePickerController imagePicker;
 
 		//  ---------------------------------
 		//  NewEventController(): Constructor used for UI Construction
@@ -84,6 +88,14 @@ namespace App12
 			}
 			descField.Started += EditingStarted;
 			descField.Ended += EditingEnded;
+
+			imageView.SetTitle("Edit", UIControlState.Normal);
+			imageView.HorizontalAlignment = UIControlContentHorizontalAlignment.Center;
+			imageView.VerticalAlignment = UIControlContentVerticalAlignment.Top;
+			imageView.TitleEdgeInsets = new UIEdgeInsets(85f, 0f, 0f, 0f);
+			imageView.SetBackgroundImage(Event.GetImage(false), UIControlState.Normal);
+			imageView.TouchUpInside += AddPhoto;
+
 			titleField.ShouldReturn += (textField) =>
 			{
 				textField.ResignFirstResponder();
@@ -96,6 +108,79 @@ namespace App12
 
 		}// END ViewDidLoad()
 
+		void AddPhoto(object sender, EventArgs e)
+		{
+			var temp = FindImage.ParseForImage(titleField.Text);
+			var tempstring = temp.Split(new char[] { '.' });
+			temp = tempstring[0];
+			temp = temp.First().ToString().ToUpper() + temp.Substring(1);
+			var actionSheetAlert = UIAlertController.Create("Add Photo", "Take a new photo or upload an existing one.", UIAlertControllerStyle.ActionSheet);
+			actionSheetAlert.AddAction(UIAlertAction.Create("Use " + temp + " Icon", UIAlertActionStyle.Default, (obj) => { SetImageToDefault(); }));
+			actionSheetAlert.AddAction(UIAlertAction.Create("Take Photo", UIAlertActionStyle.Default, (obj) => { OpenImagePicker("Camera"); }));
+			actionSheetAlert.AddAction(UIAlertAction.Create("Choose Photo", UIAlertActionStyle.Default, (obj) => { OpenImagePicker("Library"); }));
+			actionSheetAlert.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, (obj) => { }));
+			UIPopoverPresentationController presentationPopover = actionSheetAlert.PopoverPresentationController;
+			if (presentationPopover != null)
+			{
+				presentationPopover.SourceView = View;
+				presentationPopover.PermittedArrowDirections = UIPopoverArrowDirection.Up;
+			}
+
+			PresentViewController(actionSheetAlert, true, null);
+		}
+
+		void SetImageToDefault()
+		{
+			Event.TypeOfImage = TypeOfImage.Default;
+			Event.Image = FindImage.ParseForImage(titleField.Text);
+			imageView.SetBackgroundImage(UIImage.FromFile(Event.Image), UIControlState.Normal);
+		}
+
+		void OpenImagePicker(string type)
+		{
+			switch (type)
+			{
+				case "Library":
+					imagePicker = new UIImagePickerController();
+					imagePicker.SourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+					//imagePicker.MediaTypes = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary);
+					imagePicker.ModalPresentationStyle = UIModalPresentationStyle.PageSheet;
+					imagePicker.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+
+					imagePicker.FinishedPickingMedia += Handle_FinishedPickingMedia;
+					imagePicker.Canceled += Handle_Canceled;
+
+					NavigationController.PresentModalViewController(imagePicker, true);
+					break;
+				case "Camera":
+					imagePicker = new UIImagePickerController();
+					imagePicker.SourceType = UIImagePickerControllerSourceType.Camera;
+					imagePicker.ModalPresentationStyle = UIModalPresentationStyle.PageSheet;
+					imagePicker.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+
+					imagePicker.FinishedPickingMedia += Handle_FinishedPickingMedia;
+					imagePicker.Canceled += Handle_Canceled;
+					break;
+			}
+		}
+
+		void Handle_Canceled(object sender, EventArgs e)
+		{
+			imagePicker.DismissModalViewController(true);
+		}
+
+		protected void Handle_FinishedPickingMedia(object sender, UIImagePickerMediaPickedEventArgs e)
+		{
+			var originalImage = e.Info[UIImagePickerController.OriginalImage] as UIImage;
+
+			if (originalImage != null)
+			{
+				Event.SetImage(originalImage, null, TypeOfImage.Custom);
+				Event.TypeOfImage = TypeOfImage.Custom;
+				imageView.SetBackgroundImage(originalImage, UIControlState.Normal);
+			}
+			imagePicker.DismissModalViewController(true);
+		}
 
 		void EditingStarted(object sender, EventArgs ea)
 		{
@@ -363,7 +448,6 @@ namespace App12
 			return ((DateTime)date).ToLocalTime();
 		}
 
-		public NSIndexPath currentTableCell;
 		public bool[] tableItems;
 		//  ---------------------------------
 		//  PrepareForSegue(): Save the date and transfer it back to the main screen to create a new event
@@ -377,8 +461,12 @@ namespace App12
 				//  Save the text from the Title Field
 				Event.Title = titleField.Text;
 
-				Event.Color = EventColor;
-
+				if (Event.Color != EventColor && Event.TypeOfImage == TypeOfImage.Custom)
+				{
+					Event.Color = EventColor;
+					Event.SetImage(Event.GetImage(false), null, TypeOfImage.Custom);
+				} 
+				Console.WriteLine("EditEventController: Image: " + Event.Image);
 				//  If the Title Field is null, set it to "New Event"
 				if (Event.Title == "")
 					Event.Title = "New Event";
@@ -387,8 +475,6 @@ namespace App12
 				{
 					descField.Text = " ";
 				}
-
-				Event.Image = FindImage.ParseForImage(Event.Title);
 
 				//  Save the text from the Description Field
 				Event.Desc = descField.Text;
@@ -418,9 +504,6 @@ namespace App12
 				var transferdata = segue.DestinationViewController as MasterViewController;
 
 				transferdata.Event = Event;
-				if (currentTableCell == null)
-					currentTableCell = new NSIndexPath();
-				transferdata.tempIndexPath = currentTableCell;
 
 			}
 			else if (segue.Identifier == "repeatSegue")

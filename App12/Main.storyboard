@@ -32,7 +32,9 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections/>
+                                <connections>
+                                    <segue id="9891" destination="9448" kind="show" identifier="editEventSegue"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -48,7 +50,6 @@
                         <barButtonItem key="leftBarButtonItem" id="5216" systemItem="compose"/>
                     </navigationItem>
                     <connections>
-                        <segue id="2723" destination="1608" kind="show" identifier="editEventSegue"/>
                         <outlet property="enableEditButton" destination="5216" id="name-outlet-5216"/>
                         <outlet property="addButton" destination="115" id="name-outlet-115"/>
                     </connections>
@@ -56,7 +57,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="514" y="32"/>
+            <point key="canvasLocation" x="605" y="-71"/>
         </scene>
         <!--Detail-->
         <!--Table View Controller-->
@@ -75,7 +76,7 @@
                             <tableViewSection id="1451">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1452">
-                                        <rect key="frame" x="0.0" y="70" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="240" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1452" id="1453">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -99,7 +100,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1454" style="IBUITableViewCellStyleValue1" textLabel="1472" detailTextLabel="1473">
-                                        <rect key="frame" x="0.0" y="114" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="284" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1454" id="1455">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -122,7 +123,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1456" rowHeight="13">
-                                        <rect key="frame" x="0.0" y="158" width="414" height="13"/>
+                                        <rect key="frame" x="0.0" y="328" width="414" height="13"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1456" id="1457">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="12.5"/>
@@ -150,7 +151,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1496" style="IBUITableViewCellStyleValue1" textLabel="1502" detailTextLabel="1503">
-                                        <rect key="frame" x="0.0" y="171" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="341" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1496" id="1497">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -173,7 +174,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1498" rowHeight="16">
-                                        <rect key="frame" x="0.0" y="215" width="414" height="16"/>
+                                        <rect key="frame" x="0.0" y="385" width="414" height="16"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1498" id="1499">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="15.5"/>
@@ -235,7 +236,7 @@
                             <tableViewSection id="1515">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1522" rowHeight="132">
-                                        <rect key="frame" x="0.0" y="476" width="414" height="132"/>
+                                        <rect key="frame" x="0.0" y="646" width="414" height="132"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1522" id="1523">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="131.5"/>
@@ -283,7 +284,7 @@
                             <tableViewSection id="3525">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="3526" style="IBUITableViewCellStyleValue1" textLabel="3532" detailTextLabel="3533" accessoryType="disclosureIndicator">
-                                        <rect key="frame" x="0.0" y="852" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="1022" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3526" id="3527">
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="43.5"/>
@@ -314,7 +315,7 @@
                             <tableViewSection id="7563">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7564" rowHeight="44" style="IBUITableViewCellStyleValue1" textLabel="7729" detailTextLabel="7730" accessoryType="disclosureIndicator">
-                                        <rect key="frame" x="0.0" y="1052" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="1222" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7564" id="7565">
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="43.5"/>
@@ -343,6 +344,27 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
+                        <view contentMode="scaleToFill" id="10226" key="tableHeaderView">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="10232" translatesAutoresizingMaskIntoConstraints="NO">
+                                    <rect key="frame" x="167" y="10" width="80" height="80"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <constraints>
+                                        <constraint id="10235" firstItem="10232" firstAttribute="height" constant="80"/>
+                                        <constraint id="10236" firstItem="10232" firstAttribute="width" constant="80"/>
+                                    </constraints>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint id="10233" firstItem="10232" firstAttribute="centerX" secondItem="10226" secondAttribute="centerX"/>
+                                <constraint id="10261" firstItem="10232" firstAttribute="top" secondItem="10226" secondAttribute="top" constant="10"/>
+                            </constraints>
+                        </view>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Event" id="1183">
                         <barButtonItem key="rightBarButtonItem" id="1298" style="plain" systemItem="save">
@@ -369,6 +391,8 @@
                         <outlet property="repeatText" destination="3533" id="name-outlet-3533"/>
                         <outlet property="colorLabel" destination="7730" id="name-outlet-7730"/>
                         <outlet property="colorCell" destination="7564" id="name-outlet-7564"/>
+                        <outlet property="imageView" destination="10232" id="name-outlet-10232"/>
+                        <outlet property="headerView" destination="10226" id="name-outlet-10226"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1189" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -389,7 +413,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1194" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-361" y="38"/>
+            <point key="canvasLocation" x="-493" y="93"/>
         </scene>
         <scene sceneID="1607">
             <objects>
@@ -406,7 +430,7 @@
                             <tableViewSection id="1635">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1636">
-                                        <rect key="frame" x="0.0" y="70" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="240" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1636" id="1637">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -430,7 +454,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1643" style="IBUITableViewCellStyleValue1" textLabel="1644" detailTextLabel="1616">
-                                        <rect key="frame" x="0.0" y="114" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="284" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1643" id="1645">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -453,7 +477,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1646" rowHeight="6">
-                                        <rect key="frame" x="0.0" y="158" width="414" height="6"/>
+                                        <rect key="frame" x="0.0" y="328" width="414" height="6"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1646" id="1647">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="5.5"/>
@@ -481,7 +505,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1654" style="IBUITableViewCellStyleValue1" textLabel="1655" detailTextLabel="1622">
-                                        <rect key="frame" x="0.0" y="164" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="334" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1654" id="1656">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -504,7 +528,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1657" rowHeight="7">
-                                        <rect key="frame" x="0.0" y="208" width="414" height="7"/>
+                                        <rect key="frame" x="0.0" y="378" width="414" height="7"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1657" id="1658">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="6.5"/>
@@ -566,7 +590,7 @@
                             <tableViewSection id="1665">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1666" rowHeight="132">
-                                        <rect key="frame" x="0.0" y="444" width="414" height="132"/>
+                                        <rect key="frame" x="0.0" y="614" width="414" height="132"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1666" id="1667">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="131.5"/>
@@ -614,7 +638,7 @@
                             <tableViewSection id="2729">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2730" style="IBUITableViewCellStyleValue1" textLabel="2737" detailTextLabel="2738" accessoryType="disclosureIndicator">
-                                        <rect key="frame" x="0.0" y="820" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="990" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2730" id="2731">
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="43.5"/>
@@ -644,7 +668,7 @@
                             <tableViewSection id="8036">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8037" style="IBUITableViewCellStyleValue1" textLabel="8043" detailTextLabel="8044" accessoryType="disclosureIndicator">
-                                        <rect key="frame" x="0.0" y="1020" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="1190" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8037" id="8038">
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="43.5"/>
@@ -675,7 +699,7 @@
                             <tableViewSection id="6564">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6565">
-                                        <rect key="frame" x="0.0" y="1220" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="1390" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6565" id="6566">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -703,6 +727,27 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
+                        <view contentMode="scaleToFill" id="10283" key="tableHeaderView">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="10284" translatesAutoresizingMaskIntoConstraints="NO">
+                                    <rect key="frame" x="167" y="10" width="80" height="80"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <constraints>
+                                        <constraint id="10286" firstItem="10284" firstAttribute="height" constant="80"/>
+                                        <constraint id="10287" firstItem="10284" firstAttribute="width" constant="80"/>
+                                    </constraints>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint id="10285" firstItem="10284" firstAttribute="top" secondItem="10283" secondAttribute="top" constant="10"/>
+                                <constraint id="10288" firstItem="10284" firstAttribute="centerX" secondItem="10283" secondAttribute="centerX"/>
+                            </constraints>
+                        </view>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Event" id="1627">
                         <barButtonItem key="rightBarButtonItem" id="1620" style="plain" systemItem="save">
@@ -725,6 +770,8 @@
                         <outlet property="deleteButton" destination="6571" id="name-outlet-6571"/>
                         <outlet property="colorLabel" destination="8044" id="name-outlet-8044"/>
                         <outlet property="colorCell" destination="8037" id="name-outlet-8037"/>
+                        <outlet property="headerView" destination="10283" id="name-outlet-10283"/>
+                        <outlet property="imageView" destination="10284" id="name-outlet-10284"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1672" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -942,7 +989,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2762" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1232" y="737"/>
+            <point key="canvasLocation" x="1103" y="741"/>
         </scene>
         <scene sceneID="5227">
             <objects>
@@ -992,7 +1039,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5230" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="-80"/>
+            <point key="canvasLocation" x="30" y="-73"/>
         </scene>
         <scene sceneID="5261">
             <objects>
@@ -1012,7 +1059,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5265" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-404" y="-417"/>
+            <point key="canvasLocation" x="-397" y="-1015"/>
         </scene>
         <scene sceneID="5438">
             <objects>
@@ -1394,7 +1441,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6836" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-780" y="-84"/>
+            <point key="canvasLocation" x="-1090" y="-155"/>
         </scene>
         <scene sceneID="7750">
             <objects>
@@ -2158,22 +2205,177 @@
             </objects>
             <point key="canvasLocation" x="1666" y="60"/>
         </scene>
-        <scene sceneID="8490">
+        <scene sceneID="9447">
             <objects>
-                <viewController id="8491" sceneMemberID="viewController">
+                <tableViewController id="9448" sceneMemberID="viewController" customClass="EventViewController">
+                    <navigationItem key="navigationItem" title="Root View Controller" id="9449"/>
+                    <connections>
+                        <segue id="10050" destination="1608" kind="show" identifier="secondEditSegue"/>
+                        <outlet property="timeLabel" destination="10107" id="name-outlet-10107"/>
+                        <outlet property="descLabel" destination="10106" id="name-outlet-10106"/>
+                        <outlet property="headerView" destination="10148" id="name-outlet-10148"/>
+                        <outlet property="titleLabel" destination="10158" id="name-outlet-10158"/>
+                        <outlet property="speaker" destination="10178" id="name-outlet-10178"/>
+                        <outlet property="imageView" destination="10301" id="name-outlet-10301"/>
+                    </connections>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="44" sectionHeaderHeight="25" sectionFooterHeight="25" id="10071" key="view" separatorStyle="none">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="10074" headerTitle="Time">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="10075" style="IBUITableViewCellStyleDefault" textLabel="10107">
+                                        <rect key="frame" x="0.0" y="385" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="10075" id="10076">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="10107">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Description" id="10081">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="10104" style="IBUITableViewCellStyleDefault" textLabel="10106">
+                                        <rect key="frame" x="0.0" y="523" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="10104" id="10105">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="10106">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <view contentMode="scaleToFill" id="10148" key="tableHeaderView">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="10158" translatesAutoresizingMaskIntoConstraints="NO">
+                                    <rect key="frame" x="0.0" y="145" width="414" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="22" weight="medium"/>
+                                    <color key="textColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                                    <nil key="highlightedColor"/>
+                                    <constraints>
+                                        <constraint id="10161" firstItem="10158" firstAttribute="height" constant="21"/>
+                                    </constraints>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="10178" translatesAutoresizingMaskIntoConstraints="NO">
+                                    <rect key="frame" x="354" y="20" width="40" height="40"/>
+                                    <color key="tintColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                                    <state key="normal" image="speakers.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <constraints>
+                                        <constraint id="10181" firstItem="10178" firstAttribute="height" constant="40"/>
+                                        <constraint id="10182" firstItem="10178" firstAttribute="width" constant="40"/>
+                                    </constraints>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="10301" translatesAutoresizingMaskIntoConstraints="NO">
+                                    <rect key="frame" x="162" y="25" width="90" height="90"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <constraints>
+                                        <constraint id="10303" firstItem="10301" firstAttribute="height" constant="90"/>
+                                        <constraint id="10304" firstItem="10301" firstAttribute="width" constant="90"/>
+                                    </constraints>
+                                    <connections>
+                                        <segue id="10757" destination="10476" kind="show" identifier="openImageView"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint id="10159" firstItem="10158" firstAttribute="width" secondItem="10148" secondAttribute="width"/>
+                                <constraint id="10160" firstItem="10158" firstAttribute="centerX" secondItem="10148" secondAttribute="centerX"/>
+                                <constraint id="10179" firstItem="10178" firstAttribute="top" secondItem="10148" secondAttribute="top" constant="20"/>
+                                <constraint id="10180" firstItem="10148" firstAttribute="trailing" secondItem="10178" secondAttribute="trailing" constant="20"/>
+                                <constraint id="10302" firstItem="10301" firstAttribute="centerX" secondItem="10148" secondAttribute="centerX"/>
+                                <constraint id="10305" firstItem="10148" firstAttribute="centerY" secondItem="10301" secondAttribute="centerY" constant="20"/>
+                                <constraint id="10308" firstItem="10158" firstAttribute="top" secondItem="10301" secondAttribute="centerY" constant="75"/>
+                            </constraints>
+                        </view>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9455" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2102" y="879"/>
+        </scene>
+        <scene sceneID="10316">
+            <objects>
+                <viewController id="10317" sceneMemberID="viewController" customClass="PresentImageView">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8488"/>
-                        <viewControllerLayoutGuide type="bottom" id="8489"/>
+                        <viewControllerLayoutGuide type="top" id="10314"/>
+                        <viewControllerLayoutGuide type="bottom" id="10315"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8492">
+                    <view key="view" contentMode="scaleToFill" id="10318">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="10878" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <color key="backgroundColor" colorSpace="calibratedWhite" white="0" alpha="1"/>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint id="10879" firstItem="10878" firstAttribute="top" secondItem="10314" secondAttribute="bottom"/>
+                            <constraint id="10880" firstItem="10878" firstAttribute="leading" secondItem="10318" secondAttribute="leading"/>
+                            <constraint id="10881" firstItem="10315" firstAttribute="top" secondItem="10878" secondAttribute="bottom"/>
+                            <constraint id="10882" firstItem="10318" firstAttribute="trailing" secondItem="10878" secondAttribute="trailing"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="closeButton" destination="10762" id="name-outlet-10762"/>
+                        <outlet property="imageView" destination="10878" id="name-outlet-10878"/>
+                    </connections>
+                    <navigationItem title="Detail View" id="10761" key="navigationItem">
+                        <barButtonItem key="leftBarButtonItem" id="10762" systemItem="done">
+                            <connections>
+                                <segue id="10870" destination="10320" kind="unwind" unwindAction="UnwindToEventViewController:"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8493" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="10319" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="10320" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1664" y="863"/>
+            <point key="canvasLocation" x="1681" y="1023"/>
+        </scene>
+        <scene sceneID="10475">
+            <objects>
+                <navigationController id="10476" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="10478">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue id="10681" destination="10317" kind="relationship" relationship="rootViewController"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="10479" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1146" y="1111"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -2262,5 +2464,6 @@
         <image name="Pink.jpg" width="200" height="200"/>
         <image name="Red.jpg" width="200" height="200"/>
         <image name="White.jpg" width="200" height="200"/>
+        <image name="imagemask.png" width="240" height="240"/>
     </resources>
 </document>

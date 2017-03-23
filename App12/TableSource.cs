@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Foundation;
 using UIKit;
 
@@ -30,7 +27,6 @@ namespace App12
         //
         public TableSource(MasterViewController controller, DateTime tempDate)
         {
-            //  Set the current view controller to the controller input
             this.controller = controller;
 			date = tempDate;
 			tableItems = DataAccess.GetEvents(date);
@@ -38,17 +34,15 @@ namespace App12
         }
 		//  END TableSource()
 
-		public void DeleteItem(int tempID, NSIndexPath path) 
+		public void DeleteItem(int tempID) 
 		{
-			//var obj = tableItems.ElementAt(path.Row);
-
 			var obj = DataAccess.GetObject(tempID);
 			DataAccess.DeleteObject(obj);
 			ReloadSourceData();
 		}
 
 
-        public void EditItem(int index, EventData item)
+        public void EditItem(EventData item)
         {
             DataAccess.SaveObject(item);
             ReloadSourceData();
@@ -57,16 +51,15 @@ namespace App12
         public void ReloadSourceData()
         {
 			tableItems = DataAccess.GetEvents(date);
-
         }
-
 
         //
         //  Method for adding an item
         //
-        public void AddItem(EventData item)
+        public void AddItem(EventData item, UIImage image)
         {
             DataAccess.SaveObject(item);
+			item.SetImage(image, item.Title, item.TypeOfImage);
             ReloadSourceData();
             
         }
@@ -78,10 +71,10 @@ namespace App12
         //
         public override nint RowsInSection(UITableView tableview, nint section)
         {
-            nint itemCount = DataAccess.Count(date);
+            var itemCount = DataAccess.Count(date);
             if (itemCount == 0)
             {
-                UILabel noDataLabel = new UILabel(new CoreGraphics.CGRect(0, 0, tableview.Bounds.Width, tableview.Bounds.Height));
+                var noDataLabel = new UILabel(new CoreGraphics.CGRect(0, 0, tableview.Bounds.Width, tableview.Bounds.Height));
                 if (controller.Day.DayOfWeek == DateTime.Now.DayOfWeek)
                 {
                     noDataLabel.Text = "No events today.";
@@ -103,17 +96,6 @@ namespace App12
         }
         //  END RowsInSection()
 
-
-        //
-        //  Allows cells to be deleted
-        //
-        public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
-        {
-			return false;
-        }
-        //  END CanEditRow()
-
-
         //
         //  When the row is touched
         //
@@ -133,12 +115,15 @@ namespace App12
         //  
         //  Custom method for cell retreival
         //
+
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(cellIdentifier) as AgendaCell;
             tableView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
-            if (cell == null)
-                cell = new AgendaCell(cellIdentifier);
+			if (cell == null)
+			{
+				cell = new AgendaCell(cellIdentifier);
+			}
             cell.UpdateCell(tableItems[indexPath.Row]);
 
 			cell.speech.TouchUpInside += delegate {
@@ -150,8 +135,8 @@ namespace App12
 
 		void SpeakTitle(AgendaCell cell)
 		{
-			string[] times = cell.time.Text.Split(new char[] { '-' });
-			string text = cell.title.Text + ", occurs from " + times[0] + ". to " + times[1] + ". " + cell.desc.Text;
+			var times = cell.time.Text.Split(new char[] { '-' });
+			string text = cell.title.Text + ", happens from " + times[0] + ". to " + times[1] + ". " + cell.desc.Text;
 			TextToSpeechImplementation.Speak(text);
 		}
     }

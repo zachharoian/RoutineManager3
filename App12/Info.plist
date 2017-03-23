@@ -37,12 +37,16 @@
 		<key>UINavigationBar</key>
 		<dict>
 			<key>Style</key>
-			<string>UIBarStyleBlack</string>
+			<string>UIBarStyleDefault</string>
 			<key>Translucent</key>
 			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleName</key>
 	<string>Routines</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This allow you to upload your own images in place of the default icons.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This allows you to take your own images in place of the default icons.</string>
 </dict>
 </plist>

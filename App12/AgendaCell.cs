@@ -2,6 +2,8 @@
 using CoreGraphics;
 using CoreImage;
 using System;
+using System.IO;
+using Foundation;
 
 namespace App12
 {
@@ -60,7 +62,7 @@ namespace App12
 			highlight = new UIView();
             
             //  Instantiate the card behind the text
-            card = new UIView()
+            card = new UIView
             {
                 BackgroundColor = backgroundColor,
             };
@@ -74,15 +76,16 @@ namespace App12
 			card.Layer.ShadowRadius = 2;
 			card.Layer.BorderColor = UIColor.FromRGB(220,220,220).CGColor;
 			card.Layer.BorderWidth = 1;
-            //  Instantiate the iamge view
+			//  Instantiate the iamge view
 			imageView = new UIImageView();
+
 
 			speech = new UIButton();
 			speech.SetBackgroundImage(UIImage.FromFile("speakers.png"), UIControlState.Normal);
 
             
             //  Add the above items to the view.
-            ContentView.AddSubviews(new UIView[] {card, title, desc, time, highlight, imageView, speech});
+            ContentView.AddSubviews(new UIView[] {card, title, desc, time, highlight, speech, imageView});
         }
         #endregion
 
@@ -96,31 +99,8 @@ namespace App12
             title.Text = obj.Title;
             desc.Text = obj.Desc;
             time.Text = obj.Start.ToShortTimeString() + " - " + obj.End.ToShortTimeString();
-			UIImage Image = new UIImage();
-			//  Try/Catch incase the image path is not valid. Fallback is the default alarm picture.
-            try
-            {
-                Image = UIImage.FromFile(obj.Image);
-            }
-            catch
-            {
-                Image = UIImage.FromFile("alarm.png");
-            }
-			/*
-			CIImage coreImage = CIImage.FromCGImage(Image.CGImage);
-			CIFilter filter = CIFilter.FromName("CIColorInvert");
-			filter.Image = coreImage;
-			CIImage result = filter.OutputImage;
-
-
-			imageView.Image = new UIImage(result);
-			imageView.Opaque = false;
-			imageView.Alpha = 0.75f;*/
 			highlight.BackgroundColor = GetColor(obj.Color);
-			//UIImage test = Image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
-			imageView.Image = Image;
-			//imageView.TintColor = UIColor.White;
-			//imageView.Alpha = 0.5f;
+			imageView.Image = obj.GetImage(true);
         }
 		#endregion
 
@@ -265,7 +245,7 @@ namespace App12
             card.Frame = new CGRect(5, 5, ContentView.Bounds.Width - 10, ContentView.Bounds.Height - 10);
             title.Frame = new CGRect(10 + imageOffset, 10, ContentView.Bounds.Width - imageOffset-55, 23);
             time.Frame = new CGRect(10 + imageOffset, 33, ContentView.Bounds.Width - imageOffset-45, 19);
-            desc.Frame = new CGRect(10 + imageOffset, 52, ContentView.Bounds.Width - imageOffset-10, 78);
+            desc.Frame = new CGRect(10 + imageOffset, 52, ContentView.Bounds.Width - imageOffset-20, 78);
             //  Image will be 10 pixels from the left of the cell, 10 pixels from the top, 80 pixels diameter
             imageView.Frame = new CGRect(10, 25, 80, 80);
 			speech.Frame = new CGRect(ContentView.Bounds.Width - 50, 10, 40, 40);

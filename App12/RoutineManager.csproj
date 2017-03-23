@@ -143,6 +143,19 @@
     <Compile Include="ColorEditViewController.designer.cs">
       <DependentUpon>ColorEditViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventViewController.cs" />
+    <Compile Include="EventViewController.designer.cs">
+      <DependentUpon>EventViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditRootViewController.cs" />
+    <Compile Include="EditRootViewController.designer.cs">
+      <DependentUpon>EditRootViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cropper.cs" />
+    <Compile Include="PresentImageView.cs" />
+    <Compile Include="PresentImageView.designer.cs">
+      <DependentUpon>PresentImageView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MasterViewController.cs" />
@@ -266,6 +279,7 @@
     <BundleResource Include="Resources\Pink.jpg" />
     <BundleResource Include="Resources\Red.jpg" />
     <BundleResource Include="Resources\White.jpg" />
+    <BundleResource Include="Resources\imagemask.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="radialprogress">

@@ -1,7 +1,6 @@
 ﻿using Foundation;
 using System;
 using UIKit;
-using UserNotifications;
 
 namespace App12
 {
@@ -25,15 +24,18 @@ namespace App12
 
 		public static RootViewController CurrentRootViewController;
 
-        private int segmentIndex = (int)DateTime.Now.DayOfWeek;
+        public static int segmentIndex = (int)DateTime.Now.DayOfWeek;
 
-		public static bool consentComfirmed = false;
+		public static bool consentComfirmed;
 
 		public static bool isEditingEnabled = DataAccess.GetEdit();
 
 		public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+			NavigationController.NavigationBar.Opaque = false;
+			NavigationController.NavigationBar.BarStyle = UIBarStyle.Black;
+			NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes { ForegroundColor = UIColor.White };
             NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(0.012f, 0.663f, 0.957f);
 			NavigationController.NavigationBar.TintColor = UIColor.White;
             ModelController = new ModelController();
@@ -92,7 +94,7 @@ namespace App12
 
 		void valueChangeFromSwipe(object sender, EventArgs ea)
 		{
-			int newIndex = ModelController.IndexOf((MasterViewController)PageViewController.ViewControllers[0]);
+			var newIndex = ModelController.IndexOf((MasterViewController)PageViewController.ViewControllers[0]);
 			segmentedControl.SelectedSegment = newIndex;
 			segmentIndex = newIndex;
 			UpdatePrompt();
@@ -116,7 +118,7 @@ namespace App12
             }
             else
             {
-                DateTime obj = new DateTime(2017, 1, segmentIndex + 1);
+                var obj = new DateTime(2017, 1, segmentIndex + 1);
                 NavigationItem.Prompt = obj.DayOfWeek.ToString() + "'s Agenda";
             }
         }
