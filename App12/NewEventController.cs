@@ -80,6 +80,23 @@ namespace App12
 
 		}// END ViewDidLoad()
 
+		void RecordingDialog(object sender, EventArgs e)
+		{
+			var actionSheetAlert = UIAlertController.Create("Record Audio", "Record a voice-over to replace the default text-to-speech reader.", UIAlertControllerStyle.ActionSheet);
+			actionSheetAlert.AddAction(UIAlertAction.Create("New Recording", UIAlertActionStyle.Default, (obj) => { SetImageToDefault(); }));
+			actionSheetAlert.AddAction(UIAlertAction.Create("Take Photo", UIAlertActionStyle.Default, (obj) => { OpenImagePicker("Camera"); }));
+			actionSheetAlert.AddAction(UIAlertAction.Create("Choose Photo", UIAlertActionStyle.Default, (obj) => { OpenImagePicker("Library"); }));
+			actionSheetAlert.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, (obj) => { }));
+			UIPopoverPresentationController presentationPopover = actionSheetAlert.PopoverPresentationController;
+			if (presentationPopover != null)
+			{
+				presentationPopover.SourceView = View;
+				presentationPopover.PermittedArrowDirections = UIPopoverArrowDirection.Up;
+			}
+
+			PresentViewController(actionSheetAlert, true, null);
+		}
+
 		void AddPhoto(object sender, EventArgs e)
 		{
 			var temp = FindImage.ParseForImage(titleField.Text);

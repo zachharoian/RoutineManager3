@@ -48,6 +48,10 @@ namespace App12
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton recordButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel repeatText { get; set; }
 
         [Outlet]
@@ -114,6 +118,11 @@ namespace App12
             if (imageView != null) {
                 imageView.Dispose ();
                 imageView = null;
+            }
+
+            if (recordButton != null) {
+                recordButton.Dispose ();
+                recordButton = null;
             }
 
             if (repeatText != null) {
