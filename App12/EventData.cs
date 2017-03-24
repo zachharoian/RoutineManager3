@@ -106,6 +106,7 @@ namespace App12
 						mask = UIGraphics.GetImageFromCurrentImageContext();
 						Console.WriteLine(mask.Size);
 						UIGraphics.EndImageContext();
+						image = CropImage(image, 0,0,240,240);
 						//	Draw the thumbnail image
 						UIGraphics.BeginImageContext(new CGSize(240, 240));
 						image.Draw(new CGRect(0, 0, 240, 240));
@@ -117,7 +118,7 @@ namespace App12
 						NSError thumbErr;
 						thumbnailPathData.Save(thumbnailPath, false, out thumbErr);
 						Console.WriteLine("Error: " + thumbErr);
-
+						thumbnailPathData.Save(thumbnailPath + "_notif.png", false, out thumbErr);
 						/*
 						UIImage imageEdited;
 						//UIGraphics.BeginImageContext(new CGSize(240, 240));
@@ -137,18 +138,19 @@ namespace App12
 			TypeOfImage = newImageType;
 		}
 
-		public UIImage MaxResizeImage(UIImage sourceImage, float maxWidth, float maxHeight)
+		UIImage CropImage(UIImage sourceImage, int crop_x, int crop_y, int width, int height)
 		{
-			var sourceSize = sourceImage.Size;
-			var maxResizeFactor = Math.Min(maxWidth / sourceSize.Width, maxHeight / sourceSize.Height);
-			if (maxResizeFactor > 1) return sourceImage;
-			var width = maxResizeFactor * sourceSize.Width;
-			var height = maxResizeFactor * sourceSize.Height;
-			UIGraphics.BeginImageContext(new SizeF((float)width, (float)height));
-			sourceImage.Draw(new RectangleF(0, 0, (float)width, (float)height));
-			var resultImage = UIGraphics.GetImageFromCurrentImageContext();
+			var imgSize = sourceImage.Size;
+			var maxResizeFactor = Math.Max(width / imgSize.Width, height / imgSize.Height);
+			UIGraphics.BeginImageContext(new SizeF(width, height));
+			var context = UIGraphics.GetCurrentContext();
+			var clippedRect = new RectangleF(0, 0, width, height);
+			context.ClipToRect(clippedRect);
+			var drawRect = new RectangleF(-crop_x, -crop_y, (float)(imgSize.Width*maxResizeFactor), (float)(imgSize.Height*maxResizeFactor));
+			sourceImage.Draw(drawRect);
+			var modifiedImage = UIGraphics.GetImageFromCurrentImageContext();
 			UIGraphics.EndImageContext();
-			return resultImage;
+			return modifiedImage;
 		}
 		string Filename(bool isThumbnail, bool fullPath)
 		{
@@ -205,12 +207,12 @@ namespace App12
 				}
 				else
 				{
-					imagePath = NSUrl.FromFilename(Filename(true, true));
+					imagePath = NSUrl.FromFilename(Filename(true, true) + "_notif.png");
 				}
 
 				NSError error;
 				var attachment = UNNotificationAttachment.FromIdentifier(attachmentID, imagePath, options, out error);
-
+				Console.WriteLine(error);
 				var content = new UNMutableNotificationContent();
 				content.Title = Title;
 				if (Desc != "")

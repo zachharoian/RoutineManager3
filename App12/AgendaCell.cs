@@ -1,9 +1,5 @@
 ﻿using UIKit;
 using CoreGraphics;
-using CoreImage;
-using System;
-using System.IO;
-using Foundation;
 
 namespace App12
 {
@@ -20,25 +16,25 @@ namespace App12
         UIView card, highlight;
         UIImageView imageView;
 		public UIButton speech;
-        #endregion
+		#endregion
 
-        #region Constructor
-        //
-        //  AgendaCell(): Constructor 
-        //
-        public AgendaCell (string cellId) : base (UITableViewCellStyle.Default, cellId)
-        {
-            //  Set the background color of the table to be a mid-gray.
-            ContentView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
+		#region Constructor
+		//
+		//  AgendaCell(): Constructor 
+		//
+		public AgendaCell(string cellId) : base(UITableViewCellStyle.Default, cellId)
+		{
+			//  Set the background color of the table to be a mid-gray.
+			ContentView.BackgroundColor = UIColor.GroupTableViewBackgroundColor;
 
-            //  Instantiate the Title
-            title = new UILabel()
-            {   //  Set text properties
-				TextColor = UIColor.FromRGB(30, 30,30),
-                BackgroundColor = UIColor.Clear,
-                LineBreakMode = UILineBreakMode.TailTruncation,
-                Font = UIFont.FromName("HelveticaNeue-Medium", 20f)
-            };
+			//  Instantiate the Title
+			title = new UILabel()
+			{   //  Set text properties
+				TextColor = UIColor.FromRGB(30, 30, 30),
+				BackgroundColor = UIColor.Clear,
+				LineBreakMode = UILineBreakMode.TailTruncation,
+				Font = UIFont.FromName("HelveticaNeue-Medium", 20f)
+			};
 
 			//  Instantiate the Time label
 			time = new UILabel()
@@ -56,19 +52,17 @@ namespace App12
 				BackgroundColor = UIColor.Clear,
 				LineBreakMode = UILineBreakMode.TailTruncation,
 				Lines = 3
-                
-             };
+
+			};
 
 			highlight = new UIView();
-            
-            //  Instantiate the card behind the text
-            card = new UIView
-            {
-                BackgroundColor = backgroundColor,
-            };
-            
-            //  Set view properties
-            card.Layer.ShadowColor = UIColor.Black.CGColor;
+
+			//  Instantiate the card behind the text
+			card = new UIView() { BackgroundColor = UIColor.White };
+
+
+		//  Set view properties
+			card.Layer.ShadowColor = UIColor.Black.CGColor;
             card.Layer.ShadowOpacity = 0.1f;
             card.Layer.ShadowOffset = new CGSize(0, 1);
             //card.Layer.CornerRadius = 2;
