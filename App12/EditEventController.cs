@@ -2,7 +2,7 @@
 using System;
 using UIKit;
 using System.Linq;
-
+using CoreGraphics;
 namespace App12
 {
 	public partial class EditEventController : UITableViewController
@@ -32,6 +32,83 @@ namespace App12
 
 		}// END NewEventController()
 
+
+		public static UIImage FixOrientation(UIImage image)
+		{
+			if (image.Orientation == UIImageOrientation.Up)
+				return image;
+			var transform = new CGAffineTransform();
+
+			//	Rotate
+			switch (image.Orientation)
+			{
+				case UIImageOrientation.Down:
+				case UIImageOrientation.DownMirrored:
+					transform = CGAffineTransform.Translate(transform, image.Size.Width, image.Size.Height);
+					transform = CGAffineTransform.Rotate(transform, (nfloat)Math.PI);
+					break;
+				case UIImageOrientation.Left:
+				case UIImageOrientation.LeftMirrored:
+					transform = CGAffineTransform.Translate(transform, image.Size.Width, 0);
+					transform = CGAffineTransform.Rotate(transform, (nfloat)Math.PI * 2);
+					break;
+				case UIImageOrientation.Right:
+				case UIImageOrientation.RightMirrored:
+					transform = CGAffineTransform.Translate(transform, 0, image.Size.Height);
+					transform = CGAffineTransform.Rotate(transform, (nfloat)Math.PI * -2);
+					break;
+				case UIImageOrientation.Up:
+				case UIImageOrientation.UpMirrored:
+					break;
+			}
+
+			//	Flip
+			switch (image.Orientation)
+			{
+				case UIImageOrientation.UpMirrored:
+				case UIImageOrientation.DownMirrored:
+					transform = CGAffineTransform.Translate(transform, image.Size.Width, 0);
+					transform = CGAffineTransform.Scale(transform, -1, 1);
+					break;
+				case UIImageOrientation.LeftMirrored:
+				case UIImageOrientation.RightMirrored:
+					transform = CGAffineTransform.Translate(transform, image.Size.Height, 0);
+					transform = CGAffineTransform.Scale(transform, -1, 1);
+					break;
+				case UIImageOrientation.Up:
+				case UIImageOrientation.Down:
+				case UIImageOrientation.Left:
+				case UIImageOrientation.Right:
+					break;
+			}
+
+			//	Apply translation
+
+			CGContext ctx = new CGBitmapContext(null, (nint)image.Size.Width, (nint)image.Size.Height,
+												image.CGImage.BitsPerComponent, 0,
+												image.CGImage.ColorSpace, image.CGImage.AlphaInfo);
+
+			ctx.ConcatCTM(transform);
+			switch (image.Orientation)
+			{
+				case UIImageOrientation.Left:
+				case UIImageOrientation.LeftMirrored:
+				case UIImageOrientation.Right:
+				case UIImageOrientation.RightMirrored:
+					ctx.DrawImage(new CGRect(0, 0, image.Size.Height, image.Size.Width), image.CGImage);
+					break;
+				default:
+					ctx.DrawImage(new CGRect(0, 0, image.Size.Width, image.Size.Height), image.CGImage);
+					break;
+			}
+
+			//	Create new UIImage from the drawing context
+			var cgimg = ctx.AsBitmapContext().ToImage();
+			var img = new UIImage(cgimg);
+			ctx.Dispose();
+			cgimg.Dispose();
+			return img;
+		}
 
 		//  ---------------------------------
 		//  ViewDidLoad(): Method for loading data after the screen is ready to be displayed.
@@ -99,6 +176,9 @@ namespace App12
 			titleField.ShouldReturn += (textField) =>
 			{
 				textField.ResignFirstResponder();
+				Event.Image = FindImage.ParseForImage(titleField.Text);
+				if (Event.TypeOfImage == TypeOfImage.Default)
+					imageView.SetBackgroundImage(UIImage.FromFile(Event.Image), UIControlState.Normal);
 				return true;
 			};
 
@@ -160,6 +240,7 @@ namespace App12
 
 					imagePicker.FinishedPickingMedia += Handle_FinishedPickingMedia;
 					imagePicker.Canceled += Handle_Canceled;
+					NavigationController.PresentModalViewController(imagePicker, true);
 					break;
 			}
 		}
@@ -175,6 +256,7 @@ namespace App12
 
 			if (originalImage != null)
 			{
+				originalImage = FixOrientation(originalImage);
 				Event.SetImage(originalImage, null, TypeOfImage.Custom);
 				Event.TypeOfImage = TypeOfImage.Custom;
 				imageView.SetBackgroundImage(originalImage, UIControlState.Normal);
@@ -463,9 +545,9 @@ namespace App12
 
 				if (Event.Color != EventColor && Event.TypeOfImage == TypeOfImage.Custom)
 				{
-					Event.Color = EventColor;
 					Event.SetImage(Event.GetImage(false), null, TypeOfImage.Custom);
 				} 
+				Event.Color = EventColor;
 				Console.WriteLine("EditEventController: Image: " + Event.Image);
 				//  If the Title Field is null, set it to "New Event"
 				if (Event.Title == "")
